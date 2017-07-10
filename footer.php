@@ -6,10 +6,10 @@
                 <div class="footer_color">
                   <h4>TecnoCom</h4>
                   <ul>
-                    <li><a href="">Quiénes Somos</a></li>
-                    <li><a href="">Ubicación</a></li>
-                    <li><a href="">Aviso de Privacidad</a></li>
-                    <li><a href="">Términos y Condiciones</a></li>
+                    <li><a href="quienes_somos.php">Quiénes Somos</a></li>
+                    <li><a href="ubicacion.php">Ubicación</a></li>
+                    <li><a href="aviso_privacidad.php">Aviso de Privacidad</a></li>
+                    <li><a href="terminos_condiciones.php">Términos y Condiciones</a></li>
                   </ul>
                 </div>
               </div>
@@ -31,8 +31,8 @@
                 <div class="footer_color">
                   <h4>Servicio al Cliente</h4>
                   <ul>
-                    <li><a href="">Contactános</a></li>
-                    <li><a href="">Opciones de Pago</a></li>
+                    <li><a href="contacto.php">Contactános</a></li>
+                    <li><a href="opciones_pagos.php">Opciones de Pago</a></li>
                   </ul>
                 </div>
               </div>

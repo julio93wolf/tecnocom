@@ -23,35 +23,36 @@
       <header>
         <div class="container-fluid">
           <div class="row">
-              <div class="hidden-xs col-sm-8 col-md-8 col-lg-8">
-              </div><!-- /.col-xs-4 /.col-sm-8 /.col-md-8 /.col-lg-8 -->
-              <div class="col-sm-4 col-md-4 col-lg-4">
-                  <div class="row" id="header_registro">
-                    <form class="form-inline" action="ingresa.php">
-                      <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Registrarse</button>
-                        <button type="submit" class="btn btn-danger">
-                          <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Ingresar
-                        </button>
-                      </div><!-- /.form-group -->
-                    </form>
-                  </div><!-- /.row -->
-                  <div class="row" id="header_log_in">
-                  <form class="form-inline" action="busqueda.php" method="GET">
-                    <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-addon">
-                          <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                        </div><!-- /.input-group -->
-                        <input type="text" class="form-control" name="search" placeholder="Buscar...">
-                        <span class="input-group-btn">
-                          <button class="btn btn-success" type="submit">Buscar</button>
-                        </span>
+            <div class="col-md-8">
+              logo
+            </div><!-- /.col-xs-4 /.col-sm-8 /.col-md-8 /.col-lg-8 -->
+            <div class="col-md-4">
+              <div class="row" id="header_sesion">
+                <form class="form-inline header_form" action="ingresa.php">
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Registrarse</button>
+                    <button type="submit" class="btn btn-danger">
+                      <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Ingresar
+                    </button>
+                  </div><!-- /.form-group -->
+                </form>
+              </div><!-- /.row -->
+              <div class="row">
+                <form class="form-inline header_form" action="busqueda.php" method="GET">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                       </div><!-- /.input-group -->
-                    </div><!-- /.form-group -->
-                  </form>
-                </div><!-- /.row -->  
-              </div><!-- /.col-xs-8 /.col-sm-4 /.col-md-4 /.col-lg-4 -->
+                      <input type="text" class="form-control" name="search" placeholder="Buscar...">
+                      <span class="input-group-btn">
+                        <button class="btn btn-success" type="submit">Buscar</button>
+                      </span>
+                    </div><!-- /.input-group -->
+                  </div><!-- /.form-group -->
+                </form>
+              </div><!-- /.row -->  
+            </div><!-- /.col-md-6 -->
           </div><!-- /.row -->
         </div><!-- /.container -->
       </header>
@@ -65,7 +66,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="#">Categorias</a>
+              <a class="navbar-brand" href="index.php">Inicio</a>
             </div><!-- /.navbar-header -->
 
             <div class="collapse navbar-collapse" id="nav_caterorias">

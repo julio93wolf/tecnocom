@@ -1,5 +1,5 @@
 <?php
-	foreach($conexion->query("select * from categoria") as $cat_fila) {
+	foreach($conexion->query("select * from fabricantes") as $cat_fila) {
 		echo '<li class="dropdown">';
 		echo '<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">'.$cat_fila['categoria'].'<span class="caret"></span></a>';
 		echo '<ul class="dropdown-menu">';
