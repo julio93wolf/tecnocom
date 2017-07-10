@@ -175,6 +175,8 @@ insert into producto_descripcion values (2,'- Procesador Intel Core i7 6700 (has
 - Unidad Óptica DVD±R/RW,<br />
 - S.O. Windows 10 Pro (64 Bits)');
 
+/*Agregar mas Productos*/
+
 create view fabricante_view as
 select fab.id_fabricante,fab.fabricante,sub.id_subcategoria
 from subcategoria sub 
