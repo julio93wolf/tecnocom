@@ -1,21 +1,21 @@
 body{
 	background-color: #BDBDBD;
 }
+header{
+	width: 100%
+	margin: 0px;
+}
 #wrapper{
 	background-color: #FFFFFF;
 }
-
-#header_sesion{
-	margin-bottom: 10px;
+#login{
+	float: right;
 }
-
-.header_form{
+#search{
 	float: right;
 }
 
-header{
-	margin-bottom: 10px;
-}
+
 
 section{
 	margin: 0px;

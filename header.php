@@ -15,46 +15,45 @@
     <title>TecnoCom</title>
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet"> 
-    <!-- Bootstrap -->
+    <!-- Main CSS -->
     <link href="css/main.css" rel="stylesheet"> 
   </head>
   <body>
     <div class="container" id="wrapper">
       <header>
         <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-8">
-              logo
-            </div><!-- /.col-xs-4 /.col-sm-8 /.col-md-8 /.col-lg-8 -->
-            <div class="col-md-4">
-              <div class="row" id="header_sesion">
-                <form class="form-inline header_form" action="ingresa.php">
-                  <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Registrarse</button>
-                    <button type="submit" class="btn btn-danger">
-                      <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Ingresar
-                    </button>
-                  </div><!-- /.form-group -->
-                </form>
-              </div><!-- /.row -->
-              <div class="row">
-                <form class="form-inline header_form" action="busqueda.php" method="GET">
-                  <div class="form-group">
-                    <div class="input-group">
-                      <div class="input-group-addon">
-                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                      </div><!-- /.input-group -->
-                      <input type="text" class="form-control" name="search" placeholder="Buscar...">
-                      <span class="input-group-btn">
-                        <button class="btn btn-success" type="submit">Buscar</button>
-                      </span>
+          <div class="col-md-8">
+            logo
+          </div><!-- /.col-md-8 -->
+          <div class="col-md-4">
+            <div class="row" id="login">
+              <form class="form-horizontal" action="ingresa.php">
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary">Registrarse</button>
+                  <button type="submit" class="btn btn-danger">
+                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Ingresar
+                  </button>
+                </div><!-- /.form-group -->
+              </form>
+            </div><!-- /.row -->
+
+            <div class="row" id="search">
+              <form class="form-horizontal" action="busqueda.php" method="GET">
+                <div class="form-group">
+                  <div class="input-group">
+                    <div class="input-group-addon">
+                      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                     </div><!-- /.input-group -->
-                  </div><!-- /.form-group -->
-                </form>
-              </div><!-- /.row -->  
-            </div><!-- /.col-md-6 -->
-          </div><!-- /.row -->
-        </div><!-- /.container -->
+                    <input type="text" class="form-control" name="search" placeholder="Buscar...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-success" type="submit">Buscar</button>
+                    </span>
+                  </div><!-- /.input-group -->
+                </div><!-- /.form-group -->
+              </form>
+            </div><!-- /.row -->  
+          </div><!-- /.col-md-4 -->
+        </div><!-- /.container-fluid -->
       </header>
       <div id="content">
         <nav class="navbar navbar-inverse">
