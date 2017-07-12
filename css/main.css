@@ -99,3 +99,14 @@ footer{
 	margin-bottom: 30px;
 }
 
+.margen_logo{
+	margin: auto;
+}
+
+.margen_logo img{
+	margin: auto;
+}
+
+.td_logo{
+	background-color: black;
+}

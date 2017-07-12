@@ -46,14 +46,24 @@
 							
 				    	if(isset($_GET['cat'])){
 				    		$i=0;
-				    		foreach($conexion->query('select * from productos_view '.$where) as $fila) {
+				    		foreach($conexion->query('select * from vw_productos '.$where) as $fila) {
 					        echo '<tr>';
-				    			echo '<td><img src="images/productos/'.$fila['imagen'].'" alt="'.$fila['producto'].'" class="img-thumbnail"></td>';
+				    			echo '<td class="td_logo">';
+				    			echo '<div class="margen_logo">';
+				    			echo '<img src="images/productos/'.$fila['imagen'].'" alt="'.$fila['producto'].'" >';
+				    			echo '</div>';
+				    			echo '</td>';
 				    			echo '<td>
 				    				<img src="images/fabricantes/'.$fila['logo'].'" alt="'.$fila['fabricante'].'" class="img-rounded">
 				    				<p>'.$fila['sku'].'</p>
 				    			</td>';
-				    			echo '<td><h4>'.$fila['producto'].'</h4><p>'.$fila['descripcion'].'</p></td>';
+				    			echo '<td>';
+				    			echo '<h4>'.$fila['producto'].'</h4>';
+				    			echo '<ul>';
+				    			foreach($conexion->query('select descripcion from detalle where id_producto='.$fila['id_producto']) as $fila_desc){
+				    				echo '<li>'.$fila_desc['descripcion'].'</li>';
+				    			}
+				    			echo '</ul></td>';
 				    			echo '<td><p>'.$fila['precio'].'</p></td>';
 					        echo '</tr>';
 				    		}

@@ -136,8 +136,6 @@ insert into fabricante values (null,'Brother','brother.png');
 insert into fabricante values (null,'Lexmark','lexmark.png');
 insert into fabricante values (null,'Xerox','xerox.png');
 
-drop table producto_descripcion;
-drop table producto;
 create table producto (
 	id_producto int auto_increment,
     sku varchar (13) unique not null,
@@ -153,27 +151,30 @@ create table producto (
     foreign key (id_subcategoria) references subcategoria (id_subcategoria)
 );
 
-create table producto_descripcion (
-	id_producto int not null,
+create table detalle (
+	id_detalle int auto_increment,
+    id_producto int not null,
     descripcion text not null,
+    primary key (id_detalle),
     foreign key (id_producto) references producto (id_producto)
 );
 
 insert into producto values (null,'SKU-122362','Desktop DELL Inspiron 3647','ID3647_I341TBW10S_5',10999,10,1,1,'SKU-122362.jpg');
-insert into producto_descripcion values (1,'- Procesador Intel Core i3 4170 (3.7 GHz),<br /> 
-- Memoria de 4GB DDR3L,<br /> 
-- Disco Duro de 1TB,<br /> 
-- Video Intel HD Graphics 4400,<br /> 
-- Unidad Óptica DVD±R/RW,<br /> 
-- S.O. Windows 10 Home');
+insert into detalle values (null,1,'Procesador Intel Core i3 4170 (3.7 GHz)');
+insert into detalle values (null,1,'Memoria de 4GB DDR3L');
+insert into detalle values (null,1,'Disco Duro de 1TB');
+insert into detalle values (null,1,'Video Intel HD Graphics 4400');
+insert into detalle values (null,1,'Unidad Óptica DVD±R/RW');
+insert into detalle values (null,1,'S.O. Windows 10 Home');
+
 insert into producto values (null,'SKU-153818','All in One Lenovo ThinkCentre M900Z','10F5A05KLS',18999,10,2,1,'SKU-153818.jpg');
-insert into producto_descripcion values (2,'- Procesador Intel Core i7 6700 (hasta 4.00 GHz),<br />
-- Memoria de 4GB DDR3L,<br />
-- Disco Duro de 500GB,<br />
-- Pantalla de 23.8" LED,<br />
-- Video Intel HD Graphics 530,<br />
-- Unidad Óptica DVD±R/RW,<br />
-- S.O. Windows 10 Pro (64 Bits)');
+insert into detalle values (null,2,'Procesador Intel Core i7 6700 (hasta 4.00 GHz)');
+insert into detalle values (null,2,'Memoria de 4GB DDR3L');
+insert into detalle values (null,2,'Disco Duro de 500GB');
+insert into detalle values (null,2,'Pantalla de 23.8" LED');
+insert into detalle values (null,2,'Video Intel HD Graphics 530');
+insert into detalle values (null,2,'Unidad Óptica DVD±R/RW');
+insert into detalle values (null,2,'S.O. Windows 10 Pro (64 Bits)');
 
 /*Agregar mas Productos*/
 
@@ -183,8 +184,10 @@ from subcategoria sub
 	inner join producto pro on pro.id_subcategoria = sub.id_subcategoria
     inner join fabricante fab on fab.id_fabricante = pro.id_fabricante;
 
-create view productos_view as 
-select pro.imagen,fab.logo,fab.fabricante,pro.sku,pro.producto,prd.descripcion,pro.precio,pro.id_subcategoria,pro.id_fabricante
+drop view if exists vw_productos;
+create view vw_productos as 
+select pro.id_producto,pro.imagen,fab.logo,fab.fabricante,pro.sku,pro.producto,pro.precio,pro.id_subcategoria,pro.id_fabricante
 from producto pro
-	inner join fabricante fab on pro.id_fabricante = fab.id_fabricante
-    inner join producto_descripcion prd on pro.id_producto = prd.id_producto;
+	inner join fabricante fab on pro.id_fabricante = fab.id_fabricante;
+    
+select * from productos_view;
