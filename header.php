@@ -7,7 +7,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta name="description" content="TecnoCom Celaya">
     <meta name="author" content="Valle Rodriguez Julio Cesar">
     <meta name="keywords" content="computadoras procesadores">
@@ -15,47 +15,46 @@
     <title>TecnoCom</title>
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet"> 
-    <!-- Main CSS -->
     <link href="css/main.css" rel="stylesheet"> 
   </head>
   <body>
-    <div class="container" id="wrapper">
-      <header>
-        <div class="container-fluid">
-          <div class="col-md-8">
-            logo
-          </div><!-- /.col-md-8 -->
-          <div class="col-md-4">
-            <div class="row" id="login">
-              <form class="form-horizontal" action="ingresa.php">
-                <div class="form-group">
-                  <button type="submit" class="btn btn-primary">Registrarse</button>
-                  <button type="submit" class="btn btn-danger">
-                    <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Ingresar
-                  </button>
-                </div><!-- /.form-group -->
-              </form>
-            </div><!-- /.row -->
 
-            <div class="row" id="search">
-              <form class="form-horizontal" action="busqueda.php" method="GET">
-                <div class="form-group">
-                  <div class="input-group">
-                    <div class="input-group-addon">
-                      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                    </div><!-- /.input-group -->
-                    <input type="text" class="form-control" name="search" placeholder="Buscar...">
-                    <span class="input-group-btn">
-                      <button class="btn btn-success" type="submit">Buscar</button>
-                    </span>
-                  </div><!-- /.input-group -->
-                </div><!-- /.form-group -->
-              </form>
-            </div><!-- /.row -->  
-          </div><!-- /.col-md-4 -->
-        </div><!-- /.container-fluid -->
-      </header>
-      <div id="content">
+    <div class="container">
+      <div class="row" id="wrapper">
+        <header>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="hidden-xs hidden-sm col-md-8 col-lg-8">
+              </div>
+              <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+                <div class="container-fluid" id="header_login">
+                  <div class="row">
+                    <div class="btn-group pull-right" role="group" aria-label="...">
+                      <a class="btn btn-primary" href="#" role="button"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Registrarse</a>
+                      <a class="btn btn-success" href="#" role="button"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Iniciar Sesion</a>
+                    </div>    
+                  </div>
+                </div>
+                <div class="container-fluid" id="header_search">
+                  <form class="form-horizontal" method="GET" action="busqueda.php">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <div class="input-group-addon">
+                          <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        </div>
+                        <input type="text" class="form-control" name="search" placeholder="Buscar...">
+                        <span class="input-group-btn">
+                          <button class="btn btn-default" type="submit">Buscar</button>
+                        </span>
+                      </div>
+                    </div>
+                  </form> 
+                </div>
+              </div>
+            </div>  
+          </div>
+        </header>
+
         <nav class="navbar navbar-inverse">
           <div class="container-fluid">
             <div class="navbar-header">
@@ -77,3 +76,7 @@
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container-fluid -->
         </nav>
+
+        <div class="container-fluid" id="content">
+          <div class="row">
+          

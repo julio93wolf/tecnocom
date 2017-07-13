@@ -5,6 +5,7 @@ drop database if exists tecnocom;
 create database tecnocom default charset utf8 default collate utf8_general_ci;
 use tecnocom;
 
+drop table if exists categoria;
 create table categoria (
 	id_categoria int auto_increment,
     categoria varchar (100) not null,
@@ -20,6 +21,7 @@ insert into categoria values (null,'Redes');
 insert into categoria values (null,'Software');
 insert into categoria values (null,'Impresión');
 
+drop table if exists subcategoria;
 create table subcategoria (
 	id_subcategoria int auto_increment,
     subcategoria varchar (100) not null,
@@ -58,6 +60,7 @@ insert into subcategoria values (null,'Sistemas Operativos',7);
 insert into subcategoria values (null,'Consumibles',8);
 insert into subcategoria values (null,'Impresoras',8);
 
+drop table if exists fabricante;
 create table fabricante (
 	id_fabricante int auto_increment,
     fabricante varchar (100) not null,
@@ -89,7 +92,6 @@ insert into fabricante values (null,'Intel','intel.png');
 insert into fabricante values (null,'EVGA','evga.png');
 insert into fabricante values (null,'PNY','pny.png');
 insert into fabricante values (null,'AMD','amd.png');
-
 insert into fabricante values (null,'Acteck','acteck.png');
 insert into fabricante values (null,'AeroCool','aerocool.png');
 insert into fabricante values (null,'Coolermaster','coolermaster.png');
@@ -113,7 +115,6 @@ insert into fabricante values (null,'Microsoft','microsoft.png');
 insert into fabricante values (null,'Perfect Choice','perfect_choice.png');
 insert into fabricante values (null,'Razer','razer.png');
 insert into fabricante values (null,'Verbatim','verbatim.png');
-
 insert into fabricante values (null,'Sony','sony.png');
 insert into fabricante values (null,'Sandisk','sandisk.png');
 insert into fabricante values (null,'Panasonic','panasonic.png');
@@ -136,6 +137,7 @@ insert into fabricante values (null,'Brother','brother.png');
 insert into fabricante values (null,'Lexmark','lexmark.png');
 insert into fabricante values (null,'Xerox','xerox.png');
 
+drop table if exists producto;
 create table producto (
 	id_producto int auto_increment,
     sku varchar (13) unique not null,
@@ -151,6 +153,7 @@ create table producto (
     foreign key (id_subcategoria) references subcategoria (id_subcategoria)
 );
 
+drop table if exists detalle;
 create table detalle (
 	id_detalle int auto_increment,
     id_producto int not null,
@@ -176,9 +179,122 @@ insert into detalle values (null,2,'Video Intel HD Graphics 530');
 insert into detalle values (null,2,'Unidad Óptica DVD±R/RW');
 insert into detalle values (null,2,'S.O. Windows 10 Pro (64 Bits)');
 
+drop table if exists rol;
+create table rol (
+	id_rol int auto_increment,
+    rol varchar (100) not null,
+    primary key (id_rol)
+);
+
+insert into rol values (null,'Administrador');
+insert into rol values (null,'Cliente');
+
+drop table if exists usuario;
+create table usuario(
+	id_usuario int auto_increment,
+    correo varchar (100) not null unique,
+    contrasena varchar (32) not null,
+    primary key (id_usuario)
+);
+
+insert into usuario values(null,'abc@mail.com','');
+insert into usuario values(null,'def@mail.com','');
+insert into usuario values(null,'123@mail.com','');
+insert into usuario values(null,'456@mail.com','');
+
+drop table if exists usuario_rol;
+create table usuario_rol(
+	id_usuario int not null,
+    id_rol int not null,
+    primary key (id_usuario,id_rol),
+    foreign key (id_usuario) references usuario (id_usuario),
+    foreign key (id_rol) references rol (id_rol)
+);
+
+insert into usuario_rol values (1,2);
+insert into usuario_rol values (2,2);
+insert into usuario_rol values (3,1);
+insert into usuario_rol values (4,1);
+
+select * 
+from usuario usr 
+	inner join usuario_rol usrd on usr.id_usuario=usrd.id_usuario
+    inner join rol on rol.id_rol= usrd.id_rol;
+
+drop table if exists cliente;
+create table cliente (
+	id_cliente int auto_increment,
+    nombre varchar (100) not null,
+    apaterno varchar (100),
+    amaterno varchar (100),
+    telefono varchar (16),
+    domicilio varchar (100),
+    id_usuario int not null,
+    primary key (id_cliente),
+    foreign key (id_usuario) references usuario (id_usuario)
+);
+
+insert into cliente values (null,'JOSE MAURO','BARRAGAN','ACOSTA','','',1);
+insert into cliente values (null,'FELIX','BECERRA','GUTIERREZ','','',2);
+
+drop table if exists carrito;
+create table carrito (
+	id_carrito int auto_increment,
+    id_cliente int not null,
+    fecha date not null,
+    subtotal numeric (10,2),
+    iva numeric (10,2),
+    total numeric (10,2),
+    primary key (id_carrito),
+    foreign key (id_cliente) references cliente (id_cliente)
+);
+
+insert into carrito values (null,1,now(),0,0,0);
+insert into carrito values (null,1,now(),0,0,0);
+insert into carrito values (null,2,now(),0,0,0);
+
+drop table if exists carrito_detalle;
+create table carrito_detalle (
+	id_carrito int not null,
+    id_producto int not null,
+    cantidad int not null,
+    precio numeric (10,2),
+    primary key (id_carrito,id_producto),
+    foreign key (id_producto) references producto (id_producto)
+);
+
+/*
+delimiter //
+create trigger tgr_carrito 
+after insert on carrito_detalle for each row
+begin
+	declare precio_producto numeric(10,2);
+    set @precio_producto := (select precio from producto where id_producto = new.id_producto);
+	update carrito_detalle set precio = @precio_producto where id_carrito = new.id_carrito and id_producto = new.id_producto;
+end//
+delimiter ;*/
+
+drop procedure if exists prc_carrito_detalle;
+delimiter //
+create procedure prc_carrito_detalle (carrito int, producto int)
+begin 	
+	declare precio_producto numeric(10,2);
+    set precio_producto = (select precio from producto where id_producto = producto);
+	update carrito_detalle set precio = precio_producto where id_carrito = carrito and id_producto = producto;
+end //
+delimiter ;
+
+
+
+insert into carrito_detalle values (1,2,10,null);
+call prc_carrito_detalle (1,2);
+select * from carrito_detalle;
+
+select * from carrito;
 /*Agregar mas Productos*/
 
-create view fabricante_view as
+drop view if exists vw_fabricantes;
+create view vw_fabricantes as
 select fab.id_fabricante,fab.fabricante,sub.id_subcategoria
 from subcategoria sub 
 	inner join producto pro on pro.id_subcategoria = sub.id_subcategoria
@@ -189,5 +305,3 @@ create view vw_productos as
 select pro.id_producto,pro.imagen,fab.logo,fab.fabricante,pro.sku,pro.producto,pro.precio,pro.id_subcategoria,pro.id_fabricante
 from producto pro
 	inner join fabricante fab on pro.id_fabricante = fab.id_fabricante;
-    
-select * from productos_view;
