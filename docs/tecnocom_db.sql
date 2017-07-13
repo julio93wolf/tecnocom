@@ -279,8 +279,20 @@ delimiter //
 create procedure prc_carrito_detalle (carrito int, producto int)
 begin 	
 	declare precio_producto numeric(10,2);
+    declare cantidad_producto int;
+    declare carrito_subtotal numeric(10,2);
+    declare carrito_iva numeric(10,2);
+    declare carrito_total numeric(10,2);
+    
     set precio_producto = (select precio from producto where id_producto = producto);
+    set cantidad_producto = (select cantidad from carrito_detalle where id_carrito = carrito and id_producto = producto);
+    
+    set carrito_subtotal = cantidad_producto * precio_producto;
+    set carrito_iva = carrito_subtotal * 0.2;
+    set carrito_total = carrito_subtotal + carrito_iva;
+    
 	update carrito_detalle set precio = precio_producto where id_carrito = carrito and id_producto = producto;
+    update carrito set subtotal=carrito_subtotal, iva=carrito_iva, total = carrito_total where id_carrito = carrito;
 end //
 delimiter ;
 
@@ -289,6 +301,7 @@ delimiter ;
 insert into carrito_detalle values (1,2,10,null);
 call prc_carrito_detalle (1,2);
 select * from carrito_detalle;
+select * from carrito;
 
 select * from carrito;
 /*Agregar mas Productos*/
