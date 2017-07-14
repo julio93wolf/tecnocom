@@ -98,6 +98,11 @@ footer{
 
 .pre_producto_info h3{
 	text-align: center;
+	text-decoration: line-through;
+}
+
+.pre_producto_info h2{
+	text-align: center;
 	color: red;
 }
 

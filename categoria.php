@@ -65,7 +65,7 @@
 			    					echo '<h4>'.$fila['producto'].'</h4>';
 			    					echo '<p>'.$fila['sku'].'</p>';
 				    				echo '<ul>';
-				    				foreach($conexion->query('select descripcion from detalle where id_producto='.$fila['id_producto']) as $fila_desc){
+				    				foreach($conexion->query('select descripcion from producto_detalle where id_producto='.$fila['id_producto']) as $fila_desc){
 					    				echo '<li>'.$fila_desc['descripcion'].'</li>';
 				    				}
 				    				echo '</ul>';
@@ -74,7 +74,12 @@
 			    				echo '<td>';
 			    					echo '<div class="pre_producto">';
 			    						echo '<div class="pre_producto_info">';
-			    							echo '<h3>$'.$fila['precio'].'</h3>';
+			    							if($fila['precio_oferta']<$fila['precio']){
+			    								echo '<h3>$'.$fila['precio'].'</h3>';
+			    								echo '<h2>$'.$fila['precio_oferta'].'</h2>';
+			    							}else{
+			    								echo '<h2>$'.$fila['precio'].'</h2>';
+			    							}
 			    							echo '<a class="btn btn-warning center-block" href="#" role="button"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Agregar</a>';
 			    						echo '</div>';
 			    					echo '</div>';

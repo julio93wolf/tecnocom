@@ -153,31 +153,40 @@ create table producto (
     foreign key (id_subcategoria) references subcategoria (id_subcategoria)
 );
 
-drop table if exists detalle;
-create table detalle (
-	id_detalle int auto_increment,
+drop table if exists producto_detalle;
+create table producto_detalle (
+	id_producto_detalle int auto_increment,
     id_producto int not null,
     descripcion text not null,
-    primary key (id_detalle),
+    primary key (id_producto_detalle),
     foreign key (id_producto) references producto (id_producto)
 );
 
 insert into producto values (null,'SKU-122362','Desktop DELL Inspiron 3647','ID3647_I341TBW10S_5',10999,10,1,1,'SKU-122362.jpg');
-insert into detalle values (null,1,'Procesador Intel Core i3 4170 (3.7 GHz)');
-insert into detalle values (null,1,'Memoria de 4GB DDR3L');
-insert into detalle values (null,1,'Disco Duro de 1TB');
-insert into detalle values (null,1,'Video Intel HD Graphics 4400');
-insert into detalle values (null,1,'Unidad Óptica DVD±R/RW');
-insert into detalle values (null,1,'S.O. Windows 10 Home');
+insert into producto_detalle values (null,1,'Procesador Intel Core i3 4170 (3.7 GHz)');
+insert into producto_detalle values (null,1,'Memoria de 4GB DDR3L');
+insert into producto_detalle values (null,1,'Disco Duro de 1TB');
+insert into producto_detalle values (null,1,'Video Intel HD Graphics 4400');
+insert into producto_detalle values (null,1,'Unidad Óptica DVD±R/RW');
+insert into producto_detalle values (null,1,'S.O. Windows 10 Home');
 
 insert into producto values (null,'SKU-153818','All in One Lenovo ThinkCentre M900Z','10F5A05KLS',18999,10,2,1,'SKU-153818.jpg');
-insert into detalle values (null,2,'Procesador Intel Core i7 6700 (hasta 4.00 GHz)');
-insert into detalle values (null,2,'Memoria de 4GB DDR3L');
-insert into detalle values (null,2,'Disco Duro de 500GB');
-insert into detalle values (null,2,'Pantalla de 23.8" LED');
-insert into detalle values (null,2,'Video Intel HD Graphics 530');
-insert into detalle values (null,2,'Unidad Óptica DVD±R/RW');
-insert into detalle values (null,2,'S.O. Windows 10 Pro (64 Bits)');
+insert into producto_detalle values (null,2,'Procesador Intel Core i7 6700 (hasta 4.00 GHz)');
+insert into producto_detalle values (null,2,'Memoria de 4GB DDR3L');
+insert into producto_detalle values (null,2,'Disco Duro de 500GB');
+insert into producto_detalle values (null,2,'Pantalla de 23.8" LED');
+insert into producto_detalle values (null,2,'Video Intel HD Graphics 530');
+insert into producto_detalle values (null,2,'Unidad Óptica DVD±R/RW');
+insert into producto_detalle values (null,2,'S.O. Windows 10 Pro (64 Bits)');
+
+insert into producto values (null,'SKU-143000','Disco Duro Seagate Barracuda 1TB','ST1000DM010',1299,10,8,3,'SKU-143000.jpg');
+insert into producto_detalle values (null,3,'Caché 64MB');
+insert into producto_detalle values (null,3,'7200 RPM');
+insert into producto_detalle values (null,3,'SATA III (6.0 Gb/s)');
+
+
+select id_fabricante from fabricante where fabricante ='Seagate';
+select id_subcategoria from subcategoria where subcategoria='Discos Duros';
 
 drop table if exists rol;
 create table rol (
@@ -241,17 +250,12 @@ drop table if exists carrito;
 create table carrito (
 	id_carrito int auto_increment,
     id_cliente int not null,
-    fecha date not null,
     subtotal numeric (10,2),
     iva numeric (10,2),
     total numeric (10,2),
     primary key (id_carrito),
     foreign key (id_cliente) references cliente (id_cliente)
 );
-
-insert into carrito values (null,1,now(),0,0,0);
-insert into carrito values (null,1,now(),0,0,0);
-insert into carrito values (null,2,now(),0,0,0);
 
 drop table if exists carrito_detalle;
 create table carrito_detalle (
@@ -262,6 +266,45 @@ create table carrito_detalle (
     primary key (id_carrito,id_producto),
     foreign key (id_producto) references producto (id_producto)
 );
+
+drop table if exists compra;
+create table compra (
+	id_compra int auto_increment,
+    id_cliente int not null,
+    fecha date not null,
+    subtotal numeric (10,2),
+    iva numeric (10,2),
+    total numeric (10,2),
+    primary key (id_compra),
+    foreign key (id_cliente) references cliente (id_cliente)
+);
+
+drop table if exists compra_detalle;
+create table compra_detalle (
+	id_compra int not null,
+    id_producto int not null,
+    cantidad int not null,
+    precio numeric (10,2),
+    primary key (id_compra,id_producto),
+    foreign key (id_compra) references compra (id_compra),
+    foreign key (id_producto) references producto (id_producto)
+);
+
+drop table if exists oferta;
+create table oferta (
+	id_oferta int auto_increment,
+    id_producto int not null,
+    fechai date not null,
+    fechat date not null,
+    precio_oferta numeric (10,2) not null,
+    primary key (id_oferta),
+    foreign key (id_producto) references producto (id_producto)
+);
+
+insert into oferta values (null,2,'2017-7-1','2017-8-1',200);
+insert into oferta values (null,1,'2017-7-20','2017-8-1',300);
+insert into oferta values (null,2,'2017-6-1','2017-7-1',300);
+insert into oferta values (null,1,'2017-7-1','2017-8-1',300);
 
 /*
 delimiter //
@@ -314,7 +357,68 @@ from subcategoria sub
     inner join fabricante fab on fab.id_fabricante = pro.id_fabricante;
 
 drop view if exists vw_productos;
-create view vw_productos as 
-select pro.id_producto,pro.imagen,fab.logo,fab.fabricante,pro.sku,pro.producto,pro.precio,pro.id_subcategoria,pro.id_fabricante
+create view vw_productos as
+select 
+	pro.id_producto,
+    pro.imagen,
+    fab.logo,
+    fab.fabricante,
+    pro.sku,
+    pro.producto,
+    pro.precio,
+    ifnull(ofe.precio_oferta,pro.precio) as precio_oferta,
+    ifnull(ofe.fechai,now()) as fechai,
+    ifnull(ofe.fechat,now()) as fechat,
+    pro.id_subcategoria,
+    pro.id_fabricante
 from producto pro
-	inner join fabricante fab on pro.id_fabricante = fab.id_fabricante;
+	inner join fabricante fab on pro.id_fabricante = fab.id_fabricante
+    left join oferta ofe on pro.id_producto = ofe.id_producto
+where now() between ifnull(ofe.fechai,now()) and ifnull(ofe.fechat,now());
+select * from vw_productos;
+
+drop view if exists vw_ofertas;
+create view vw_ofertas as
+select 
+	pro.id_producto,
+    pro.imagen,
+    fab.logo,
+    fab.fabricante,
+    pro.sku,
+    pro.producto,
+    pro.precio,
+    ofe.precio_oferta,
+    ofe.fechai,
+    ofe.fechat,
+    pro.id_subcategoria,
+    pro.id_fabricante
+from producto pro
+	inner join fabricante fab on pro.id_fabricante = fab.id_fabricante
+    inner join oferta ofe on pro.id_producto = ofe.id_producto
+where now() between ofe.fechai and ofe.fechat limit 4;
+select * from vw_ofertas;
+
+
+drop view if exists vw_ultimos_productos;
+create view vw_ultimos_productos as
+select 
+	pro.id_producto,
+    pro.imagen,
+    fab.logo,
+    fab.fabricante,
+    pro.sku,
+    pro.producto,
+    pro.precio,
+    ifnull(ofe.precio_oferta,pro.precio) as precio_oferta,
+    ifnull(ofe.fechai,now()) as fechai,
+    ifnull(ofe.fechat,now()) as fechat,
+    pro.id_subcategoria,
+    pro.id_fabricante
+from producto pro
+	inner join fabricante fab on pro.id_fabricante = fab.id_fabricante
+    left join oferta ofe on pro.id_producto = ofe.id_producto
+where now() between ifnull(ofe.fechai,now()) and ifnull(ofe.fechat,now())
+order by id_producto desc
+limit 4;
+
+select * from vw_ultimos_productos;
