@@ -11,7 +11,7 @@
     <meta name="description" content="TecnoCom Celaya">
     <meta name="author" content="Valle Rodriguez Julio Cesar">
     <meta name="keywords" content="computadoras procesadores">
-    <link rel="icon" href="images/tecnocom.ico">
+    <link rel="icon" href="images/icon_tecnocom.ico">
     <title>TecnoCom</title>
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet"> 
@@ -24,7 +24,10 @@
         <header>
           <div class="container-fluid">
             <div class="row">
-              <div class="hidden-xs hidden-sm col-md-8 col-lg-8">
+              <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+                  <div class="row">
+                    <img src="images/banner_tecnocom.png" class="img-responsive" alt="TecnoCom">
+                  </div>
               </div>
               <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
                 <div class="container-fluid" id="header_login">

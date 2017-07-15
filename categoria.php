@@ -11,7 +11,7 @@
 			  	<?php
 			    	if(isset($_GET['cat'])){
 			    		echo '<li class="list-group-item"><a href="categoria.php?cat='.$_GET['cat'].'">Todos</a></li>';	
-			    		foreach($conexion->query('select * from vw_fabricantes where id_subcategoria='.$_GET['cat'].'') as $fila) {
+			    		foreach($conexion->query('select * from vw_fabricantes where id_subcategoria='.$_GET['cat'].' group by fabricante') as $fila) {
 			    			echo '<li class="list-group-item"><a href="categoria.php?cat='.$_GET['cat'].'&fab='.$fila['id_fabricante'].'">'.$fila['fabricante'].'</a></li>';	
 			    		}
 			    	}
@@ -46,47 +46,48 @@
 						
 			    	if(isset($_GET['cat'])){
 			    		$i=0;
-			    		foreach($conexion->query('select * from vw_productos '.$where) as $fila) {
-				        echo '<tr class="producto" >';
+			    		foreach($conexion->query('select * from vw_productos '.$where) as $fila) { ?>
+				        
+				        <tr class="producto" >
 				    			
-				    			echo '<td class="hidden-xs">';
-					    			echo '<div class="img_producto">';
-					    				echo '<img class="img-responsive" src="images/productos/'.$fila['imagen'].'" alt="'.$fila['producto'].'" />';
-					    			echo '</div>';
-				    			echo '</td>';
+				    			<td class="hidden-xs">
+					    			<div class="img_producto"><?php
+											echo '<img class="img-responsive" src="images/productos/'.$fila['imagen'].'" alt="'.$fila['producto'].'" />'; ?>
+					    			</div>
+				    			</td>
 
-				    			echo '<td class="hidden-xs">';
-				    				echo '<div class="img_logo">';
-					    				echo '<img class="img-responsive" src="images/fabricantes/'.$fila['logo'].'" alt="'.$fila['fabricante'].'" />';
-				    				echo '</div>';
-				    			echo '</td>';
+				    			<td class="hidden-xs">
+				    				<div class="img_logo"><?php 
+					    				echo '<img class="img-responsive" src="images/fabricantes/'.$fila['logo'].'" alt="'.$fila['fabricante'].'" />'; ?>
+				    				</div>
+				    			</td>
 
-			    				echo '<td>';
-			    					echo '<h4>'.$fila['producto'].'</h4>';
+			    				<td><?php
+			    					echo '<h4><strong>'.$fila['producto'].'</strong></h4>';
 			    					echo '<p>'.$fila['sku'].'</p>';
 				    				echo '<ul>';
 				    				foreach($conexion->query('select descripcion from producto_detalle where id_producto='.$fila['id_producto']) as $fila_desc){
 					    				echo '<li>'.$fila_desc['descripcion'].'</li>';
 				    				}
-				    				echo '</ul>';
-				    			echo '</td>';
+				    				echo '</ul>';?>
+				    			</td>
 			    				
-			    				echo '<td>';
-			    					echo '<div class="pre_producto">';
-			    						echo '<div class="pre_producto_info">';
+			    				<td>
+			    					<div class="pre_producto">
+			    						<div class="pre_producto_info"><?php
 			    							if($fila['precio_oferta']<$fila['precio']){
-			    								echo '<h3>$'.$fila['precio'].'</h3>';
-			    								echo '<h2>$'.$fila['precio_oferta'].'</h2>';
+			    								echo '<h2><strong>$'.$fila['precio_oferta'].'</strong></h2>';
+			    								echo '<h5><strong>$'.$fila['precio'].'</strong></h5>';
 			    							}else{
-			    								echo '<h2>$'.$fila['precio'].'</h2>';
-			    							}
-			    							echo '<a class="btn btn-warning center-block" href="#" role="button"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Agregar</a>';
-			    						echo '</div>';
-			    					echo '</div>';
-			    				echo '</td>';
+			    								echo '<h2><strong>$'.$fila['precio'].'</strong></h2>';
+			    							}?>
+			    							<a class="btn btn-warning center-block" href="#" role="button"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Agregar</a>
+			    						</div>
+			    					</div>
+			    				</td>
 
-				        echo '</tr>';
-			    		}
+				        </tr>
+			    		<?php } 
 			    	}
 			    ?>
 				</table>
