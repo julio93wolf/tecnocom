@@ -350,6 +350,9 @@ insert into usuario values(null,'felix_becerra@mail.com','');
 insert into usuario values(null,'juan_luna@mail.com','');
 insert into usuario values(null,'juan_lozano@mail.com','');
 
+insert into usuario values(null,'julio_valle@mail.com','');
+insert into empleado values (null,'JULIO CESAR','VALLE','RODRIGUEZ',6);
+
 drop table if exists usuario_rol;
 create table usuario_rol(
 id_usuario int not null,
@@ -416,6 +419,31 @@ foreign key (id_producto) references producto (id_producto),
 foreign key (id_carrito) references carrito (id_carrito)
 );
 
+insert into producto values (null,'SKU-PRUEBA','PRUEBA','MOD-PRUEBA',5555,42,15,'PRUEBA.jpg');
+insert into producto_detalle values (null,35,'PRUEBA');
+
+/*Producto*/
+select * from producto order by id_producto desc;
+select * from producto_detalle order by id_producto desc;
+select * from carrito_detalle order by id_producto desc;
+
+
+select * from oferta;
+insert into oferta values (null,35,'2017-6-1','2017-7-1',3999);
+insert into oferta_banner values (15,'oferta_11.jpg');
+insert into oferta values (null,35,'2017-7-1','2017-8-1',3999);
+insert into oferta_banner values (16,'oferta_11.jpg');
+insert into oferta values (null,35,'2017-7-1','2017-8-1',3999);
+
+select * from oferta;
+select * from oferta_banner;
+
+select * from oferta ofe left join oferta_banner ofb on ofe.id_oferta= ofb.id_oferta  where ofe.id_producto=35;
+
+insert into carrito values (null,1,0,0,0);
+insert into carrito_detalle values (1,10,5,null);
+insert into carrito_detalle values (1,32,5,null);
+
 drop table if exists compra;
 create table compra (
 id_compra int auto_increment,
@@ -479,8 +507,6 @@ insert into oferta values (null,8,'2017-7-1','2017-8-1',1399);
 insert into oferta values (null,15,'2017-7-1','2017-8-1',6099);
 insert into oferta values (null,31,'2017-7-1','2017-8-1',3999);
 insert into oferta values (null,31,'2017-6-1','2017-7-1',3999);
-
-select sku from producto where id_producto = 31;
 
 drop table if exists oferta_banner;
 create table oferta_banner (
@@ -621,3 +647,6 @@ from oferta ofer
 where now() between ifnull(ofer.fechai,now()) and ifnull(ofer.fechat,now())
 order by rand() desc limit 3;
 select * from vw_banner_ofertas;
+
+
+select * from producto;
