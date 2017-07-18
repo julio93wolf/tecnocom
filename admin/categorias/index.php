@@ -6,9 +6,9 @@
   <h1>Categorías</h1>
 </div>
 <?php
-	if(isset($mensajes) and isset($color) and isset($icon)){
-		foreach ($mensajes as $key => $value) {
-			echo '<div class="alert alert-'.$color.' alert-dismissible" role="alert"><span class="glyphicon '.$icon.'" aria-hidden="true"></span> '.$value.'</div>';
+	if(isset($mensAlert) and isset($colorAlert) and isset($iconAlert)){
+		foreach ($mensAlert as $keyMensaje => $valuMensaje) {
+			echo '<div class="alert alert-'.$colorAlert.' alert-dismissible" role="alert"><span class="glyphicon '.$iconAlert.'" aria-hidden="true"></span> '.$valuMensaje.'</div>';
 		}
 	}
 ?>
@@ -23,15 +23,16 @@
 		  <tr class="active">
 				<th>Categoría</th>
 				<th></th>
-				<th></th>
+				<th></th> 
 			</tr>
 			<?php
-				$datos=$tecnocom->consultar("select * from categoria order by categoria asc");
-				foreach ($datos as $key => $value) {
+				$datoCategorias=$tecnocom->consultar("select * from categoria order by categoria asc");
+				foreach ($datoCategorias as $keyCategoria => $valuCategoria) {
 					echo '<tr>';
-						echo '<td>'.$value['categoria'].'</td>';
-						echo '<td><a class="btn btn-primary" href="editar.php?id_categoria='.$value['id_categoria'].'" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Editar</a></td>';
-						echo '<td><a class="btn btn-danger" href="eliminar.php?id_categoria='.$value['id_categoria'].'" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Eliminar</a></td>';
+						echo '<td>'.$valuCategoria['categoria'].'</td>';
+						echo '<td><a class="btn btn-success" href="../subcategorias/index.php?id_categoria='.$valuCategoria['id_categoria'].'" role="button"><span class="glyphicon glyphicon-list" aria-hidden="true"></span> Ver Subcategorías</a></td>';
+						echo '<td><a class="btn btn-primary" href="editar.php?id_categoria='.$valuCategoria['id_categoria'].'" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Editar</a></td>';
+						echo '<td><a class="btn btn-danger" href="eliminar.php?id_categoria='.$valuCategoria['id_categoria'].'" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Eliminar</a></td>';
 					echo '</tr>';
 				}
 			?>
@@ -39,5 +40,5 @@
 	</div>
 </div>
 <?php
-	include('../footer.php');
+	include('../footer.php'); 
 ?>

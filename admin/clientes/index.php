@@ -6,9 +6,9 @@
   <h1>Clientes</h1>
 </div>
 <?php
-	if(isset($mensajes) and isset($color) and isset($icon)){
-		foreach ($mensajes as $key => $value) {
-			echo '<div class="alert alert-'.$color.' alert-dismissible" role="alert"><span class="glyphicon '.$icon.'" aria-hidden="true"></span> '.$value.'</div>';
+	if(isset($mensAlert) and isset($colorAlert) and isset($iconAlert)){
+		foreach ($mensAlert as $keyMensaje => $valMensaje) {
+			echo '<div class="alert alert-'.$colorAlert.' alert-dismissible" role="alert"><span class="glyphicon '.$iconAlert.'" aria-hidden="true"></span> '.$valMensaje.'</div>';
 		}
 	}
 ?>
@@ -28,14 +28,14 @@
 				<th></th>
 			</tr>
 			<?php
-				$datos=$tecnocom->consultar("select cli.id_cliente,cli.id_usuario,concat(cli.nombre,' ',ifnull(cli.apaterno,''),' ',ifnull(cli.amaterno,'')) as nom_cliente,usr.correo,cli.telefono from cliente cli join usuario usr on cli.id_usuario = usr.id_usuario order by (cli.apaterno) asc");
-				foreach ($datos as $key => $value) {
+				$datoCliente=$tecnocom->consultar("select cli.id_cliente,cli.id_usuario,concat(cli.nombre,' ',ifnull(cli.apaterno,''),' ',ifnull(cli.amaterno,'')) as nom_cliente,usr.correo,cli.telefono from cliente cli join usuario usr on cli.id_usuario = usr.id_usuario order by (cli.apaterno) asc");
+				foreach ($datoCliente as $keyCliente => $valCliente) {
 					echo '<tr>';
-						echo '<td>'.$value['nom_cliente'].'</td>';
-						echo '<td>'.$value['correo'].'</td>';
-						echo '<td>'.$value['telefono'].'</td>';
-						echo '<td><a class="btn btn-primary" href="editar.php?id_cliente='.$value['id_cliente'].'" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Editar</a></td>';
-						echo '<td><a class="btn btn-danger" href="eliminar.php?id_cliente='.$value['id_cliente'].'" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Eliminar</a></td>';
+						echo '<td>'.$valCliente['nom_cliente'].'</td>';
+						echo '<td>'.$valCliente['correo'].'</td>';
+						echo '<td>'.$valCliente['telefono'].'</td>';
+						echo '<td><a class="btn btn-primary" href="editar.php?id_cliente='.$valCliente['id_cliente'].'" role="button"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Editar</a></td>';
+						echo '<td><a class="btn btn-danger" href="eliminar.php?id_cliente='.$valCliente['id_cliente'].'" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Eliminar</a></td>';
 					echo '</tr>';
 				}
 			?>
@@ -43,5 +43,5 @@
 	</div>
 </div>
 <?php
-	include('../footer.php');
+	include('../footer.php');  
 ?>

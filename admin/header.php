@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es">  
 <head>
 	<meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -37,7 +37,6 @@
 	            <li><a href="/tecnocom/admin/roles">Roles</a></li>
 			        <li><a href="/tecnocom/admin/fabricantes">Fabricantes</a></li>
 			        <li><a href="/tecnocom/admin/categorias">Categoría</a></li>
-			        <li><a href="/tecnocom/admin/subcategorias">Subcategorias</a></li>
 	          </ul>
 	        </li>
 	      </ul>
