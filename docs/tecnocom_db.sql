@@ -424,18 +424,7 @@ select * from usuario;
 select * from usuario_rol;
 select * from cliente;
 select * from carrito;
-
-insert into usuario values (null,'julio_valle@mail.com','');
-insert into usuario_rol values (5,2);
-insert into cliente values (null,'Julio Cesar','Valle','Rodriguez','12345','Celaya',5);
-insert into carrito values (null,3,0,0,0);
-insert into carrito_detalle values (4,2,3,null);
-insert into carrito_detalle values (4,6,3,null);
-
-select * from carrito_detalle where id_carrito=4;
-
-insert into compra values (null,3,'2017-7-17',0,0,0);
-delete from compra where id_cliente=3;
+select * from carrito_detalle;
 
 insert into producto values (null,'SKU-PRUEBA','PRUEBA','MOD-PRUEBA',5555,42,15,'PRUEBA.jpg');
 insert into producto_detalle values (null,35,'PRUEBA');
