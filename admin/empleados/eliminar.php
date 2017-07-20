@@ -1,15 +1,40 @@
 <?php
 	include_once('../tecnocom.class.php');
-	$id_empleado = $_GET['id_empleado'];
-	$parametros['id_empleado']= $id_empleado;
-	$datos=$tecnocom->consultar('select id_usuario from empleado where id_empleado=:id_empleado',$parametros);
-	$usuario['id_usuario']=$datos[0]['id_usuario'];
-	$row_change=$tecnocom->borrar('empleado',$parametros);	
-	$mensajes[0]="Se eliminaron ".$row_change." empleados";
-	$row_change=$tecnocom->borrar('usuario_rol',$usuario);
-	$row_change=$tecnocom->borrar('usuario',$usuario);	
-	$mensajes[1]="Se eliminaron ".$row_change." usuarios";
-	$color="success";
-	$icon='glyphicon-ok';
+	$mensAlert[0]="Error: No se ha seleccionado algún empleado a eliminar";
+	$colorAlert="danger";
+	$iconAlert='glyphicon-exclamation-sign';
+	if (isset($_GET['id_empleado'])){
+		$mensAlert[0]="Error: No se ha podido eliminar el empleado";
+		$id_empleado = $_GET['id_empleado'];
+		$paraEmpleado['id_empleado']= $id_empleado;
+		$datoEmpleado=$tecnocom->consultar('select * from empleado where id_empleado=:id_empleado',$paraEmpleado);
+		if (count($datoEmpleado)>0) {
+			$rowChange=$tecnocom->borrar('empleado',$paraEmpleado);
+			if ($rowChange>0) {
+				$mensAlert[0]=" Se ha eliminado ".$rowChange." empleado";
+				$colorAlert='success';
+				$iconAlert='glyphicon glyphicon-ok';
+			}else{
+				$mensAlert[0]="Error: No se ha ha podido eliminar el empleado";
+				$colorAlert="danger";
+				$iconAlert='glyphicon-exclamation-sign';
+			}
+			$id_usuario=$datoEmpleado[0]['id_usuario'];
+			$paraUsuario['id_usuario']=$id_usuario;
+			$rowChange=$tecnocom->borrar('usuario_rol',$paraUsuario);
+			$rowChange=$tecnocom->borrar('usuario',$paraUsuario);
+			if ($rowChange>0) {
+				$mensAlert[1]=" Se ha eliminado ".$rowChange." usuario";
+				$colorAlert='success';
+				$iconAlert='glyphicon glyphicon-ok';
+			}else{
+				$mensAlert[1]="Error: No se ha ha podido eliminar el usuario";
+				$colorAlert="danger";
+				$iconAlert='glyphicon-exclamation-sign';
+			}
+		}else{
+			$mensAlert[0]="Error: No se ha ha podido eliminar el empleado";
+		}
+	}
 	include('index.php');
 ?>

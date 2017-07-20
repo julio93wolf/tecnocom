@@ -1,8 +1,8 @@
 <?php
 	include_once('../tecnocom.class.php');
 	if (isset($_POST['enviar'])) {
-		$parametros['categoria']=$_POST['categoria'];
-		$rowChange=$tecnocom->insertar('categoria',$parametros);			
+		$paraCategoria['categoria']=$_POST['categoria'];
+		$rowChange=$tecnocom->insertar('categoria',$paraCategoria);			
 		if ($rowChange>0) {
 			$mensAlert[0]='Se inserto la nueva categoría';
 			$colorAlert='success';

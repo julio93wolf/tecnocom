@@ -98,7 +98,7 @@
 				try{
 					$statement=$this->conexion->prepare($sql);
 					foreach ($parametros as $key => $value) {
-						$statement->bindParam(':'.$key,$value);
+						$statement->bindValue(':'.$key,$value);
 					}
 					return $statement->execute();
 				}catch (PDOException $e) {
