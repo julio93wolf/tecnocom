@@ -7,6 +7,7 @@
 			function __construct(){
 				include ('../../config.php');
 				$this->conexion=$conexion;
+				$this->configuracion=$configuracion;
 			}
 
 			/*
@@ -120,6 +121,13 @@
 				}
 				$select.='</select>';
 				return $select;
+			}
+
+			function validarImagen($imagen){
+				if(in_array($imagen['type'],$this->configuracion['img_permit'])){
+					return true;
+				}
+				return false;
 			}
 			
 		}// Class Tecnocom

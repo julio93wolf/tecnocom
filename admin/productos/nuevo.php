@@ -7,7 +7,7 @@
 			$extension=explode('.',$_FILES['imagen']['name']);
 			$origen=$_FILES['imagen']['tmp_name'];
 			$destino='../../images/productos/'.$_POST['sku'].'.'.$extension[1];
-			if($abarrotera->validarImagen($_FILES['imagen'])){
+			if($tecnocom->validarImagen($_FILES['imagen'])){
 				if(move_uploaded_file($origen,$destino)){
 					$paraProducto['sku']=$_POST['sku'];
 					$paraProducto['producto']=$_POST['producto'];
@@ -15,15 +15,20 @@
 					$paraProducto['precio']=$_POST['precio'];
 					$paraProducto['id_fabricante']=$_POST['id_fabricante'];
 					$paraProducto['id_subcategoria']=$_POST['id_subcategoria'];
+					$paraProducto['imagen']=$_POST['sku'].'.'.$extension[1];
 					$rowChange=$tecnocom->insertar('producto',$paraProducto);			
 					if ($rowChange>0) {
-						$mensAlert[0]='Se inserto la nueva categoría';
+						$mensAlert[0]='Se inserto el nuevo producto';
 						$colorAlert='success';
 						$iconAlert='glyphicon glyphicon-ok';
 					}else{
 						$mensAlert[0]="Error: No se ha podido agregar la nueva categoría";
 					}			
+				}else{
+					$mensAlert[0]="Error: No se ha podido cargar la imagen al servidor";
 				}
+			}else{
+				$mensAlert[0]="Error: El archivo tiene una extensión invalída";
 			}
 		}else{
 			$mensAlert[0]="Error: No se cargo la imagen del producto";

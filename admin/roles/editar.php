@@ -1,15 +1,15 @@
 <?php
 	include_once('../tecnocom.class.php');
 	if (isset($_POST['enviar'])) {
-		$llaveCategoria['id_categoria']=$_POST['id_categoria'];
-		$paraCategoria['categoria']=$_POST['categoria'];
-		$rowChange=$tecnocom->actualizar('categoria',$paraCategoria,$llaveCategoria);
+		$llaveRol['id_rol']=$_POST['id_rol'];
+		$paraRol['rol']=$_POST['rol'];
+		$rowChange=$tecnocom->actualizar('rol',$paraRol,$llaveRol);
 		if ($rowChange>0) {
-			$mensAlert[0]='Se actualizo la categoría';
+			$mensAlert[0]='Se actualizo el rol';
 			$colorAlert='success';
 			$iconAlert='glyphicon glyphicon-ok';
 		}else{
-			$mensAlert[0]="Error: No se ha podido modificar la categoría";
+			$mensAlert[0]="Error: No se ha podido modificar el rol";
 			$colorAlert="danger";
 			$iconAlert='glyphicon-exclamation-sign';
 		}
@@ -18,10 +18,10 @@
 			die();
 		}
 	}
-	if(isset($_REQUEST['id_categoria'])){
-		$paraCategoria=array();
-		$paraCategoria['id_categoria']=$_REQUEST['id_categoria'];
-		$datosCategoria=$tecnocom->consultar("select * from categoria where id_categoria=:id_categoria",$paraCategoria);
+	if(isset($_REQUEST['id_rol'])){
+		$paraRol=array();
+		$paraRol['id_rol']=$_REQUEST['id_rol'];
+		$datoRol=$tecnocom->consultar("select * from rol where id_rol=:id_rol",$paraRol);
 	}else{
 		$mensAlert[0]="Error: No se ha seleccionado una categoría a modificar";
 		$colorAlert="danger";
@@ -32,7 +32,7 @@
 	include('../header.php');
 ?>
 <div class="page-header">
-  <h1>Editar Categoría</h1>
+  <h1>Editar Rol</h1>
 </div>
 <?php
 	if(isset($mensAlert) and isset($colorAlert) and isset($iconAlert)){
@@ -44,10 +44,10 @@
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<form action="editar.php" method="POST">
-			<input type="hidden" name="id_categoria" value="<?php echo $datosCategoria[0]['id_categoria']; ?>">
+			<input type="hidden" name="id_rol" value="<?php echo $datoRol[0]['id_rol']; ?>">
 			<div class="form-group">
-		    <label for="in_Categoria">Categoría</label>
-		    <input type="text" name="categoria" class="form-control" id="in_Categoria" placeholder="Subcategoría" value="<?php echo $datosCategoria[0]['categoria']; ?>">
+		    <label for="in_Rol">Rol</label>
+		    <input type="text" name="rol" class="form-control" id="in_Rol" placeholder="Rol" value="<?php echo $datoRol[0]['rol']; ?>">
 	  	</div>
 	  	<div class="form-group">
 	  		<button type="submit" name="enviar" value="Guardar" class="btn btn-primary">Guardar</button>

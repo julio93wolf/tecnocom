@@ -1,64 +1,64 @@
 <?php
 	include_once('../tecnocom.class.php');
-	$id_producto = $_GET['id_producto'];
-	$parametros['id_producto']= $id_producto;
-	$datos=$tecnocom->consultar('select * from compra_detalle where id_producto=:id_producto',$parametros);
-	$mensajes[0]="No se han podido eliminar por que hay ".sizeof($datos)." compras asociadas";
-	$color="danger";
-	$icon='glyphicon-exclamation-sign';
-	if(sizeof($datos)<=0){
-		
-		//Eliminar el producto del carrito de los usuarios
-		$row_change=$tecnocom->borrar('carrito_detalle',$parametros);
-		
-		//Obtener el id de las ofertas asignadas al producto
-		$oferta=$tecnocom->consultar('select id_oferta from oferta where id_producto=:id_producto',$parametros);
-		foreach ($oferta as $key => $value) {
-			$param_oferta = array();
-			$param_oferta['id_oferta']=$value['id_oferta'];
-			//Obtener los banner de las ofertas asiganadas
-			$oferta_detalle=$tecnocom->consultar('select banner from oferta_banner where id_oferta=:id_oferta',$param_oferta);
-			if(sizeof($oferta_detalle)>0){
-				$oferta_banner=$oferta_detalle[0]['banner'];	
-				//Eliminar los banners de la oferta
-				$row_change=$tecnocom->borrar('oferta_banner',$param_oferta);
-				if($row_change>0){
-					if(file_exists('../../images/ofertas/'.$oferta_banner)){
-							//Eliminar los banners de la carpeta del servidor
-		    			unlink('../../images/ofertas/'.$oferta_banner);
+	$mensAlert[0]="Error: No se ha seleccionado un producto a eliminar";
+	$colorAlert="danger";
+	$iconAlert='glyphicon-exclamation-sign';
+	if (isset($_GET['id_producto'])) {
+		$id_producto = $_GET['id_producto'];
+		$paraProducto['id_producto']= $id_producto;
+		$datoCompraDetalle=$tecnocom->consultar('select * from compra_detalle where id_producto=:id_producto',$paraProducto);
+		$mensAlert[0]="No se han podido eliminar por que hay ".count($datoCompraDetalle)." compras asociadas";
+		if(count($datoCompraDetalle)<=0){
+			//Eliminar el producto del carrito de los usuarios
+			$rowChange=$tecnocom->borrar('carrito_detalle',$paraProducto);
+			//Obtener el id de las ofertas asignadas al producto
+			$datoOferta=$tecnocom->consultar('select id_oferta from oferta where id_producto=:id_producto',$paraProducto);
+			foreach ($datoOferta as $keyOferta => $varOferta) {
+				$paraOferta = array();
+				$paraOferta['id_oferta']=$varOferta['id_oferta'];
+				//Obtener los banner de las ofertas asiganadas
+				$datoOfertaBanner=$tecnocom->consultar('select banner from oferta_banner where id_oferta=:id_oferta',$paraOferta);
+				if(count($datoOfertaBanner)>0){
+					$oferta_banner=$datoOfertaBanner[0]['banner'];
+					//Eliminar los banners de la oferta
+					$rowChange=$tecnocom->borrar('oferta_banner',$paraOferta);
+					if($rowChange>0){
+						if(file_exists('../../images/ofertas/'.$oferta_banner)){
+								//Eliminar los banners de la carpeta del servidor
+			    			unlink('../../images/ofertas/'.$oferta_banner);
+						}
 					}
 				}
 			}
-		}
 
-		//Eliminar las ofertas del producto
-		$row_change=$tecnocom->borrar('oferta',$parametros);
-		if($row_change>0){
-			$mensajes[0]="Se eliminaron ".$row_change." ofertas";
-		}
+			// Eliminas las ofertas
+			$rowChange=$tecnocom->borrar('oferta',$paraProducto);
+			
+			//Eliminar los detalles del producto
+			$rowChange=$tecnocom->borrar('producto_detalle',$paraProducto);
 
-		//Eliminar los detalles del producto
-		$row_change=$tecnocom->borrar('producto_detalle',$parametros);
-
-		//Obtener el nombre de la imagen del producto
-		$producto_imagen="";
-		$producto=$tecnocom->consultar('select imagen from producto where id_producto=:id_producto',$parametros);
-		if(sizeof($producto)>0){
-			$producto_imagen=$producto[0]['imagen'];	
-		}
-		//Eliminar el producto
-		$row_change=$tecnocom->borrar('producto',$parametros);
-		if($row_change>0){
-			$mensajes[1]="Se eliminaron ".$row_change." productos";
-			if($producto_imagen!=""){
-				if(file_exists('../../images/productos/'.$producto_imagen)){
-					//Eliminar las imagenes de la carpeta del servidor
-	    		unlink('../../images/producto/'.$producto_imagen);
+			//Obtener el nombre de la imagen del producto
+			$prodImagen="";
+			$producto=$tecnocom->consultar('select imagen from producto where id_producto=:id_producto',$paraProducto);
+			if(count($producto)>0){
+				$prodImagen=$producto[0]['imagen'];	
+			}
+			//Eliminar el producto
+			$rowChange=$tecnocom->borrar('producto',$paraProducto);
+			if($rowChange>0){
+				$colorAlert="success";
+				$iconAlert='glyphicon-ok';
+				$mensAlert[0]="Se eliminaron ".$rowChange." productos";
+				if($prodImagen!=""){
+					if(file_exists('../../images/productos/'.$prodImagen)){
+						//Eliminar las imagenes de la carpeta del servidor
+		    		unlink('../../images/productos/'.$prodImagen);
+					}
 				}
+			}else{
+				$mensAlert[0]="Error: No se pudo eliminar el producto";
 			}
 		}
-		$color="success";
-		$icon='glyphicon-ok';
 	}
 	include('index.php');
 ?>

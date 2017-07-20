@@ -1,20 +1,20 @@
 <?php
-	if(isset($_REQUEST['id_categoria'])){
-		$id_categoria=$_REQUEST['id_categoria'];
+	if(isset($_REQUEST['id_producto'])){
+		$id_producto=$_REQUEST['id_producto'];
 	}else{
-		header('Location: /tecnocom/admin/categorias/');
+		header('Location: /tecnocom/admin/productos/');
 	}
 	include_once('../tecnocom.class.php');
 	if (isset($_POST['enviar'])) {
-		$paraSubCategoria['id_categoria']=$_POST['id_categoria'];
-		$paraSubCategoria['subcategoria']=$_POST['subcategoria'];
-		$rowChange=$tecnocom->insertar('subcategoria',$paraSubCategoria);			
+		$paraDetalle['id_producto']=$_POST['id_producto'];
+		$paraDetalle['descripcion']=$_POST['descripcion'];
+		$rowChange=$tecnocom->insertar('producto_detalle',$paraDetalle);			
 		if ($rowChange>0) {
-			$mensAlert[0]='Se inserto la nueva subcategoría';
+			$mensAlert[0]='Se inserto la nueva descripción';
 			$colorAlert='success';
 			$iconAlert='glyphicon glyphicon-ok';
 		}else{
-			$mensAlert[0]="Error: No se ha podido agregar la nueva subcategoría";
+			$mensAlert[0]="Error: No se ha podido agregar la nueva descripción";
 			$colorAlert="danger";
 			$iconAlert='glyphicon-exclamation-sign';
 		}
@@ -26,7 +26,7 @@
 	include('../header.php');
 ?>
 <div class="page-header">
-  <h1>Nueva Subcategoría</h1>
+  <h1>Nueva Descripción</h1>
 </div>
 <?php
 	if(isset($mensAlert) and isset($colorAlert) and isset($iconAlert)){
@@ -38,15 +38,15 @@
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<form action="nuevo.php" method="POST">
-			<input type="hidden" name="id_categoria" value="<?php echo $id_categoria; ?>">
+			<input type="hidden" name="id_producto" value="<?php echo $id_producto; ?>">
 			<div class="form-group">
-		    <label for="in_Subcategoria">Subcategoría</label>
-		    <input type="text" name="subcategoria" class="form-control" id="in_Subcategoria" placeholder="Subcategoría">
+		    <label for="in_Descripcion">Descripción</label>
+		    <input type="text" name="descripcion" class="form-control" id="in_Descripcion" placeholder="Descripción">
 	  	</div>
 	  	<div class="form-group">
 	  		<button type="submit" name="enviar" value="Guardar" class="btn btn-primary">Guardar</button>
 				<button type="submit" name="enviar" value="Guardar y Regresar" class="btn btn-success">Guardar y Regresar</button>	
-				<a class="btn btn-danger pull-right" href="index.php?id_categoria=<?php echo $id_categoria; ?>">Cancelar</a>  		
+				<a class="btn btn-danger pull-right" href="index.php?id_producto=<?php echo $id_producto; ?>">Cancelar</a>  		
 	  	</div>
 		</form>
 	</div>

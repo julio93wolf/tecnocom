@@ -1,7 +1,6 @@
 <?php
 	if(isset($_REQUEST['id_categoria'])){
 		$id_categoria=$_REQUEST['id_categoria'];
-		$paramSubcategoria['id_categoria']=$id_categoria;
 	}else{
 		header('Location: /tecnocom/admin/categorias/');
 	}
@@ -27,13 +26,15 @@
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<table class="table table-hover">
-		  <tr>
+		  <tr class="active">
 				<th>Subcategoria</th>
 				<th>Categoria</th>
 				<th>Editar</th>
 				<th>Eliminar</th>
 			</tr>
 			<?php
+				$paramSubcategoria=array();
+				$paramSubcategoria['id_categoria']=$id_categoria;
 				$dataSubcategoria=$tecnocom->consultar("select * from subcategoria sub join categoria cat on sub.id_categoria = cat.id_categoria where sub.id_categoria=:id_categoria order by subcategoria asc",$paramSubcategoria);
 				foreach ($dataSubcategoria as $keySubcategoria => $valSubcategoria) {
 					echo '<tr>';

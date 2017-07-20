@@ -1,20 +1,20 @@
 <?php
-	if(isset($_REQUEST['id_categoria'])){
-		$id_categoria=$_REQUEST['id_categoria'];
+	if(isset($_REQUEST['id_producto'])){
+		$id_producto=$_REQUEST['id_producto'];
 	}else{
-		header('Location: /tecnocom/admin/categorias/');
+		header('Location: /tecnocom/admin/producto/');
 	}
 	include_once('../tecnocom.class.php');
 	if (isset($_POST['enviar'])) {
-		$llaveSubcategoria['id_subcategoria']=$_POST['id_subcategoria'];
-		$updaParaSubcategoria['subcategoria']=$_POST['subcategoria'];
-		$rowChange=$tecnocom->actualizar('subcategoria',$updaParaSubcategoria,$llaveSubcategoria);
+		$llaveDetalle['id_producto_detalle']=$_POST['id_producto_detalle'];
+		$paraDetalle['descripcion']=$_POST['descripcion'];
+		$rowChange=$tecnocom->actualizar('producto_detalle',$paraDetalle,$llaveDetalle);
 		if ($rowChange>0) {
-			$mensAlert[0]='Se actualizo la subcategoría';
+			$mensAlert[0]='Se actualizo la descripción';
 			$colorAlert='success';
 			$iconAlert='glyphicon glyphicon-ok';
 		}else{
-			$mensAlert[0]="Error: No se ha podido modificar la categoría";
+			$mensAlert[0]="Error: No se ha podido modificar la descripción";
 			$colorAlert="danger";
 			$iconAlert='glyphicon-exclamation-sign';
 		}
@@ -23,10 +23,11 @@
 			die();
 		}
 	}
-	if(isset($_REQUEST['id_subcategoria'])){
-		$id_subcategoria=$_REQUEST['id_subcategoria'];
-		$paraSubcategoria['id_subcategoria']=$_REQUEST['id_subcategoria'];
-		$datoSubcategoria=$tecnocom->consultar("select * from subcategoria where id_subcategoria=:id_subcategoria",$paraSubcategoria);
+	if(isset($_REQUEST['id_producto_detalle'])){
+		$id_producto_detalle=$_REQUEST['id_producto_detalle'];
+		$paraDetalle=array();
+		$paraDetalle['id_producto_detalle']=$_REQUEST['id_producto_detalle'];
+		$datoDetalle=$tecnocom->consultar("select * from producto_detalle where id_producto_detalle=:id_producto_detalle",$paraDetalle);
 	}else{
 		$mensAlert[0]="Error: No se ha seleccionado una subcategoría a modificar";
 		$colorAlert="danger";
@@ -37,7 +38,7 @@
 	include('../header.php');
 ?>
 <div class="page-header">
-  <h1>Editar Subategoría</h1>
+  <h1>Editar Descripción</h1>
 </div>
 <?php
 	if(isset($mensAlert) and isset($colorAlert) and isset($iconAlert)){
@@ -49,16 +50,16 @@
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<form action="editar.php" method="POST">
-			<input type="hidden" name="id_categoria" value="<?php echo $id_categoria; ?>">
-			<input type="hidden" name="id_subcategoria" value="<?php echo $id_subcategoria; ?>">
+			<input type="hidden" name="id_producto" value="<?php echo $id_producto; ?>">
+			<input type="hidden" name="id_producto_detalle" value="<?php echo $id_producto_detalle; ?>">
 			<div class="form-group">
-		    <label for="in_Subcategoria">Subcategoría</label>
-		    <input type="text" name="subcategoria" class="form-control" id="in_Subcategoria" placeholder="Subcategoría" value="<?php echo $datoSubcategoria[0]['subcategoria']; ?>">
+		    <label for="in_Descripcion">Descripción</label>
+		    <input type="text" name="descripcion" class="form-control" id="in_Descripcion" placeholder="Descripción" value="<?php echo $datoDetalle[0]['descripcion']; ?>">
 	  	</div>
 	  	<div class="form-group">
 	  		<button type="submit" name="enviar" value="Guardar" class="btn btn-primary">Guardar</button>
 				<button type="submit" name="enviar" value="Guardar y Regresar" class="btn btn-success">Guardar y Regresar</button>	
-				<a class="btn btn-danger pull-right" href="index.php?id_categoria=<?php echo $id_categoria; ?>">Cancelar</a>  		
+				<a class="btn btn-danger pull-right" href="index.php?id_producto=<?php echo $id_producto; ?>">Cancelar</a>  		
 	  	</div>
 		</form>
 	</div>
