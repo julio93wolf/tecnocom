@@ -1,25 +1,32 @@
 <?php
 	include_once('../tecnocom.class.php');
 	if (isset($_POST['enviar'])) {
-
-		$paraProducto['sku']=$_POST['sku'];
-		$paraProducto['producto']=$_POST['producto'];
-		$paraProducto['modelo']=$_POST['modelo'];
-		$paraProducto['precio']=$_POST['precio'];
-		$paraProducto['id_fabricante']=$_POST['id_fabricante'];
-		$paraProducto['id_subcategoria']=$_POST['id_subcategoria'];
-		
-
-
-		$rowChange=$tecnocom->insertar('categoria',$paraProducto);			
-		if ($rowChange>0) {
-			$mensAlert[0]='Se inserto la nueva categoría';
-			$colorAlert='success';
-			$iconAlert='glyphicon glyphicon-ok';
+		$colorAlert="danger";
+		$iconAlert='glyphicon-exclamation-sign';
+		if(!empty($_FILES['imagen']['name'])){
+			$extension=explode('.',$_FILES['imagen']['name']);
+			$origen=$_FILES['imagen']['tmp_name'];
+			$destino='../../images/productos/'.$_POST['sku'].'.'.$extension[1];
+			if($abarrotera->validarImagen($_FILES['imagen'])){
+				if(move_uploaded_file($origen,$destino)){
+					$paraProducto['sku']=$_POST['sku'];
+					$paraProducto['producto']=$_POST['producto'];
+					$paraProducto['modelo']=$_POST['modelo'];
+					$paraProducto['precio']=$_POST['precio'];
+					$paraProducto['id_fabricante']=$_POST['id_fabricante'];
+					$paraProducto['id_subcategoria']=$_POST['id_subcategoria'];
+					$rowChange=$tecnocom->insertar('producto',$paraProducto);			
+					if ($rowChange>0) {
+						$mensAlert[0]='Se inserto la nueva categoría';
+						$colorAlert='success';
+						$iconAlert='glyphicon glyphicon-ok';
+					}else{
+						$mensAlert[0]="Error: No se ha podido agregar la nueva categoría";
+					}			
+				}
+			}
 		}else{
-			$mensAlert[0]="Error: No se ha podido agregar la nueva categoría";
-			$colorAlert="danger";
-			$iconAlert='glyphicon-exclamation-sign';
+			$mensAlert[0]="Error: No se cargo la imagen del producto";
 		}
 		if($_POST['enviar']=="Guardar y Regresar"){
 			include('index.php');
@@ -42,7 +49,7 @@
 ?>
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<form action="nuevo.php" method="POST">
+		<form action="nuevo.php" method="POST" enctype="multipart/form-data">
 			
 			<div class="form-group">
 		    <label for="in_SKU">SKU</label>
@@ -69,9 +76,9 @@
 		    <?php echo $dropSubcategoria; ?>
 	  	</div>
 	  	<div class="form-group">
-		    <label for="in_Imagen">File input</label>
+		    <label for="in_Imagen">Imagen del Producto</label>
 		    <input type="file" name="imagen" id="in_Imagen">
-		    <p class="help-block">Example block-level help text here.</p>
+		    <p class="help-block">Solo archivos .jpg, .png y .gif</p>
 		  </div>
 	  	<div class="form-group">
 	  		<button type="submit" name="enviar" value="Guardar" class="btn btn-primary">Guardar</button>
