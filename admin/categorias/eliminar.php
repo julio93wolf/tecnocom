@@ -1,5 +1,7 @@
 <?php
 	include_once('../tecnocom.class.php');
+	$rol[0]='Administrador';
+	$tecnocom->security($rol,'/tecnocom/admin/login/');
 	$mensAlert[0]="Error: No se ha seleccionado una categoría a eliminar";
 	$colorAlert="danger";
 	$iconAlert='glyphicon-exclamation-sign';

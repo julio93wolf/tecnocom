@@ -130,6 +130,29 @@
 				return false;
 			}
 			
+			function security($rolPermitido,$ulrError){
+				if (isset($_SESSION['usrValido'])) {
+					if ($_SESSION['usrValido']) {
+						$bandRol=false;
+						foreach ($_SESSION['usrRol'] as $rolUsr) {
+							if (in_array($rolUsr,$rolPermitido)) {
+								$bandRol=true;
+							}
+						}
+						if (!$bandRol) {
+							$error=3;
+						}
+					}else{
+						$error=2;
+					}
+				}else{
+					$error=1;
+				}
+				if (!$bandRol) {
+					header('Location: '.$ulrError.'index.php?error='.$error);
+				}
+			}
+
 		}// Class Tecnocom
 
 	}

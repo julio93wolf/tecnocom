@@ -1,5 +1,7 @@
 <?php
 	if(isset($_REQUEST['id_producto'])){
+		$rol[0]='Administrador';
+		$tecnocom->security($rol,'/tecnocom/admin/login/');
 		$id_producto=$_REQUEST['id_producto'];
 	}else{
 		header('Location: /tecnocom/admin/productos/');

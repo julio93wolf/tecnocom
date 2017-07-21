@@ -3,8 +3,6 @@
 	if (isset($_POST['enviar'])) {
 		// Validar contraseña correcta
 		$correo=$_POST['correo'];
-		$colorAlert="danger";
-		$iconAlert='glyphicon-exclamation-sign';
 		if (filter_var($correo, FILTER_VALIDATE_EMAIL)) {
 			$contrasena=$_POST['contrasena'];
 			$confirmar=$_POST['confirmar'];
@@ -33,7 +31,6 @@
 						$paraCliente['id_usuario']=$id_usuario;
 						$rowChange=$tecnocom->insertar('cliente',$paraCliente);
 						if ($rowChange>0) {
-							$mensAlert[1]='Se agrego el nuevo cliente';
 							// Obtenemos el id del cliente
 							$paraCliente=array();
 							$paraCliente['id_usuario']=$id_usuario;
@@ -45,46 +42,43 @@
 							$paraCarrito['total']=0;
 							$rowChange=$tecnocom->insertar('carrito',$paraCarrito);
 							if ($rowChange>0) {
-								$mensAlert[2]='Se agrego el nuevo carrito para el cliente';
-								$colorAlert='success';
-								$iconAlert='glyphicon glyphicon-ok';
-								include('../login/index.php');
+								header('Location: /tecnocom/venta/login/');
 								die();
-							}else{
-								$mensAlert[2]="Error: No se ha podido agregar un carrito al nuevo cliente";	
 							}
-						}else{
-							$mensAlert[1]="Error: No se ha podido agregar al nuevo cliente";
 						}
-					}else{
-						$mensAlert[0]="Error: No se ha podido agregar al nuevo usuario";
 					}
 				}else{
 					$mensAlert[0]="Error: Las contraseñas no son correctas";
+					$colorAlert="danger";
+					$iconAlert='glyphicon-exclamation-sign';
 				}
 			}else{
 				$mensAlert[0]="Error: La contraseña debe tener al menos 5 carácteres";
+				$colorAlert="danger";
+				$iconAlert='glyphicon-exclamation-sign';
 			}
 		}else{
 			$mensAlert[0]="Error: El correo no es correcto";
+			$colorAlert="danger";
+			$iconAlert='glyphicon-exclamation-sign';
 		}
 	}
 	include('../header.php');
 ?>
-<div class="page-header">
-  <h1>Registro</h1>
-</div>
-<?php
-	if(isset($mensAlert) and isset($colorAlert) and isset($iconAlert)){
-		foreach ($mensAlert as $key => $value) {
-			echo '<div class="alert alert-'.$colorAlert.' alert-dismissible" role="alert"><span class="glyphicon '.$iconAlert.'" aria-hidden="true"></span> '.$value.'</div>';
-		}
-	}
-?>
+
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-8 col-md-offset-2 col-lg-8">
-		<form action="index.php" method="POST">
-			
+	<div class="page-header">
+  		<h1>Registro</h1>
+		</div>
+		<?php
+			if(isset($mensAlert) and isset($colorAlert) and isset($iconAlert)){
+				foreach ($mensAlert as $key => $value) {
+					echo '<div class="alert alert-'.$colorAlert.' alert-dismissible" role="alert"><span class="glyphicon '.$iconAlert.'" aria-hidden="true"></span> '.$value.'</div>';
+				}
+			}
+		?>
+		<form action="index.php" method="POST">			
 			<div class="form-group">
 		    <label for="in_Nombre">Nombre</label>
 		    <input type="text" name="nombre" class="form-control" id="in_Nombre" placeholder="Nombre(s)">

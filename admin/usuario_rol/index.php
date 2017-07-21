@@ -1,5 +1,7 @@
 <?php
 	include_once('../tecnocom.class.php');
+	$rol[0]='Administrador';
+	$tecnocom->security($rol,'/tecnocom/admin/login/');
 	if (isset($_POST['enviar'])) {
 		$id_usuario = $_POST['id_usuario'];
 		$id_rol = $_POST['id_rol'];

@@ -1,5 +1,7 @@
 <?php
 	include_once('../tecnocom.class.php');
+	$rol[0]='Administrador';
+	$tecnocom->security($rol,'/tecnocom/admin/login/');
 	if (isset($_POST['enviar'])) {
 		$llaveCategoria['id_categoria']=$_POST['id_categoria'];
 		$paraCategoria['categoria']=$_POST['categoria'];

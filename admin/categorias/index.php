@@ -1,5 +1,7 @@
 <?php
 	include_once('../tecnocom.class.php');
+	$rol[0]='Administrador';
+	$tecnocom->security($rol,'/tecnocom/admin/login/');
 	include('../header.php');
 ?>
 <div class="page-header">
@@ -24,6 +26,7 @@
 				<th>Categoría</th>
 				<th></th>
 				<th></th> 
+				<th></th>
 			</tr>
 			<?php
 				$datoCategorias=$tecnocom->consultar("select * from categoria order by categoria asc");

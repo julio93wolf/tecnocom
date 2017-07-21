@@ -1,10 +1,12 @@
 <?php
+	include_once('../tecnocom.class.php');
+	$rol[0]='Administrador';
+	$tecnocom->security($rol,'/tecnocom/admin/login/');
 	if(isset($_REQUEST['id_categoria'])){
 		$id_categoria=$_REQUEST['id_categoria'];
 	}else{
 		header('Location: /tecnocom/admin/categorias/');
 	}
-	include_once('../tecnocom.class.php');
 	if (isset($_POST['enviar'])) {
 		$llaveSubcategoria['id_subcategoria']=$_POST['id_subcategoria'];
 		$updaParaSubcategoria['subcategoria']=$_POST['subcategoria'];

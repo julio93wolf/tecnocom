@@ -1,10 +1,12 @@
 <?php
+	include_once('../tecnocom.class.php');
+	$rol[0]='Administrador';
+	$tecnocom->security($rol,'/tecnocom/admin/login/');
 	if(isset($_REQUEST['id_producto'])){
 		$id_producto=$_REQUEST['id_producto'];
 	}else{
 		header('Location: /tecnocom/admin/productos/');
 	}
-	include_once('../tecnocom.class.php');
 	if (isset($_POST['enviar'])) {
 		$paraDetalle['id_producto']=$_POST['id_producto'];
 		$paraDetalle['descripcion']=$_POST['descripcion'];

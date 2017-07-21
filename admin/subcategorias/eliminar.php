@@ -1,10 +1,12 @@
 <?php
+	include_once('../tecnocom.class.php');
+	$rol[0]='Administrador';
+	$tecnocom->security($rol,'/tecnocom/admin/login/');
 	if(isset($_GET['id_categoria'])){
 		$id_categoria=$_GET['id_categoria'];
 	}else{
 		header('Location: /tecnocom/admin/categorias/');
 	}
-	include_once('../tecnocom.class.php');
 	$mensAlert[0]="Error: No se ha seleccionado una subcategoría a eliminar";
 	$colorAlert="danger";
 	$iconAlert='glyphicon-exclamation-sign';

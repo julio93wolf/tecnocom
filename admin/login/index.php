@@ -22,7 +22,7 @@
 					$_SESSION['usrRol'][$contRol]=$datoRol[$contRol]['rol'];
 					$contRol++;
 				}
-				header('Location: ../cliente/index.php');
+				header('Location: ../productos/');
 				die();
 			}else{
 				$mensAlert[0]='Correo o Contraseña incorrecta';
