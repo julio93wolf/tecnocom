@@ -33,8 +33,8 @@
                 <div class="container-fluid" id="header_login">
                   <div class="row">
                     <div class="btn-group pull-right" role="group" aria-label="...">
-                      <a class="btn btn-primary" href="#" role="button"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Registrarse</a>
-                      <a class="btn btn-success" href="#" role="button"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Iniciar Sesion</a>
+                      <a class="btn btn-primary" href="/tecnocom/venta/registro" role="button"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Registrarse</a>
+                      <a class="btn btn-success" href="/tecnocom/venta/login" role="button"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Iniciar Sesion</a>
                     </div>    
                   </div>
                 </div>

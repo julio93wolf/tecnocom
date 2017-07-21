@@ -1,5 +1,5 @@
 <?php
-	//session_start();
+	session_start();
 
 	/*Configuración de la base de datos - Conexion*/
 	define('USER','admin_tecnocom');

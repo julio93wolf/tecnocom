@@ -5,7 +5,7 @@
     class Tecnocom{
 		
 			function __construct(){
-				include ('../../config.php');
+				include ($_SERVER['DOCUMENT_ROOT'].'/tecnocom/config.php');
 				$this->conexion=$conexion;
 				$this->configuracion=$configuracion;
 			}
