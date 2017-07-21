@@ -82,7 +82,7 @@
 	  	
 	  	<div class="form-group">
 	  		<button type="submit" name="login" value="Login" class="btn btn-primary">Iniciar Sesión</button>
-				<a class="btn btn-danger pull-right" href="index.php">Cancelar</a>  		
+	  		<a class="btn btn-link" href="../registro/recuperar.php" role="button">¿Olvidaste tu contraseña?</a>
 	  	</div>
 		</form>
 	</div>
