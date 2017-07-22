@@ -3,10 +3,6 @@
 	$rol[0]='Cliente';
 	$tecnocom->security($rol,'/tecnocom/venta/login/');
 	echo "Bienvenido";
-	echo "<pre>";
-	print_r($_SESSION);
-	echo "</pre>";
-	die();
 	include('../header.php');
 ?>
 
