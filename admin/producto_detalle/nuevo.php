@@ -22,8 +22,10 @@
 		}
 		if($_POST['enviar']=="Guardar y Regresar"){
 			include('index.php');
+			unset($_POST['enviar']);
 			die();
 		}
+		unset($_POST['enviar']);
 	}
 	include('../header.php');
 ?>

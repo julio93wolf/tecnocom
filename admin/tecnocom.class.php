@@ -29,21 +29,10 @@
 			* Método generico para insertar registros en la base de datos
 			*/
 			function insertar($tabla,$parametros){
-				$columnas='';
-				$datos='';
-				$i=0;
-				foreach ($parametros as $key => $value) {
-					if ($i!=0){
-						$columnas.=','.$key;
-						$datos.=',:'.$key;
-					}
-					else{
-						$columnas.=$key;
-						$datos.=':'.$key;
-					}
-					$i++;
-				}
-				$sql='insert into '.$tabla.' ('.$columnas.') values ('.$datos.')';
+				$columnas = array_keys($parametros);
+				$datos = array_keys($parametros);
+				array_walk($datos, function(&$item){$item=':'.$item;});
+				$sql='insert into '.$tabla.' ('.implode(", ",$columnas).') values ('.implode(", ",$datos).');';
 				try{
 					$statement=$this->conexion->prepare($sql);
 					foreach ($parametros as $key => $value) {
@@ -84,18 +73,9 @@
 			* Método generico para eliminar registros en la base de datos
 			*/
 			function borrar($tabla,$parametros){
-				$sql='delete from '.$tabla.' where ';
-				$where='';
-				$i=0;
-				foreach ($parametros as $key => $value) {
-					if ($i!=0) {
-						$where=$where.' and '.$key.'=:'.$key;
-					}else{
-						$where=$key.'=:'.$key;
-					}
-					$i++;
-				}
-				$sql=$sql.$where;
+				$datos = array_keys($parametros);
+				array_walk($datos, function(&$item){$item=$item.'=:'.$item;});
+				$sql='delete from '.$tabla.' where '.implode(" and ", $datos).'';
 				try{
 					$statement=$this->conexion->prepare($sql);
 					foreach ($parametros as $key => $value) {

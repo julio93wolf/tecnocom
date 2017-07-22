@@ -12,15 +12,6 @@ create table categoria (
 	primary key (id_categoria)
 );
 
-insert into categoria values (null,'Computadoras');
-insert into categoria values (null,'Hardware');
-insert into categoria values (null,'Accesorios');
-insert into categoria values (null,'Almacenamiento');
-insert into categoria values (null,'Eléctronica');
-insert into categoria values (null,'Redes');
-insert into categoria values (null,'Software');
-insert into categoria values (null,'Impresión');
-
 drop table if exists subcategoria;
 create table subcategoria (
 	id_subcategoria int auto_increment,
@@ -29,6 +20,261 @@ create table subcategoria (
     primary key (id_subcategoria),
     foreign key (id_categoria) references categoria (id_categoria)
 );
+
+drop table if exists fabricante;
+create table fabricante (
+	id_fabricante int auto_increment,
+    fabricante varchar (100) not null,
+    logo varchar (100),
+    primary key (id_fabricante)
+);
+
+drop table if exists producto;
+create table producto (
+	id_producto int auto_increment,
+    sku varchar (13) unique not null,
+    producto varchar (100) not null,
+    modelo varchar (50) not null,
+    precio numeric (10,2) not null,
+	id_fabricante int not null,
+    id_subcategoria int not null,
+    imagen varchar (100) not null,
+    primary key (id_producto),
+    foreign key (id_fabricante) references fabricante (id_fabricante),
+    foreign key (id_subcategoria) references subcategoria (id_subcategoria)
+);
+
+drop table if exists producto_detalle;
+create table producto_detalle (
+	id_producto_detalle int auto_increment,
+    id_producto int not null,
+    descripcion text not null,
+    primary key (id_producto_detalle),
+    foreign key (id_producto) references producto (id_producto)
+);
+
+drop table if exists rol;
+create table rol (
+id_rol int auto_increment,
+rol varchar (100) not null,
+primary key (id_rol)
+);
+
+drop table if exists usuario;
+create table usuario(
+id_usuario int auto_increment,
+correo varchar (100) not null unique,
+contrasena varchar (32) not null,
+llave varchar (96),
+primary key (id_usuario)
+);
+
+drop table if exists usuario_rol;
+create table usuario_rol(
+id_usuario int not null,
+id_rol int not null,
+primary key (id_usuario,id_rol),
+foreign key (id_usuario) references usuario (id_usuario),
+foreign key (id_rol) references rol (id_rol)
+);
+
+drop table if exists cliente;
+create table cliente (
+id_cliente int auto_increment,
+nombre varchar (100) not null,
+apaterno varchar (100),
+amaterno varchar (100),
+telefono varchar (16),
+domicilio varchar (100),
+id_usuario int not null,
+primary key (id_cliente),
+foreign key (id_usuario) references usuario (id_usuario)
+);
+
+drop table if exists empleado;
+create table empleado (
+	id_empleado int auto_increment,
+    nombre varchar (100) not null,
+	apaterno varchar (100),
+	amaterno varchar (100),
+    id_usuario int not null,
+    primary key (id_empleado), 
+    foreign key (id_usuario) references usuario (id_usuario)
+);
+
+drop table if exists carrito;
+create table carrito (
+id_carrito int auto_increment,
+id_cliente int not null,
+subtotal numeric (10,2),
+iva numeric (10,2),
+total numeric (10,2),
+primary key (id_carrito),
+foreign key (id_cliente) references cliente (id_cliente)
+);
+
+drop table if exists carrito_detalle;
+create table carrito_detalle (
+id_carrito int not null,
+id_producto int not null,
+cantidad int not null,
+precio numeric (10,2),
+primary key (id_carrito,id_producto),
+foreign key (id_producto) references producto (id_producto),
+foreign key (id_carrito) references carrito (id_carrito)
+);
+
+drop table if exists compra;
+create table compra (
+id_compra int auto_increment,
+id_cliente int not null,
+fecha date not null,
+subtotal numeric (10,2),
+iva numeric (10,2),
+total numeric (10,2),
+primary key (id_compra),
+foreign key (id_cliente) references cliente (id_cliente)
+);
+
+drop table if exists compra_detalle;
+create table compra_detalle (
+id_compra int not null,
+id_producto int not null,
+cantidad int not null,
+precio numeric (10,2),
+primary key (id_compra,id_producto),
+foreign key (id_compra) references compra (id_compra),
+foreign key (id_producto) references producto (id_producto)
+);
+
+drop table if exists oferta;
+create table oferta (
+id_oferta int auto_increment,
+id_producto int not null,
+fechai date not null,
+fechat date not null,
+precio_oferta numeric (10,2) not null,
+primary key (id_oferta),
+foreign key (id_producto) references producto (id_producto)
+);
+
+drop table if exists oferta_banner;
+create table oferta_banner (
+	id_oferta int not null,
+    banner varchar (100) not null,
+    primary key (id_oferta),
+    foreign key (id_oferta) references oferta (id_oferta)
+);
+
+drop view if exists vw_fabricantes;
+create view vw_fabricantes as
+select fab.id_fabricante,fab.fabricante,sub.id_subcategoria
+from subcategoria sub 
+	inner join producto pro on pro.id_subcategoria = sub.id_subcategoria
+    inner join fabricante fab on fab.id_fabricante = pro.id_fabricante;
+
+drop view if exists vw_productos;
+create view vw_productos as
+select 
+	pro.id_producto,
+    pro.imagen,
+    fab.logo,
+    fab.fabricante,
+    pro.sku,
+    pro.producto,
+    pro.precio,
+    ifnull(ofe.precio_oferta,pro.precio) as precio_oferta,
+    ifnull(ofe.fechai,now()) as fechai,
+    ifnull(ofe.fechat,now()) as fechat,
+    pro.id_subcategoria,
+    pro.id_fabricante
+from producto pro
+	inner join fabricante fab on pro.id_fabricante = fab.id_fabricante
+    left join oferta ofe on pro.id_producto = ofe.id_producto
+where now() between ifnull(ofe.fechai,now()) and ifnull(ofe.fechat,now());
+
+drop view if exists vw_ofertas;
+create view vw_ofertas as
+select 
+	pro.id_producto,
+    pro.imagen,
+    fab.logo,
+    fab.fabricante,
+    pro.sku,
+    pro.producto,
+    pro.precio,
+    ofe.precio_oferta,
+    ofe.fechai,
+    ofe.fechat,
+    pro.id_subcategoria,
+    pro.id_fabricante
+from producto pro
+	inner join fabricante fab on pro.id_fabricante = fab.id_fabricante
+    inner join oferta ofe on pro.id_producto = ofe.id_producto
+where now() between ofe.fechai and ofe.fechat 
+order by rand() desc limit 4;
+
+drop view if exists vw_ultimos_productos;
+create view vw_ultimos_productos as
+select 
+	pro.id_producto,
+    pro.imagen,
+    fab.logo,
+    fab.fabricante,
+    pro.sku,
+    pro.producto,
+    pro.precio,
+    ifnull(ofe.precio_oferta,pro.precio) as precio_oferta,
+    ifnull(ofe.fechai,now()) as fechai,
+    ifnull(ofe.fechat,now()) as fechat,
+    pro.id_subcategoria,
+    pro.id_fabricante
+from producto pro
+	inner join fabricante fab on pro.id_fabricante = fab.id_fabricante
+    left join oferta ofe on pro.id_producto = ofe.id_producto
+where now() between ifnull(ofe.fechai,now()) and ifnull(ofe.fechat,now())
+order by id_producto desc
+limit 4;
+
+drop view if exists vw_mas_vendidos;
+create view vw_mas_vendidos as
+select 
+	pro.id_producto,
+    pro.imagen,
+    fab.logo,
+    fab.fabricante,
+    pro.sku,
+    pro.producto,
+    pro.precio,
+    ifnull(ofe.precio_oferta,pro.precio) as precio_oferta,
+    ifnull(ofe.fechai,now()) as fechai,
+    ifnull(ofe.fechat,now()) as fechat,
+    pro.id_subcategoria,
+    pro.id_fabricante,
+    sum(cmd.cantidad) as cantidad
+from producto pro
+	inner join fabricante fab on pro.id_fabricante = fab.id_fabricante
+    inner join compra_detalle cmd on cmd.id_producto = pro.id_producto
+    left join oferta ofe on pro.id_producto = ofe.id_producto
+where now() between ifnull(ofe.fechai,now()) and ifnull(ofe.fechat,now())
+group by 1,2,3,4,5,6,7 order by cantidad desc;
+
+drop view if exists vw_banner_ofertas;
+create view vw_banner_ofertas as
+select ofer.id_oferta,ofer.id_producto,ofer.fechai,ofer.fechat,ofer.precio_oferta,ofeb.banner
+from oferta ofer
+	inner join oferta_banner ofeb on ofer.id_oferta = ofeb.id_oferta
+where now() between ifnull(ofer.fechai,now()) and ifnull(ofer.fechat,now())
+order by rand() desc limit 3;
+
+insert into categoria values (null,'Computadoras');
+insert into categoria values (null,'Hardware');
+insert into categoria values (null,'Accesorios');
+insert into categoria values (null,'Almacenamiento');
+insert into categoria values (null,'Eléctronica');
+insert into categoria values (null,'Redes');
+insert into categoria values (null,'Software');
+insert into categoria values (null,'Impresión');
 
 insert into subcategoria values (null,'Desktops',1);
 insert into subcategoria values (null,'Laptops',1);
@@ -59,14 +305,6 @@ insert into subcategoria values (null,'Antivirus y Seguridad',7);
 insert into subcategoria values (null,'Sistemas Operativos',7);
 insert into subcategoria values (null,'Consumibles',8);
 insert into subcategoria values (null,'Impresoras',8);
-
-drop table if exists fabricante;
-create table fabricante (
-	id_fabricante int auto_increment,
-    fabricante varchar (100) not null,
-    logo varchar (100),
-    primary key (id_fabricante)
-);
 
 insert into fabricante values (null,'DELL','dell.png');
 insert into fabricante values (null,'Lenovo','lenovo.png');
@@ -136,30 +374,6 @@ insert into fabricante values (null,'ESET','eset.png');
 insert into fabricante values (null,'Brother','brother.png');
 insert into fabricante values (null,'Lexmark','lexmark.png');
 insert into fabricante values (null,'Xerox','xerox.png');
-
-drop table if exists producto;
-create table producto (
-	id_producto int auto_increment,
-    sku varchar (13) unique not null,
-    producto varchar (100) not null,
-    modelo varchar (50) not null,
-    precio numeric (10,2) not null,
-	id_fabricante int not null,
-    id_subcategoria int not null,
-    imagen varchar (100) not null,
-    primary key (id_producto),
-    foreign key (id_fabricante) references fabricante (id_fabricante),
-    foreign key (id_subcategoria) references subcategoria (id_subcategoria)
-);
-
-drop table if exists producto_detalle;
-create table producto_detalle (
-	id_producto_detalle int auto_increment,
-    id_producto int not null,
-    descripcion text not null,
-    primary key (id_producto_detalle),
-    foreign key (id_producto) references producto (id_producto)
-);
 
 insert into producto values (null,'SKU-122362','Desktop DELL Inspiron 3647','ID3647_I341TBW10S_5',10999,1,1,'SKU-122362.jpg');
 insert into producto_detalle values (null,1,'Procesador Intel Core i3 4170 (3.7 GHz)');
@@ -315,7 +529,7 @@ insert into producto_detalle values (null,28,'Auténtico Sonido 5.1 Dolby Digita
 insert into producto_detalle values (null,28,'Certificación THX');
 insert into producto_detalle values (null,28,'500 Watts RMS de Poder total');
 
-insert into producto values (null,'SKU-72439','Bocinas Logitech Z623 estéreo 2.1','',3199,42,14,'SKU-72439.jpg');
+insert into producto values (null,'SKU-72439','Bocinas Logitech Z623 estéreo 2.1','980-000442',3199,42,14,'SKU-72439.jpg');
 insert into producto_detalle values (null,29,'Certificación THX, 200 Watts (RMS)');
 
 insert into producto values (null,'SKU-76375','Control para Xbox 360 y PC con Windows','52A-00004',599,44,15,'SKU-76375.jpg');
@@ -325,335 +539,48 @@ insert into producto_detalle values (null,30,'Color Negro');
 insert into producto values (null,'SKU-131704','Volante Logitech G920 Driving Force','941-000122',4999,42,15,'SKU-131704.jpg');
 insert into producto_detalle values (null,31,'Compatible con PC (USB) y Xbox One');
 
-/*Agregar mas Productos*/
+insert into oferta values (null,6,'2017-07-01','2017-08-01',15199.00);
+insert into oferta values (null,13,'2017-07-01','2017-08-01',13999.00);
+insert into oferta values (null,28,'2017-07-01','2017-08-01',5599.00);
+insert into oferta values (null,3,'2017-07-01','2017-08-01',899);
+insert into oferta values (null,14,'2017-07-01','2017-08-01',3499);
+insert into oferta values (null,20,'2017-07-01','2017-08-01',2669);
+insert into oferta values (null,19,'2017-07-01','2017-08-01',299);
 
-drop table if exists rol;
-create table rol (
-id_rol int auto_increment,
-rol varchar (100) not null,
-primary key (id_rol)
-);
+insert into oferta_banner values (1,'oferta_1.jpg');
+insert into oferta_banner values (2,'oferta_2.jpg');
+insert into oferta_banner values (3,'oferta_3.jpg');
 
 insert into rol values (null,'Administrador');
 insert into rol values (null,'Cliente');
 
-drop table if exists usuario;
-create table usuario(
-id_usuario int auto_increment,
-correo varchar (100) not null unique,
-contrasena varchar (32) not null,
-primary key (id_usuario)
-);
+insert into usuario values(null,'j_j_p_t@hotmail.com','b36d331451a61eb2d76860e00c347396',null);
+insert into usuario values(null,'jose_barragan@mail.com','202cb962ac59075b964b07152d234b70',null);
+insert into usuario values(null,'felix_becerra@mail.com','202cb962ac59075b964b07152d234b70',null);
+insert into usuario values(null,'juan_luna@mail.com','202cb962ac59075b964b07152d234b70',null);
+insert into usuario values(null,'juan_lozano@mail.com','202cb962ac59075b964b07152d234b70',null);
 
-insert into usuario values(null,'jose_barragan@mail.com','');
-insert into usuario values(null,'felix_becerra@mail.com','');
-insert into usuario values(null,'juan_luna@mail.com','');
-insert into usuario values(null,'juan_lozano@mail.com','');
-
-drop table if exists usuario_rol;
-create table usuario_rol(
-id_usuario int not null,
-id_rol int not null,
-primary key (id_usuario,id_rol),
-foreign key (id_usuario) references usuario (id_usuario),
-foreign key (id_rol) references rol (id_rol)
-);
-
-insert into usuario_rol values (1,2);
-insert into usuario_rol values (2,2);
-insert into usuario_rol values (3,1);
+insert into usuario_rol values (1,1);
 insert into usuario_rol values (4,1);
+insert into usuario_rol values (5,1);
+insert into usuario_rol values (2,2);
+insert into usuario_rol values (3,2);
 
-drop table if exists cliente;
-create table cliente (
-id_cliente int auto_increment,
-nombre varchar (100) not null,
-apaterno varchar (100),
-amaterno varchar (100),
-telefono varchar (16),
-domicilio varchar (100),
-id_usuario int not null,
-primary key (id_cliente),
-foreign key (id_usuario) references usuario (id_usuario)
-);
-
-insert into cliente values (null,'JOSE MAURO','BARRAGAN','ACOSTA','12345','Celaya',1);
-insert into cliente values (null,'FELIX','BECERRA','GUTIERREZ','12345','Celaya',2);
-
-drop table if exists empleado;
-create table empleado (
-	id_empleado int auto_increment,
-    nombre varchar (100) not null,
-	apaterno varchar (100),
-	amaterno varchar (100),
-    id_usuario int not null,
-    primary key (id_empleado), 
-    foreign key (id_usuario) references usuario (id_usuario)
-);
-
-insert into empleado values (null,'JUAN HECTOR','LUNA','SANDOVAL',3);
-insert into empleado values (null,'JUAN CARLOS','LOZANO','MARTINEZ',4);
-
-drop table if exists carrito;
-create table carrito (
-id_carrito int auto_increment,
-id_cliente int not null,
-subtotal numeric (10,2),
-iva numeric (10,2),
-total numeric (10,2),
-primary key (id_carrito),
-foreign key (id_cliente) references cliente (id_cliente)
-);
-
-drop table if exists carrito_detalle;
-create table carrito_detalle (
-id_carrito int not null,
-id_producto int not null,
-cantidad int not null,
-precio numeric (10,2),
-primary key (id_carrito,id_producto),
-foreign key (id_producto) references producto (id_producto),
-foreign key (id_carrito) references carrito (id_carrito)
-);
-
-
-/*##########################################################################*/
-/*								Pruebas										*/
-/*##########################################################################*/
-select * from usuario;
-select * from usuario_rol;
-select * from cliente;
-select * from carrito;
-select * from carrito_detalle;
-
-insert into producto values (null,'SKU-PRUEBA','PRUEBA','MOD-PRUEBA',5555,42,15,'PRUEBA.jpg');
-insert into producto_detalle values (null,35,'PRUEBA');
-
-/*Producto*/
-select * from producto order by id_producto desc;
-select * from producto_detalle order by id_producto desc;
-select * from carrito_detalle order by id_producto desc;
-
-
-select * from oferta;
-insert into oferta values (null,35,'2017-6-1','2017-7-1',3999);
-insert into oferta_banner values (15,'oferta_11.jpg');
-insert into oferta values (null,35,'2017-7-1','2017-8-1',3999);
-insert into oferta_banner values (16,'oferta_11.jpg');
-insert into oferta values (null,35,'2017-7-1','2017-8-1',3999);
-
-select * from oferta;
-select * from oferta_banner;
-
-select * from oferta ofe left join oferta_banner ofb on ofe.id_oferta= ofb.id_oferta  where ofe.id_producto=35;
-
+insert into cliente values (null,'José Mauro','Barragán','Acosta','12345','Celaya',2);
 insert into carrito values (null,1,0,0,0);
-insert into carrito_detalle values (1,10,5,null);
-insert into carrito_detalle values (1,32,5,null);
+insert into cliente values (null,'Félix','Becerra','Gutierrez','12345','Celaya',3);
+insert into carrito values (null,2,0,0,0);
 
-drop table if exists compra;
-create table compra (
-id_compra int auto_increment,
-id_cliente int not null,
-fecha date not null,
-subtotal numeric (10,2),
-iva numeric (10,2),
-total numeric (10,2),
-primary key (id_compra),
-foreign key (id_cliente) references cliente (id_cliente)
-);
+insert into empleado values (null,'Juan José','Torres','Pérez',4);
+insert into empleado values (null,'Juan Héctor','Luna','Sandoval',4);
+insert into empleado values (null,'Juan Carlos','Lozano','Mártinez',5);
 
-drop table if exists compra_detalle;
-create table compra_detalle (
-id_compra int not null,
-id_producto int not null,
-cantidad int not null,
-precio numeric (10,2),
-primary key (id_compra,id_producto),
-foreign key (id_compra) references compra (id_compra),
-foreign key (id_producto) references producto (id_producto)
-);
+insert into compra values (null,1,now(),0,0,0);
+insert into compra_detalle values (1,1,3,null);
+insert into compra values (null,1,now(),0,0,0);
+insert into compra_detalle values (2,6,4,null);
 
-select * from producto;
-
-insert into compra values (null,1,'2017-7-2',0,0,0);
-insert into compra_detalle value (1,7,5,null);
-insert into compra_detalle value (1,13,2,null);
-insert into compra_detalle value (1,18,1,null);
-
-insert into compra values (null,2,'2017-7-5',0,0,0);
-insert into compra_detalle value (2,3,4,null);
-insert into compra_detalle value (2,10,2,null);
-insert into compra_detalle value (2,14,2,null);
-insert into compra_detalle value (2,8,4,null);
-
-
-insert into compra values (null,1,'2017-7-7',0,0,0);
-insert into compra_detalle value (3,13,4,null);
-insert into compra_detalle value (3,18,2,null);
-
-drop table if exists oferta;
-create table oferta (
-id_oferta int auto_increment,
-id_producto int not null,
-fechai date not null,
-fechat date not null,
-precio_oferta numeric (10,2) not null,
-primary key (id_oferta),
-foreign key (id_producto) references producto (id_producto)
-);
-
-insert into oferta values (null,6,'2017-7-1','2017-8-1',15199);
-insert into oferta values (null,20,'2017-7-1','2017-8-1',2669);
-insert into oferta values (null,13,'2017-7-1','2017-8-1',13999);
-insert into oferta values (null,22,'2017-7-1','2017-8-1',199);
-insert into oferta values (null,28,'2017-7-1','2017-8-1',5599);
-insert into oferta values (null,19,'2017-7-1','2017-8-1',299);
-insert into oferta values (null,1,'2017-7-1','2017-8-1',8799);
-insert into oferta values (null,8,'2017-7-1','2017-8-1',1399);
-insert into oferta values (null,15,'2017-7-1','2017-8-1',6099);
-insert into oferta values (null,31,'2017-7-1','2017-8-1',3999);
-insert into oferta values (null,31,'2017-6-1','2017-7-1',3999);
-
-drop table if exists oferta_banner;
-create table oferta_banner (
-	id_oferta int not null,
-    banner varchar (100) not null,
-    primary key (id_oferta),
-    foreign key (id_oferta) references oferta (id_oferta)
-);
-
-insert into oferta_banner values (1,'oferta_1.jpg');
-insert into oferta_banner values (3,'oferta_3.jpg');
-insert into oferta_banner values (5,'oferta_5.jpg');
-insert into oferta_banner values (11,'oferta_11.jpg');
-
-/*
-drop procedure if exists prc_carrito_detalle;
-delimiter //
-create procedure prc_carrito_detalle (carrito int, producto int)
-begin 	
-	declare precio_producto numeric(10,2);
-    declare cantidad_producto int;
-    declare carrito_subtotal numeric(10,2);
-    declare carrito_iva numeric(10,2);
-    declare carrito_total numeric(10,2);
-    
-    set precio_producto = (select precio from producto where id_producto = producto);
-    set cantidad_producto = (select cantidad from carrito_detalle where id_carrito = carrito and id_producto = producto);
-    
-    set carrito_subtotal = cantidad_producto * precio_producto;
-    set carrito_iva = carrito_subtotal * 0.2;
-    set carrito_total = carrito_subtotal + carrito_iva;
-    
-	update carrito_detalle set precio = precio_producto where id_carrito = carrito and id_producto = producto;
-    update carrito set subtotal=carrito_subtotal, iva=carrito_iva, total = carrito_total where id_carrito = carrito;
-end //
-delimiter ;
-
-*/
-
-drop view if exists vw_fabricantes;
-create view vw_fabricantes as
-select fab.id_fabricante,fab.fabricante,sub.id_subcategoria
-from subcategoria sub 
-	inner join producto pro on pro.id_subcategoria = sub.id_subcategoria
-    inner join fabricante fab on fab.id_fabricante = pro.id_fabricante;
-
-drop view if exists vw_productos;
-create view vw_productos as
-select 
-	pro.id_producto,
-    pro.imagen,
-    fab.logo,
-    fab.fabricante,
-    pro.sku,
-    pro.producto,
-    pro.precio,
-    ifnull(ofe.precio_oferta,pro.precio) as precio_oferta,
-    ifnull(ofe.fechai,now()) as fechai,
-    ifnull(ofe.fechat,now()) as fechat,
-    pro.id_subcategoria,
-    pro.id_fabricante
-from producto pro
-	inner join fabricante fab on pro.id_fabricante = fab.id_fabricante
-    left join oferta ofe on pro.id_producto = ofe.id_producto
-where now() between ifnull(ofe.fechai,now()) and ifnull(ofe.fechat,now());
-
-drop view if exists vw_ofertas;
-create view vw_ofertas as
-select 
-	pro.id_producto,
-    pro.imagen,
-    fab.logo,
-    fab.fabricante,
-    pro.sku,
-    pro.producto,
-    pro.precio,
-    ofe.precio_oferta,
-    ofe.fechai,
-    ofe.fechat,
-    pro.id_subcategoria,
-    pro.id_fabricante
-from producto pro
-	inner join fabricante fab on pro.id_fabricante = fab.id_fabricante
-    inner join oferta ofe on pro.id_producto = ofe.id_producto
-where now() between ofe.fechai and ofe.fechat 
-order by rand() desc limit 4;
-
-drop view if exists vw_ultimos_productos;
-create view vw_ultimos_productos as
-select 
-	pro.id_producto,
-    pro.imagen,
-    fab.logo,
-    fab.fabricante,
-    pro.sku,
-    pro.producto,
-    pro.precio,
-    ifnull(ofe.precio_oferta,pro.precio) as precio_oferta,
-    ifnull(ofe.fechai,now()) as fechai,
-    ifnull(ofe.fechat,now()) as fechat,
-    pro.id_subcategoria,
-    pro.id_fabricante
-from producto pro
-	inner join fabricante fab on pro.id_fabricante = fab.id_fabricante
-    left join oferta ofe on pro.id_producto = ofe.id_producto
-where now() between ifnull(ofe.fechai,now()) and ifnull(ofe.fechat,now())
-order by id_producto desc
-limit 4;
-
-drop view if exists vw_mas_vendidos;
-create view vw_mas_vendidos as
-select 
-	pro.id_producto,
-    pro.imagen,
-    fab.logo,
-    fab.fabricante,
-    pro.sku,
-    pro.producto,
-    pro.precio,
-    ifnull(ofe.precio_oferta,pro.precio) as precio_oferta,
-    ifnull(ofe.fechai,now()) as fechai,
-    ifnull(ofe.fechat,now()) as fechat,
-    pro.id_subcategoria,
-    pro.id_fabricante,
-    sum(cmd.cantidad) as cantidad
-from producto pro
-	inner join fabricante fab on pro.id_fabricante = fab.id_fabricante
-    inner join compra_detalle cmd on cmd.id_producto = pro.id_producto
-    left join oferta ofe on pro.id_producto = ofe.id_producto
-where now() between ifnull(ofe.fechai,now()) and ifnull(ofe.fechat,now())
-group by 1,2,3,4,5,6,7 order by cantidad desc;
-
-drop view if exists vw_banner_ofertas;
-create view vw_banner_ofertas as
-select ofer.id_oferta,ofer.id_producto,ofer.fechai,ofer.fechat,ofer.precio_oferta,ofeb.banner
-from oferta ofer
-	inner join oferta_banner ofeb on ofer.id_oferta = ofeb.id_oferta
-where now() between ifnull(ofer.fechai,now()) and ifnull(ofer.fechat,now())
-order by rand() desc limit 3;
-select * from vw_banner_ofertas;
-
-
-select * from producto;
+insert into compra values (null,2,now(),0,0,0);
+insert into compra_detalle values (3,14,10,null);
+insert into compra_detalle values (3,15,5,null);
+insert into compra_detalle values (3,20,5,null);

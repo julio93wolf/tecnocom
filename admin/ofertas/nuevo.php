@@ -1,4 +1,5 @@
 <?php
+	include_once('../tecnocom.class.php');
 	if(isset($_REQUEST['id_producto'])){
 		$rol[0]='Administrador';
 		$tecnocom->security($rol,'/tecnocom/admin/login/');
@@ -6,7 +7,6 @@
 	}else{
 		header('Location: /tecnocom/admin/productos/');
 	}
-	include_once('../tecnocom.class.php');
 	if (isset($_POST['enviar'])) {
 		$paraOferta['id_producto']=$_POST['id_producto'];
 		$paraOferta['fechai']=$_POST['fechai'];

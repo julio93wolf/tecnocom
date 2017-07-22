@@ -1,4 +1,9 @@
-<div class="container">
+<?php
+  include_once('admin/tecnocom.class.php');
+  $datoBanner=$tecnocom->consultar('select * from vw_banner_ofertas');
+  if (count($datoBanner)>=3):
+?>
+  <div class="container">
     <!-- Carousel
     ================================================== -->
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -11,20 +16,20 @@
       <div class="carousel-inner" role="listbox">
       <?php
         $i=0;
-        foreach($conexion->query("select * from vw_banner_ofertas") as $fila) {
+        foreach ($datoBanner as $keyBanner) {
           if ($i==0) {
             echo '<div class="item active">';
-              echo'<img class="first-slide" src="images/ofertas/'.$fila['banner'].'" alt="First slide">';
+              echo'<img class="first-slide" src="images/ofertas/'.$keyBanner['banner'].'" alt="First slide">';
             echo '</div>';
           }
           if ($i==1) {
             echo '<div class="item">';
-              echo '<img class="second-slide" src="images/ofertas/'.$fila['banner'].'" alt="Second slide">';
+              echo '<img class="second-slide" src="images/ofertas/'.$keyBanner['banner'].'" alt="Second slide">';
             echo '</div>';
           }
           if ($i==2) {
             echo '<div class="item">';
-              echo '<img class="third-slide" src="images/ofertas/'.$fila['banner'].'" alt="Third slide">';
+              echo '<img class="third-slide" src="images/ofertas/'.$keyBanner['banner'].'" alt="Third slide">';
             echo '</div>';
           }
           $i++;
@@ -41,3 +46,6 @@
       </a>
     </div><!-- /.carousel -->
   </div><!-- /.container -->  
+<?php
+  endif;
+?>
