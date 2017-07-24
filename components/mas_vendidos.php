@@ -1,5 +1,5 @@
 <?php
-  include_once('admin/tecnocom.class.php');
+  //include_once('admin/tecnocom.class.php');
   $datoMasVendido=$tecnocom->consultar('select * from vw_mas_vendidos');
   if (count($datoMasVendido)>0){
     $productos=array();

@@ -71,7 +71,6 @@
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<form action="nuevo.php" method="POST">
-			
 			<div class="form-group">
 		    <label for="in_Nombre">Nombre</label>
 		    <input type="text" name="nombre" class="form-control" id="in_Nombre" placeholder="Nombre(s)">

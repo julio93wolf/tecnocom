@@ -1,15 +1,13 @@
 <?php
-  include_once('admin/tecnocom.class.php');
+  //include_once('admin/tecnocom.class.php');
   $datoOfertas=$tecnocom->consultar('select * from vw_ofertas');
   if (count($datoOfertas)>0){
     $productos=array();
     $contador=0;
-
     foreach ($datoOfertas as $keyOferta) {
       $productos[$contador]=$keyOferta;
       $contador++;
     }
-
     echo '<div class="container-fluid">';
       echo '<div class="row">';
         for ($i=0; $i < 4; $i++) { 

@@ -166,6 +166,21 @@ create table oferta_banner (
     foreign key (id_oferta) references oferta (id_oferta)
 );
 
+drop table if exists comentario;
+create table comentario(
+	id_comentario int auto_increment,
+    id_cliente int,
+    nombre varchar (100) not null,
+    correo varchar (100) not null,
+    tipo_comentario varchar (100) not null,
+    comentario text not null,
+    fecha date not null,
+    primary key (id_comentario),
+    foreign key (id_cliente) references cliente (id_cliente)
+);
+
+select * from comentario;
+
 drop view if exists vw_fabricantes;
 create view vw_fabricantes as
 select fab.id_fabricante,fab.fabricante,sub.id_subcategoria
@@ -213,6 +228,27 @@ from producto pro
     inner join oferta ofe on pro.id_producto = ofe.id_producto
 where now() between ofe.fechai and ofe.fechat 
 order by rand() desc limit 4;
+
+drop view if exists vw_oferta;
+create view vw_oferta as
+select 
+	pro.id_producto,
+    pro.imagen,
+    fab.logo,
+    fab.fabricante,
+    pro.sku,
+    pro.producto,
+    pro.precio,
+    ofe.precio_oferta,
+    ofe.fechai,
+    ofe.fechat,
+    pro.id_subcategoria,
+    pro.id_fabricante
+from producto pro
+	inner join fabricante fab on pro.id_fabricante = fab.id_fabricante
+    inner join oferta ofe on pro.id_producto = ofe.id_producto
+where now() between ofe.fechai and ofe.fechat 
+order by rand();
 
 drop view if exists vw_ultimos_productos;
 create view vw_ultimos_productos as
@@ -570,6 +606,8 @@ insert into cliente values (null,'José Mauro','Barragán','Acosta','12345','Cel
 insert into carrito values (null,1,0,0,0);
 insert into cliente values (null,'Félix','Becerra','Gutierrez','12345','Celaya',3);
 insert into carrito values (null,2,0,0,0);
+insert into carrito_detalle values (2,6,3,null);
+insert into carrito_detalle values (2,9,2,null);
 
 insert into empleado values (null,'Juan José','Torres','Pérez',4);
 insert into empleado values (null,'Juan Héctor','Luna','Sandoval',4);
@@ -584,3 +622,36 @@ insert into compra values (null,2,now(),0,0,0);
 insert into compra_detalle values (3,14,10,null);
 insert into compra_detalle values (3,15,5,null);
 insert into compra_detalle values (3,20,5,null);
+
+
+drop view if exists vw_carrito;
+create view vw_carrito as
+select 
+	crd.id_carrito,
+    car.id_cliente,
+    cli.id_usuario,
+	crd.cantidad,
+    car.subtotal,
+    car.iva,
+    car.total,
+	pro.id_producto,    
+    pro.sku,
+    pro.producto,
+    pro.precio,
+    pro.imagen,
+    pro.modelo,
+    ifnull(ofe.precio_oferta,pro.precio) as precio_oferta    
+from producto pro
+	inner join carrito_detalle crd on pro.id_producto = crd.id_producto
+    inner join carrito car on car.id_carrito = crd.id_carrito
+    inner join cliente cli on cli.id_cliente = car.id_cliente
+    left join oferta ofe on pro.id_producto = ofe.id_producto
+where now() between ifnull(ofe.fechai,now()) and ifnull(ofe.fechat,now());
+
+drop view if exists vw_compras;
+create view vw_compras as
+select com.id_compra,concat(cli.nombre,' ',cli.apaterno,' ',cli.amaterno) as nombre,cli.domicilio,cli.telefono,com.fecha,cpd.cantidad,pro.imagen,pro.sku,pro.producto,pro.modelo,cpd.precio,com.subtotal,com.iva,com.total
+from compra_detalle cpd 
+	inner join producto pro using (id_producto)
+    inner join compra com using (id_compra)
+    inner join cliente cli using (id_cliente);

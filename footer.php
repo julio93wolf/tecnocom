@@ -1,3 +1,4 @@
+            </div>
           </div><!-- /.row-->
         </div><!-- /.container-fluid -->
 
@@ -18,14 +19,13 @@
                 <ul>
                   <li><a href="">Mi Cuenta</a></li>
                   <li><a href="">Historial de Compras</a></li>
-                  <li><a href="">Mis Favoritos</a></li>
                 </ul>
               </div><!-- /.col-xs-12 /.col-sm-4 /.col-md-4 /.col-lg-4 --> 
               <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 footer_color">
                 <h4>Servicio al Cliente</h4>
                 <ul>
                   <li><a href="contacto.php">Contactános</a></li>
-                  <li><a href="opciones_pagos.php">Opciones de Pago</a></li>
+                  <li><a href="opciones_pago.php">Opciones de Pago</a></li>
                 </ul>
               </div><!-- /.col-xs-12 /.col-sm-4 /.col-md-4 /.col-lg-4 --> 
             </div><!-- /.row -->  

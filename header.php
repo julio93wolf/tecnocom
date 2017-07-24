@@ -73,7 +73,7 @@
             <div class="collapse navbar-collapse" id="nav_caterorias">
               <ul class="nav navbar-nav">
                 <?php
-                  include('components/nav.php');
+                  include('components/nav_index.php');
                 ?>
               </ul>
             </div><!-- /.navbar-collapse -->
@@ -82,4 +82,5 @@
 
         <div class="container-fluid" id="content">
           <div class="row">
+            <div class="container">
           

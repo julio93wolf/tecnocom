@@ -2,6 +2,7 @@
 	include_once('admin/tecnocom.class.php');
 	include('header.php');
 ?>
+<div class="row">		
 	<div class="col-md-2">		
 		<aside>
 			<div class="panel panel-tecnocom">
@@ -105,7 +106,7 @@
 			</div>
 		</section>
 	</div>
-
+</div>
 <?php
 	include('footer.php');
 ?>

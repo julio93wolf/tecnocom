@@ -1,5 +1,5 @@
 <?php
-  include_once('admin/tecnocom.class.php');
+  //include_once('admin/tecnocom.class.php');
   $datoBanner=$tecnocom->consultar('select * from vw_banner_ofertas');
   if (count($datoBanner)>=3):
 ?>

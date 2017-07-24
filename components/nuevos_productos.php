@@ -1,16 +1,13 @@
 <?php
-  
-  include_once('admin/tecnocom.class.php');
+  //include_once('admin/tecnocom.class.php');
   $datoNuevos=$tecnocom->consultar('select * from vw_ultimos_productos');
   if (count($datoNuevos)>0){
     $productos=array();
     $contador=0;  
-
     foreach ($datoNuevos as $keyNuevos) {
       $productos[$contador]=$keyNuevos;
       $contador++;
     }
-    
     echo '<div class="row">';
       for ($i=0; $i < 4; $i++) { 
         echo '<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">';

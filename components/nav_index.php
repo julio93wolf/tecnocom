@@ -1,5 +1,5 @@
 <?php
-	include_once('admin/tecnocom.class.php');
+	//include_once('admin/tecnocom.class.php');
 	$datoCategoria=$tecnocom->consultar('select * from categoria');
   if (count($datoCategoria)>0){
   	foreach ($datoCategoria as $keyCategoria) {

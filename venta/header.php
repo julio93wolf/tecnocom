@@ -26,15 +26,15 @@
 	        <span class="icon-bar"></span>
 	        <span class="icon-bar"></span>
 	      </button>
-	    	<a class="navbar-brand" href="#">Clientes</a>
+	    	<a class="navbar-brand" href="/tecnocom/venta/cliente">Cliente</a>
 	  	</div><!-- /.navbar-header -->
 
       <div class="collapse navbar-collapse" id="nav_cliente">
 	      <ul class="nav navbar-nav">
-	        <li><a href="/tecnocom/admin/productos">Productos</a></li>
-	        <li><a href="/tecnocom/admin/productos">Ofertas</a></li>
-	        <li><a href="/tecnocom/admin/productos">Mi Carrito</a></li>
-	        <li><a href="/tecnocom/admin/productos">Historial</a></li>
+	        <li><a href="/tecnocom/venta/productos">Productos</a></li>
+	        <li><a href="/tecnocom/venta/ofertas">Ofertas</a></li>
+	        <li><a href="/tecnocom/venta/carrito">Mi Carrito</a></li>
+	        <li><a href="/tecnocom/venta/historial">Mis Compras</a></li>
 	      </ul>
 	      
 	      <ul class="nav navbar-nav navbar-right">

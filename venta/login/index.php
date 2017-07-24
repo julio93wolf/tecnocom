@@ -70,21 +70,25 @@
 				}
 			}
 		?>
-		<form action="index.php" method="POST">
-	  	<div class="form-group">
-		    <label for="in_Email">Correo</label>
-		    <input type="email" name="correo" class="form-control" id="in_Email" placeholder="Correo">
-	  	</div>
-	  	<div class="form-group">
-		    <label for="in_Contrasena">Contraseña</label>
-		    <input type="password" name="contrasena" class="form-control" id="in_Contrasena" placeholder="Contraseña" onkeydown="password()">
-	  	</div>
-	  	
-	  	<div class="form-group">
-	  		<button type="submit" name="login" value="Login" class="btn btn-primary">Iniciar Sesión</button>
-	  		<a class="btn btn-link" href="../registro/recuperar.php" role="button">¿Olvidaste tu contraseña?</a>
-	  	</div>
-		</form>
+		<div class="panel panel-primary">
+		  <div class="panel-body">
+				<form action="index.php" method="POST">
+			  	<div class="form-group">
+				    <label for="in_Email">Correo</label>
+				    <input type="email" name="correo" class="form-control" id="in_Email" placeholder="Correo">
+			  	</div>
+			  	<div class="form-group">
+				    <label for="in_Contrasena">Contraseña</label>
+				    <input type="password" name="contrasena" class="form-control" id="in_Contrasena" placeholder="Contraseña" onkeydown="password()">
+			  	</div>
+			  	
+			  	<div class="form-group">
+			  		<button type="submit" name="login" value="Login" class="btn btn-primary">Iniciar Sesión</button>
+			  		<a class="btn btn-link" href="../registro/recuperar.php" role="button">¿Olvidaste tu contraseña?</a>
+			  	</div>
+				</form>    
+		  </div>
+		</div>
 	</div>
 </div> 
 <?php

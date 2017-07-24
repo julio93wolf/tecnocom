@@ -22,7 +22,7 @@
 					$_SESSION['usrRol'][$contRol]=$datoRol[$contRol]['rol'];
 					$contRol++;
 				}
-				header('Location: ../productos/');
+				header('Location: ../main/');
 				die();
 			}else{
 				$mensAlert[0]='Correo o Contraseña incorrecta';
@@ -82,7 +82,6 @@
 	  	
 	  	<div class="form-group">
 	  		<button type="submit" name="login" value="Login" class="btn btn-primary">Iniciar Sesión</button>
-				<a class="btn btn-danger pull-right" href="index.php">Cancelar</a>  		
 	  	</div>
 		</form>
 	</div>

@@ -1,5 +1,7 @@
 body{
-	background-color: #CFD8DC;
+	background-color: #F5F5F5;
+	margin: 0px; 
+	padding: 0px;
 }
 header{
 	background-color: #b71c1c;
@@ -15,6 +17,24 @@ footer{
 }
 #content_admin{
 	margin-top: 30px;
+}
+
+#info{
+	margin-bottom: 40px;
+}
+
+#info p{
+	text-align: justify;
+}
+
+#info_tittle{
+	color: red;
+	text-align: center;
+}
+
+#info_bottom{
+	color: red;
+	text-align: center;
 }
 
 .footer_color h4{
@@ -117,4 +137,23 @@ footer{
 .panel_index{
 	margin-top: 10px;
 	margin-bottom: 10px;
+}
+
+.panel-admin{
+	border-color: #5cb85c;
+}
+
+.panel-admin > .panel-heading{
+	background-color: #5cb85c;
+	color: white;
+}
+
+
+
+.precios h1{
+	color: red;
+}
+
+.precios p{
+	text-decoration: line-through;
 }
