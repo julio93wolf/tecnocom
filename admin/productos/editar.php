@@ -5,7 +5,6 @@
 	if (isset($_POST['enviar'])) {
 		$colorAlert="danger";
 		$iconAlert='glyphicon-exclamation-sign';
-		
 		if(!empty($_FILES['imagen']['name'])){
 			$extension=explode('.',$_FILES['imagen']['name']);
 			$origen=$_FILES['imagen']['tmp_name'];

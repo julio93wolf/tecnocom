@@ -124,7 +124,7 @@
 	  	</div>
 	  	<div class="form-group">
 	  		<button type="submit" name="enviar" value="Registrarse" class="btn btn-primary">Registrarse</button>
-				<a class="btn btn-danger pull-right" href="index.php">Cancelar</a>  		
+				<a class="btn btn-danger pull-right" href="/tecnocom/">Cancelar</a>  		
 	  	</div>
 		</form>
 	</div>

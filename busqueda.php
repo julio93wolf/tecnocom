@@ -1,27 +1,19 @@
 <?php
 	include_once('admin/tecnocom.class.php');
-	if(isset($_GET['sub'])){
-    $paramSubcategoria['id_subcategoria'] = $_GET['sub'];
-    $datoSubcategoria=$tecnocom->consultar('select * from subcategoria where id_subcategoria=:id_subcategoria',$paramSubcategoria);
-    $subcategoria=$datoSubcategoria[0]['subcategoria'];
-    $datoFabricante=$tecnocom->consultar('select * from vw_fabricantes where id_subcategoria=:id_subcategoria',$paramSubcategoria);
-    if(isset($_GET['fab'])){
-      $paramProducto['id_fabricante'] = $_GET['fab'];
-      $paramProducto['id_subcategoria'] = $_GET['sub'];
-      $datoProductos=$tecnocom->consultar('select * from vw_productos where id_subcategoria=:id_subcategoria and id_fabricante=:id_fabricante',$paramProducto);
+	if(isset($_GET['search'])){
+    $search=$_GET['search'];
+    $search=strtolower($search);
+    $search='%'.str_replace(' ','%',$search).'%';
+    if (isset($_GET['fab'])) {
+      $paramProductos['id_fabricante']=$_GET['fab'];
+      $datoProductos=$tecnocom->consultar("select * from vw_productos where id_producto in ( select id_producto from producto join producto_detalle using (id_producto) where producto like '".$search."' or descripcion like '".$search."' group by producto) and id_fabricante=:id_fabricante",$paramProductos);
     }else{
-      $paramProducto['id_subcategoria'] = $_GET['sub'];
-      $datoProductos=$tecnocom->consultar('select * from vw_productos where id_subcategoria=:id_subcategoria',$paramProducto);
+      $datoProductos=$tecnocom->consultar("select * from vw_productos where id_producto in ( select id_producto from producto join producto_detalle using (id_producto) where producto like '".$search."' or descripcion like '".$search."' group by producto)");
     }
+    $datoFabricante=$tecnocom->consultar("select id_fabricante,fabricante from fabricante where id_fabricante in (select id_fabricante from vw_productos where id_producto in (select id_producto from producto join producto_detalle using (id_producto) where producto like '".$search."' or descripcion like '".$search."' group by producto)) group by fabricante");
   }else{
-    if(isset($_GET['fab'])){
-      $paramProducto['id_fabricante'] = $_GET['fab'];
-      $datoFabricante=$tecnocom->consultar('select * from fabricante where id_fabricante=:id_fabricante',$paramProducto);
-      $datoProductos=$tecnocom->consultar('select * from vw_productos where id_fabricante=:id_fabricante',$paramProducto);
-    }else{
-      $datoFabricante=$tecnocom->consultar('select id_fabricante,fabricante from fabricante where id_fabricante in (select id_fabricante from vw_productos group by (id_fabricante)) group by fabricante');
-      $datoProductos=$tecnocom->consultar('select * from vw_productos');
-    }
+    $datoFabricante=$tecnocom->consultar('select id_fabricante,fabricante from fabricante where id_fabricante in (select id_fabricante from vw_productos group by (id_fabricante)) group by fabricante');
+    $datoProductos=$tecnocom->consultar('select * from vw_productos');
   }
 	include('header.php');
 ?>
@@ -34,16 +26,12 @@
         </div>
         <ul class="list-group">
           <?php
-            if (isset($_GET['sub'])) {
-              echo '<li class="list-group-item"><a href="categoria.php?sub='.$_GET['sub'].'">Todos</a></li>'; 
-            }else{
-              echo '<li class="list-group-item"><a href="categoria.php">Todos</a></li>'; 
-            }
+            echo '<li class="list-group-item"><a href="busqueda.php?search='.$_GET['search'].'">Todos</a></li>'; 
             foreach($datoFabricante as $keyFabricante) {
-              if (isset($_GET['sub'])) {
-                echo '<li class="list-group-item"><a href="categoria.php?sub='.$_GET['sub'].'&fab='.$keyFabricante['id_fabricante'].'">'.$keyFabricante['fabricante'].'</a></li>';  
+              if (isset($_GET['search'])) {
+                echo '<li class="list-group-item"><a href="busqueda.php?search='.$_GET['search'].'&fab='.$keyFabricante['id_fabricante'].'">'.$keyFabricante['fabricante'].'</a></li>';  
               }else{
-                echo '<li class="list-group-item"><a href="categoria.php?fab='.$keyFabricante['id_fabricante'].'">'.$keyFabricante['fabricante'].'</a></li>';  
+                echo '<li class="list-group-item"><a href="busqueda.php?fab='.$keyFabricante['id_fabricante'].'">'.$keyFabricante['fabricante'].'</a></li>';  
               }
             }
           ?>
@@ -55,13 +43,7 @@
     <section>
       <div class="panel panel-primary">
         <div class="panel-heading">
-          <?php
-            if(isset($_GET['sub'])){
-              echo '<h3 class="panel-title">'.$subcategoria.'</h3>';
-            }else{
-              echo '<h3 class="panel-title">Productos</h3>';
-            }
-          ?>
+          <h3 class="panel-title">Busqueda</h3>
         </div>
         <?php
           if (count($datoProductos)==0) {
@@ -112,4 +94,4 @@
 </div>
 <?php
 	include('footer.php');
-?>
+?>  

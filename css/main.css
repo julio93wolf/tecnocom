@@ -157,3 +157,14 @@ footer{
 .precios p{
 	text-decoration: line-through;
 }
+
+.center-block {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.vertical-align {
+    display: flex;
+    align-items: center;
+}

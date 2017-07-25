@@ -18,7 +18,6 @@
     <link href="css/main.css" rel="stylesheet"> 
   </head>
   <body>
-
     <div class="container">
       <div class="row" id="wrapper">
         <header>
@@ -57,7 +56,6 @@
             </div>  
           </div>
         </header>
-
         <nav class="navbar navbar-inverse">
           <div class="container-fluid">
             <div class="navbar-header">
@@ -69,7 +67,6 @@
               </button>
               <a class="navbar-brand" href="index.php">Inicio</a>
             </div><!-- /.navbar-header -->
-
             <div class="collapse navbar-collapse" id="nav_caterorias">
               <ul class="nav navbar-nav">
                 <?php
@@ -79,8 +76,6 @@
             </div><!-- /.navbar-collapse -->
           </div><!-- /.container-fluid -->
         </nav>
-
         <div class="container-fluid" id="content">
           <div class="row">
             <div class="container">
-          

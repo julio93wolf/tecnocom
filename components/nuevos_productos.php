@@ -11,7 +11,7 @@
     echo '<div class="row">';
       for ($i=0; $i < 4; $i++) { 
         echo '<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">';
-          echo '<img src="images/productos/'.$productos[$i]['imagen'].'" class="img-responsive center-block" alt="'.$productos[$i]['producto'].'" />';
+          echo '<img src="images/productos/'.$productos[$i]['imagen'].'" class="img-responsive center-block" alt="'.$productos[$i]['sku'].'" />';
         echo '</div>';  
       }
     echo '</div>';
