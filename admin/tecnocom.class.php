@@ -1,15 +1,12 @@
 <?php
-	
   if(!class_exists('Tecnocom')){
-		
     class Tecnocom{
-		
+    	var $rowChange=null;
 			function __construct(){
 				include ($_SERVER['DOCUMENT_ROOT'].'/tecnocom/config.php');
 				$this->conexion=$conexion;
 				$this->configuracion=$configuracion;
 			}
-
 			/*
 			* Método generico para realizar consultas en la base de datos
 			*/
@@ -21,10 +18,10 @@
 					}	
 				}
 				$statement->execute();
+				$this->rowChange=$statement->rowCount();
 				$datos=$statement->fetchAll();
 				return $datos;
 			}// Funcion Consultar
-
 			/*
 			* Método generico para insertar registros en la base de datos
 			*/
@@ -38,13 +35,13 @@
 					foreach ($parametros as $key => $value) {
 						$statement->bindValue(':'.$key,$value);
 					}
-					return $statement->execute();
+					$statement->execute();
+					$this->rowChange=$statement->rowCount();
 				}catch (PDOException $e) {
 					print "¡Error!: " . $e->getMessage() . "<br/>";
 					die();
 				}
 			}//Funcion Insertar
-
 			/*
 			* Método generico para actualizar registos en la base de datos
 			*/
@@ -63,12 +60,12 @@
 					foreach ($llaves as $key => $value) {
 						$statement->bindValue(':'.$key, $value);
 					}
-					return $statement->execute();	
+					$statement->execute();	
+					$this->rowChange=$statement->rowCount();
 				}catch (Exception $e){
 					echo 'La exception: '. $e->getMessage(). '\n';
 				}
 			}
-
 			/* 
 			* Método generico para eliminar registros en la base de datos
 			*/
@@ -81,13 +78,13 @@
 					foreach ($parametros as $key => $value) {
 						$statement->bindValue(':'.$key,$value);
 					}
-					return $statement->execute();
+					$statement->execute();
+					$this->rowChange=$statement->rowCount();
 				}catch (PDOException $e) {
 					print "¡Error!: " . $e->getMessage() . "<br/>";
 					die();
 				}
 			}// Funcion Borrar
-
 			function dropDownList($sql,$nombre,$id_seleccionado=null){
 				$datos=$this->consultar($sql);
 				$select='<select class="form-control" name="'.$nombre.'">';
@@ -102,14 +99,12 @@
 				$select.='</select>';
 				return $select;
 			}
-
 			function validarImagen($imagen){
 				if(in_array($imagen['type'],$this->configuracion['img_permit'])){
 					return true;
 				}
 				return false;
 			}
-			
 			function security($rolPermitido,$ulrError){
 				if (isset($_SESSION['usrValido'])) {
 					if ($_SESSION['usrValido']) {
@@ -132,9 +127,7 @@
 					header('Location: '.$ulrError.'index.php?error='.$error);
 				}
 			}
-
 		}// Class Tecnocom
-
 	}
 	$tecnocom = new Tecnocom;
 ?>
