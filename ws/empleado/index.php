@@ -5,6 +5,7 @@
 	$json=array('mensaje'=>'no se implemento ninguna acción');
 	switch ($metodo) {
 		case 'POST':
+		echo "POST";
 			$json=file_get_contents('php://input');
 			$json=json_decode($json);
 			foreach ($json as $key => $value) {

@@ -637,7 +637,7 @@ insert into carrito values (null,1,0,0,0);
 insert into cliente values (null,'Félix','Becerra','Gutierrez','12345','Celaya',3);
 insert into carrito values (null,2,0,0,0);
 
-insert into empleado values (null,'Juan José','Torres','Pérez',4);
+insert into empleado values (null,'Juan José','Torres','Pérez',1);
 insert into empleado values (null,'Juan Héctor','Luna','Sandoval',4);
 insert into empleado values (null,'Juan Carlos','Lozano','Mártinez',5);
 

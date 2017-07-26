@@ -1,10 +1,11 @@
 <?php
 	include('../../admin/tecnocom.class.php');
 	$metodo=$_SERVER['REQUEST_METHOD'];
-	header('Content-Type: application/json');	
+	//header('Content-Type: application/json');	
 	$json=array('mensaje'=>'no se implemento ninguna acción');
 	switch ($metodo) {
 		case 'POST':
+			echo "POST";
 			$json=file_get_contents('php://input');
 			$json=json_decode($json);
 			foreach ($json as $key => $value) {
