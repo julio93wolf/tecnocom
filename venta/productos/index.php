@@ -98,7 +98,7 @@
           </div>
           <input type="text" class="form-control" name="search" id="search" placeholder="Buscar...">
           <span class="input-group-btn">
-            <button class="btn btn-default" type="submit">Buscar</button>
+            <button class="btn btn-success" type="submit">Buscar</button>
            </span>
         </div>
       </div>

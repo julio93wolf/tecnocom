@@ -38,7 +38,7 @@
           <?php endforeach; ?>
         </table>
       <?php else: ?>
-          <div class="panel-body">No Hay Productos</div>
+          <div class="panel-body">No Hay Compras</div>
       <?php endif; ?>
     </div>
   

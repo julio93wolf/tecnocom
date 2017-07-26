@@ -64,6 +64,7 @@
       <?php endif; ?>
     </div>
   	<a class="btn btn-primary pull-right" href="recibo.php?id_compra=<?php echo $valCompra['id_compra']; ?>" role="button" target="_blank"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir</a>
+    <a class="btn btn-danger pull-right" href="index.php" role="button"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Regresar</a>
 </div>
 <?php
 	include('../footer.php');

@@ -1,5 +1,5 @@
-create user 'admin_tecnocom'@'localhost' identified by '12345';
-grant all on tecnocom.* to 'admin_tecnocom'@'localhost';
+create user 'admin'@'localhost' identified by '12345';
+grant all privileges on tecnocom.* to 'admin'@'localhost';
 
 drop database if exists tecnocom;
 create database tecnocom default charset utf8 default collate utf8_general_ci;
@@ -274,24 +274,24 @@ drop view if exists vw_mas_vendidos;
 create view vw_mas_vendidos as
 select 
 	pro.id_producto,
-    pro.imagen,
+	pro.imagen,
     fab.logo,
-    fab.fabricante,
+	fab.fabricante,
     pro.sku,
     pro.producto,
     pro.precio,
     ifnull(ofe.precio_oferta,pro.precio) as precio_oferta,
     ifnull(ofe.fechai,now()) as fechai,
     ifnull(ofe.fechat,now()) as fechat,
-    pro.id_subcategoria,
-    pro.id_fabricante,
-    sum(cmd.cantidad) as cantidad
+    pro.id_subcategoria as id_subcategoria,
+    pro.id_fabricante as id_fabricante,
+    sum(cmd.cantidad) as cantidad_vendida
 from producto pro
 	inner join fabricante fab on pro.id_fabricante = fab.id_fabricante
     inner join compra_detalle cmd on cmd.id_producto = pro.id_producto
     left join oferta ofe on pro.id_producto = ofe.id_producto
 where now() between ifnull(ofe.fechai,now()) and ifnull(ofe.fechat,now())
-group by 1,2,3,4,5,6,7 order by cantidad desc;
+group by 1,8,9,10 order by cantidad_vendida desc;
 
 drop view if exists vw_banner_ofertas;
 create view vw_banner_ofertas as
@@ -641,23 +641,21 @@ insert into empleado values (null,'Juan José','Torres','Pérez',4);
 insert into empleado values (null,'Juan Héctor','Luna','Sandoval',4);
 insert into empleado values (null,'Juan Carlos','Lozano','Mártinez',5);
 
-select * from compra_detalle;
-
 insert into compra values (null,1,'2017-07-26',82281.00,13164.96,95445.96);
-insert into compra values (1,3,2,1299.00);
-insert into compra values (1,8,4,1699.00);
-insert into compra values (1,10,1,1499.00);
-insert into compra values (1,13,2,16999.00);
-insert into compra values (1,15,1,6999.00);
-insert into compra values (1,16,1,2999.00);
-insert into compra values (1,18,1,2199.00);
-insert into compra values (1,21,1,8999.00);
-insert into compra values (1,23,1,1399.00);
-insert into compra values (1,25,1,699.00);
-insert into compra values (1,27,1,1499.00);
-insert into compra values (1,28,1,6999.00);
-insert into compra values (1,30,1,599.00);
-insert into compra values (1,31,1,4999.00);
+insert into compra_detalle values (1,3,2,1299.00);
+insert into compra_detalle values (1,8,4,1699.00);
+insert into compra_detalle values (1,10,1,1499.00);
+insert into compra_detalle values (1,13,2,16999.00);
+insert into compra_detalle values (1,15,1,6999.00);
+insert into compra_detalle values (1,16,1,2999.00);
+insert into compra_detalle values (1,18,1,2199.00);
+insert into compra_detalle values (1,21,1,8999.00);
+insert into compra_detalle values (1,23,1,1399.00);
+insert into compra_detalle values (1,25,1,699.00);
+insert into compra_detalle values (1,27,1,1499.00);
+insert into compra_detalle values (1,28,1,6999.00);
+insert into compra_detalle values (1,30,1,599.00);
+insert into compra_detalle values (1,31,1,4999.00);
 
 insert into compra values (null,1,'2017-07-26',34596.00,5535.36,40131.36);
 insert into compra_detalle values (2,7,2,8299.00);

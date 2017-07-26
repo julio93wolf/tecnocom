@@ -2,7 +2,7 @@
 	session_start();
 
 	/*Configuración de la base de datos - Conexion*/
-	define('USER','admin_tecnocom');
+	define('USER','admin');
 	define('PASSWORD','12345');
 	define('SGDB','mysql');
 	define('DB','tecnocom');

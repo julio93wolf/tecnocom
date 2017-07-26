@@ -29,7 +29,7 @@
 				// 0 = off (for production use)
 				// 1 = client messages
 				// 2 = client and server messages
-				$mail->SMTPDebug = 2;
+				$mail->SMTPDebug = 0;
 				//Ask for HTML-friendly debug output
 				$mail->Debugoutput = 'html';
 				//Set the hostname of the mail server
@@ -57,7 +57,7 @@
 				$mail->Subject = 'Tecnocom: Recuperacio de Contraseña';
 				//Read an HTML message body from an external file, convert referenced images to embedded,
 				//convert HTML into a basic plain-text alternative body
-				$mail->msgHTML('Estimado usuario a continuacion le enciamos una liga que debera presionar para recuperar su cuenta <br /><a href="http://localhost/tecnocom/venta/registro/restablecer.php?llave='.$token.'">Recuperar Constraseña</a>');
+				$mail->msgHTML('Estimado usuario a continuación le enviamos una liga que debera presionar para recuperar su cuenta <br /><a href="http://localhost/tecnocom/venta/registro/restablecer.php?llave='.$token.'">Recuperar Constraseña</a>');
 				//Replace the plain text body with one created manually
 				
 				$mail->AltBody = 'This is a plain-text message body';
@@ -68,8 +68,10 @@
 				    echo "Mailer Error: " . $mail->ErrorInfo;
 				} else {
 				    echo "Message sent!";
+				    $mensAlert[0]='Se envío el correo de recuperación, por favor revise su bandeja de entrada';
+						$colorAlert='success';
+						$iconAlert='glyphicon glyphicon-ok';
 				}
-
 			}else{
 				$mensaje='Error al enviar el Correo';
 				$color='danger';
@@ -84,6 +86,13 @@
 		<div class="page-header">
 		  <h1>Recuperar</h1>
 		</div>
+		<?php
+			if(isset($mensAlert) and isset($colorAlert) and isset($iconAlert)){
+				foreach ($mensAlert as $key => $value) {
+					echo '<div class="alert alert-'.$colorAlert.' alert-dismissible" role="alert"><span class="glyphicon '.$iconAlert.'" aria-hidden="true"></span> '.$value.'</div>';
+				}
+			}
+		?>
 		<form action="recuperar.php" method="POST">
 				<div class="form-group">
 			    <label for="in_Correo">Correo</label>

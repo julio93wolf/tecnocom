@@ -54,8 +54,7 @@
 				try{
 					$statement=$this->conexion->prepare($sql);
 					foreach ($parametros as $key => $value) {
-						$statement->bindValue(':'.$key, $value);
-						
+						$statement->bindValue(':'.$key, $value);	
 					}
 					foreach ($llaves as $key => $value) {
 						$statement->bindValue(':'.$key, $value);

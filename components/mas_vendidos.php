@@ -4,7 +4,6 @@
   if (count($datoMasVendido)>0){
     $productos=array();
     $contador=0;  
-
     foreach ($datoMasVendido as $keyVendidos) {
       $productos[$contador]=$keyVendidos;
       $contador++;

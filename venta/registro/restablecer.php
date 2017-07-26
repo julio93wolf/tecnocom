@@ -5,11 +5,9 @@
 		$datoUsuario=$tecnocom->consultar('select * from usuario where llave=:llave',$paraLlave);
 		if (count($datoUsuario)>0 && strlen($datoUsuario[0]['llave'])>0) {
 			if (isset($_POST['enviar'])) {
-				$llaveUsuario['llave']=$_POST['llave'];
+				$llaveUsuario['id_usuario']=$datoUsuario[0]['id_usuario'];
 				$paraUsuario['llave']=null;
 				$paraUsuario['contrasena']=md5($_POST['contrasena']);
-				print_r($paraUsuario);
-				die();
 				$tecnocom->actualizar('usuario',$paraUsuario,$llaveUsuario);
 				header('Location: /tecnocom/venta/login/index.php');
 			}
