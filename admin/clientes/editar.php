@@ -24,28 +24,18 @@
 							$paraUsuario['correo']=$correo;
 							$paraUsuario['contrasena']=$contrasena;
 							$llaveUsuario['id_usuario']=$_POST['id_usuario'];
-							$rowChange=$tecnocom->actualizar('usuario',$paraUsuario,$llaveUsuario);
-							if ($rowChange>0) {
-								$mensAlert[0]='Se actualizo la informacion del usuario';
-								// Actualizamos la informacion del cliente
-								$paraCliente['nombre']=$_POST['nombre'];
-								$paraCliente['apaterno']=$_POST['apaterno'];
-								$paraCliente['amaterno']=$_POST['amaterno'];
-								$paraCliente['telefono']=$_POST['telefono'];
-								$paraCliente['domicilio']=$_POST['domicilio'];
-								$llaveCliente['id_cliente']=$_POST['id_cliente'];
-								$rowChange=$tecnocom->actualizar('cliente',$paraCliente,$llaveCliente);
-								if ($rowChange>0) {
-									$mensAlert[1]='Se actualizo la informacion del cliente';
-									$colorAlert='success';
-									$iconAlert='glyphicon glyphicon-ok';
-										
-								}else{
-									$mensAlert[1]="Error: No se ha podido modificar la información del cliente";
-								}
-							}else{
-								$mensAlert[0]="Error: No se ha podido modificar la información del usuario";
-							}
+							$tecnocom->actualizar('usuario',$paraUsuario,$llaveUsuario);
+							// Actualizamos la informacion del cliente
+							$paraCliente['nombre']=$_POST['nombre'];
+							$paraCliente['apaterno']=$_POST['apaterno'];
+							$paraCliente['amaterno']=$_POST['amaterno'];
+							$paraCliente['telefono']=$_POST['telefono'];
+							$paraCliente['domicilio']=$_POST['domicilio'];
+							$llaveCliente['id_cliente']=$_POST['id_cliente'];
+							$tecnocom->actualizar('cliente',$paraCliente,$llaveCliente);
+							$mensAlert[0]='Se actualizo la informacion del cliente';
+							$colorAlert='success';
+							$iconAlert='glyphicon glyphicon-ok';
 						}else{
 							$mensAlert[0]="Error: Las contraseñas no son correctas";
 						}		
@@ -58,27 +48,18 @@
 			}else{
 				$paraUsuario['correo']=$correo;
 				$llaveUsuario['id_usuario']=$_POST['id_usuario'];
-				$rowChange=$tecnocom->actualizar('usuario',$paraUsuario,$llaveUsuario);
-				if ($rowChange>0) {
-					$mensAlert[0]='Se actualizo la informacion del usuario';
-					// Actualizamos la informacion del cliente
-					$paraCliente['nombre']=$_POST['nombre'];
-					$paraCliente['apaterno']=$_POST['apaterno'];
-					$paraCliente['amaterno']=$_POST['amaterno'];
-					$paraCliente['telefono']=$_POST['telefono'];
-					$paraCliente['domicilio']=$_POST['domicilio'];
-					$llaveCliente['id_cliente']=$_POST['id_cliente'];
-					$rowChange=$tecnocom->actualizar('cliente',$paraCliente,$llaveCliente);
-					if ($rowChange>0) {
-						$mensAlert[1]='Se actualizo la informacion del cliente';
-						$colorAlert='success';
-						$iconAlert='glyphicon glyphicon-ok';
-					}else{
-						$mensAlert[1]="Error: No se ha podido modificar la información del cliente";
-					}
-				}else{
-					$mensAlert[0]="Error: No se ha podido modificar la información del usuario";
-				}
+				$tecnocom->actualizar('usuario',$paraUsuario,$llaveUsuario);
+				// Actualizamos la informacion del cliente
+				$paraCliente['nombre']=$_POST['nombre'];
+				$paraCliente['apaterno']=$_POST['apaterno'];
+				$paraCliente['amaterno']=$_POST['amaterno'];
+				$paraCliente['telefono']=$_POST['telefono'];
+				$paraCliente['domicilio']=$_POST['domicilio'];
+				$llaveCliente['id_cliente']=$_POST['id_cliente'];
+				$tecnocom->actualizar('cliente',$paraCliente,$llaveCliente);
+				$mensAlert[1]='Se actualizo la informacion del cliente';
+				$colorAlert='success';
+				$iconAlert='glyphicon glyphicon-ok';
 			}
 		}else{
 			$mensAlert[0]="Error: El correo no es correcto";

@@ -155,41 +155,43 @@
               foreach ($datoProductos as $keyProducto):
           ?>
           <div class="panel-body">
-            <div class="hidden-xs hidden-sm col-md-2 col-lg-2"> 
-              <img class="img-responsive" src="../../images/productos/<?php echo $keyProducto['imagen']; ?>" alt="<?php echo $keyProducto['sku']; ?>" />
-            </div>
-            <div class="hidden-xs hidden-sm col-md-2 col-lg-2"> 
-              <img class="img-responsive" src="../../images/fabricantes/<?php echo $keyProducto['logo']; ?>" alt="<?php echo $keyProducto['fabricante']; ?>'" />
-            </div>
-            <div class="col-xs-8 col-sm-9 col-md-5 col-lg-5"> 
-              <?php
-                echo '<h4><strong>'.$keyProducto['producto'].'</strong></h4>';
-                echo '<p>'.$keyProducto['sku'].'</p>';
-                echo '<ul>';
-                $paramDescripcion['id_producto'] = $keyProducto['id_producto'];
-                $datoDetalle=$tecnocom->consultar('select descripcion from producto_detalle where id_producto=:id_producto',$paramDescripcion);
-                foreach($datoDetalle as $keyDetalle){
-                  echo '<li>'.$keyDetalle['descripcion'].'</li>';
-                }
-                echo '</ul>';
-              ?>
-            </div>
-            <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 precios"> 
-              <?php
-                  echo '<h4 class="text-center"><strong>Precio con IVA</strong></h4>';
-                  if($keyProducto['precio_oferta']<$keyProducto['precio']){
-                    echo '<h1 class="text-center"><strong>$'.$keyProducto['precio_oferta'].'</strong></h1>';
-                    echo '<p class="text-center"><strong>$'.$keyProducto['precio'].'</strong></p>';
-                  }else{
-                    echo '<h1 class="text-center"><strong>$'.$keyProducto['precio'].'</strong></h1>';
-                  }
-                ?>
-              <div class="form-group">
-                <label for="in_Cantidad">Cantidad:</label>
-                <input type="number" name="carrito[<?php echo $keyProducto['id_producto']; ?>]" class="form-control" id="in_Cantidad" placeholder="0">
+            <div class="row vertical-align">
+              <div class="hidden-xs hidden-sm col-md-2 col-lg-2"> 
+                <img class="img-responsive" src="../../images/productos/<?php echo $keyProducto['imagen']; ?>" alt="<?php echo $keyProducto['sku']; ?>" />
               </div>
-              <div class="form-group">
-                <button type="submit" name="solicitar" value="Agregar" class="btn btn-warning center-block"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Agregar</button>
+              <div class="hidden-xs hidden-sm col-md-2 col-lg-2"> 
+                <img class="img-responsive" src="../../images/fabricantes/<?php echo $keyProducto['logo']; ?>" alt="<?php echo $keyProducto['fabricante']; ?>'" />
+              </div>
+              <div class="col-xs-8 col-sm-9 col-md-5 col-lg-5"> 
+                <?php
+                  echo '<h4><strong>'.$keyProducto['producto'].'</strong></h4>';
+                  echo '<p>'.$keyProducto['sku'].'</p>';
+                  echo '<ul>';
+                  $paramDescripcion['id_producto'] = $keyProducto['id_producto'];
+                  $datoDetalle=$tecnocom->consultar('select descripcion from producto_detalle where id_producto=:id_producto',$paramDescripcion);
+                  foreach($datoDetalle as $keyDetalle){
+                    echo '<li>'.$keyDetalle['descripcion'].'</li>';
+                  }
+                  echo '</ul>';
+                ?>
+              </div>
+              <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3 precios"> 
+                <?php
+                    echo '<h4 class="text-center"><strong>Precio con IVA</strong></h4>';
+                    if($keyProducto['precio_oferta']<$keyProducto['precio']){
+                      echo '<h1 class="text-center"><strong>$'.$keyProducto['precio_oferta'].'</strong></h1>';
+                      echo '<p class="text-center"><strong>$'.$keyProducto['precio'].'</strong></p>';
+                    }else{
+                      echo '<h1 class="text-center"><strong>$'.$keyProducto['precio'].'</strong></h1>';
+                    }
+                  ?>
+                <div class="form-group">
+                  <label for="in_Cantidad">Cantidad:</label>
+                  <input type="number" name="carrito[<?php echo $keyProducto['id_producto']; ?>]" class="form-control" id="in_Cantidad" placeholder="0">
+                </div>
+                <div class="form-group">
+                  <button type="submit" name="solicitar" value="Agregar" class="btn btn-warning center-block"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Agregar</button>
+                </div>
               </div>
             </div>
           </div>

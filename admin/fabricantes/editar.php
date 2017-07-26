@@ -19,14 +19,10 @@
 					$paraFabricante['fabricante']=$_POST['fabricante'];
 					$paraFabricante['logo']=$logo.'.'.$extension[1];
 					$llaveFabricante['id_fabricante']=$_POST['id_fabricante'];
-					$rowChange=$tecnocom->actualizar('fabricante',$paraFabricante,$llaveFabricante);			
-					if ($rowChange>0) {
-						$mensAlert[0]='Se actualizaron los datos del fabricante';
-						$colorAlert='success';
-						$iconAlert='glyphicon glyphicon-ok';
-					}else{
-						$mensAlert[0]="Error: No se ha podido actualizar los datos del fabricante";
-					}			
+					$tecnocom->actualizar('fabricante',$paraFabricante,$llaveFabricante);			
+					$mensAlert[0]='Se actualizaron los datos del fabricante';
+					$colorAlert='success';
+					$iconAlert='glyphicon glyphicon-ok';
 				}else{
 					$mensAlert[0]="Error: No se ha podido cargar la imagen al servidor";
 				}
@@ -44,8 +40,8 @@
 			$paraFabricante['fabricante']=$_POST['fabricante'];
 			$paraFabricante['logo']=$logo.'.'.$extension[1];
 			$llaveFabricante['id_fabricante']=$_POST['id_fabricante'];
-			$rowChange=$tecnocom->actualizar('fabricante',$paraFabricante,$llaveFabricante);				
-			if ($rowChange>0) {
+			$tecnocom->actualizar('fabricante',$paraFabricante,$llaveFabricante);				
+			if ($tecnocom->rowChange>0) {
 				$mensAlert[0]='Se actualizaron los datos del fabricante';
 				$colorAlert='success';
 				$iconAlert='glyphicon glyphicon-ok';

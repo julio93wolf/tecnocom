@@ -10,8 +10,8 @@
 	if (isset($_POST['enviar'])) {
 		$paraDetalle['id_producto']=$_POST['id_producto'];
 		$paraDetalle['descripcion']=$_POST['descripcion'];
-		$rowChange=$tecnocom->insertar('producto_detalle',$paraDetalle);			
-		if ($rowChange>0) {
+		$tecnocom->insertar('producto_detalle',$paraDetalle);			
+		if ($tecnocom->rowChange>0) {
 			$mensAlert[0]='Se inserto la nueva descripción';
 			$colorAlert='success';
 			$iconAlert='glyphicon glyphicon-ok';

@@ -13,9 +13,9 @@
 	if (isset($_GET['id_producto_detalle'])) {
 		$id_producto_detalle = $_GET['id_producto_detalle'];
 		$paraDetalle['id_producto_detalle']= $id_producto_detalle;
-		$rowChange=$tecnocom->borrar('producto_detalle',$paraDetalle);	
-		if ($rowChange>0) {
-			$mensAlert[0]="Se eliminaron ".$rowChange." descripción";
+		$tecnocom->borrar('producto_detalle',$paraDetalle);	
+		if ($tecnocom->rowChange>0) {
+			$mensAlert[0]="Se eliminaron ".$tecnocom->rowChange." descripción";
 			$colorAlert="success";
 			$iconAlert='glyphicon-ok';
 		}else{

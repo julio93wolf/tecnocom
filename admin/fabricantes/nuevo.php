@@ -14,8 +14,8 @@
 				if(move_uploaded_file($origen,$destino)){
 					$paraFabricante['fabricante']=$_POST['fabricante'];
 					$paraFabricante['logo']=$logo.'.'.$extension[1];
-					$rowChange=$tecnocom->insertar('fabricante',$paraFabricante);			
-					if ($rowChange>0) {
+					$tecnocom->insertar('fabricante',$paraFabricante);			
+					if ($tecnocom->rowChange>0) {
 						$mensAlert[0]='Se inserto el nuevo fabricante';
 						$colorAlert='success';
 						$iconAlert='glyphicon glyphicon-ok';

@@ -14,9 +14,9 @@
 		$id_rol = $_GET['id_rol'];
 		$paraUserRol['id_usuario']= $id_usuario;
 		$paraUserRol['id_rol']= $id_rol;
-		$rowChange=$tecnocom->borrar('usuario_rol',$paraUserRol);	
-		if ($rowChange>0) {
-			$mensAlert[0]="Se elimino ".$rowChange." rol";
+		$tecnocom->borrar('usuario_rol',$paraUserRol);	
+		if ($tecnocom->rowChange>0) {
+			$mensAlert[0]="Se elimino ".$tecnocom->rowChange." rol";
 			$colorAlert="success";
 			$iconAlert='glyphicon-ok';
 		}else{

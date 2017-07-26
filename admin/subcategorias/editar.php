@@ -10,16 +10,10 @@
 	if (isset($_POST['enviar'])) {
 		$llaveSubcategoria['id_subcategoria']=$_POST['id_subcategoria'];
 		$updaParaSubcategoria['subcategoria']=$_POST['subcategoria'];
-		$rowChange=$tecnocom->actualizar('subcategoria',$updaParaSubcategoria,$llaveSubcategoria);
-		if ($rowChange>0) {
-			$mensAlert[0]='Se actualizo la subcategoría';
-			$colorAlert='success';
-			$iconAlert='glyphicon glyphicon-ok';
-		}else{
-			$mensAlert[0]="Error: No se ha podido modificar la categoría";
-			$colorAlert="danger";
-			$iconAlert='glyphicon-exclamation-sign';
-		}
+		$tecnocom->actualizar('subcategoria',$updaParaSubcategoria,$llaveSubcategoria);
+		$mensAlert[0]='Se actualizo la subcategoría';
+		$colorAlert='success';
+		$iconAlert='glyphicon glyphicon-ok';
 		if($_POST['enviar']=="Guardar y Regresar"){
 			include('index.php');
 			die();

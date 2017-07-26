@@ -10,16 +10,10 @@
 	if (isset($_POST['enviar'])) {
 		$llaveDetalle['id_producto_detalle']=$_POST['id_producto_detalle'];
 		$paraDetalle['descripcion']=$_POST['descripcion'];
-		$rowChange=$tecnocom->actualizar('producto_detalle',$paraDetalle,$llaveDetalle);
-		if ($rowChange>0) {
-			$mensAlert[0]='Se actualizo la descripción';
-			$colorAlert='success';
-			$iconAlert='glyphicon glyphicon-ok';
-		}else{
-			$mensAlert[0]="Error: No se ha podido modificar la descripción";
-			$colorAlert="danger";
-			$iconAlert='glyphicon-exclamation-sign';
-		}
+		$tecnocom->actualizar('producto_detalle',$paraDetalle,$llaveDetalle);
+		$mensAlert[0]='Se actualizo la descripción';
+		$colorAlert='success';
+		$iconAlert='glyphicon glyphicon-ok';
 		if($_POST['enviar']=="Guardar y Regresar"){
 			include('index.php');
 			die();

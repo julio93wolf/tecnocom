@@ -22,14 +22,10 @@
 					$paraProducto['id_subcategoria']=$_POST['id_subcategoria'];
 					$paraProducto['imagen']=$_POST['sku'].'.'.$extension[1];
 					$llaveProducto['id_producto']=$_POST['id_producto'];
-					$rowChange=$tecnocom->actualizar('producto',$paraProducto,$llaveProducto);			
-					if ($rowChange>0) {
-						$mensAlert[0]='Se actualizaron los datos del producto';
-						$colorAlert='success';
-						$iconAlert='glyphicon glyphicon-ok';
-					}else{
-						$mensAlert[0]="Error: No se ha podido actualizar los datos del producto";
-					}			
+					$tecnocom->actualizar('producto',$paraProducto,$llaveProducto);			
+					$mensAlert[0]='Se actualizaron los datos del producto';
+					$colorAlert='success';
+					$iconAlert='glyphicon glyphicon-ok';
 				}else{
 					$mensAlert[0]="Error: No se ha podido cargar la imagen al servidor";
 				}
@@ -51,8 +47,8 @@
 			$paraProducto['id_subcategoria']=$_POST['id_subcategoria'];
 			$paraProducto['imagen']=$_POST['sku'].'.'.$extension[1];
 			$llaveProducto['id_producto']=$_POST['id_producto'];
-			$rowChange=$tecnocom->actualizar('producto',$paraProducto,$llaveProducto);			
-			if ($rowChange>0) {
+			$tecnocom->actualizar('producto',$paraProducto,$llaveProducto);			
+			if ($tecnocom->rowChange>0) {
 				$mensAlert[0]='Se actualizaron los datos del producto';
 				$colorAlert='success';
 				$iconAlert='glyphicon glyphicon-ok';

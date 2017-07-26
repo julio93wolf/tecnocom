@@ -13,9 +13,9 @@
 		$colorAlert="danger";
 		$iconAlert='glyphicon-exclamation-sign';
 		if(sizeof($datoRol)<=0){
-			$rowChange=$tecnocom->borrar('rol',$paraRol);
-			if ($rowChange>0) {
-				$mensAlert[0]="Se elimino ".$rowChange." rol";
+			$tecnocom->borrar('rol',$paraRol);
+			if ($tecnocom->rowChange>0) {
+				$mensAlert[0]="Se elimino ".$tecnocom->rowChange." rol";
 				$colorAlert="success";
 				$iconAlert='glyphicon-ok';
 			}else{

@@ -4,8 +4,8 @@
 	$tecnocom->security($rol,'/tecnocom/admin/login/');
 	if (isset($_POST['enviar'])) {
 		$paraRol['rol']=$_POST['rol'];
-		$rowChange=$tecnocom->insertar('rol',$paraRol);			
-		if ($rowChange>0) {
+		$tecnocom->insertar('rol',$paraRol);			
+		if ($tecnocom->rowChange>0) {
 			$mensAlert[0]='Se inserto el nuevo rol';
 			$colorAlert='success';
 			$iconAlert='glyphicon glyphicon-ok';

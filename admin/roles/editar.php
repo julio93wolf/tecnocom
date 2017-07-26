@@ -5,16 +5,10 @@
 	if (isset($_POST['enviar'])) {
 		$llaveRol['id_rol']=$_POST['id_rol'];
 		$paraRol['rol']=$_POST['rol'];
-		$rowChange=$tecnocom->actualizar('rol',$paraRol,$llaveRol);
-		if ($rowChange>0) {
-			$mensAlert[0]='Se actualizo el rol';
-			$colorAlert='success';
-			$iconAlert='glyphicon glyphicon-ok';
-		}else{
-			$mensAlert[0]="Error: No se ha podido modificar el rol";
-			$colorAlert="danger";
-			$iconAlert='glyphicon-exclamation-sign';
-		}
+		$tecnocom->actualizar('rol',$paraRol,$llaveRol);
+		$mensAlert[0]='Se actualizo el rol';
+		$colorAlert='success';
+		$iconAlert='glyphicon glyphicon-ok';
 		if($_POST['enviar']=="Guardar y Regresar"){
 			include('index.php');
 			die();

@@ -22,14 +22,12 @@
 					$paraOferta['fechat']=$_POST['fechat'];
 					$paraOferta['precio_oferta']=$_POST['precio_oferta'];
 					$llaveOferta['id_oferta']=$_POST['id_oferta'];
-					$rowChange=$tecnocom->actualizar('oferta',$paraOferta,$llaveOferta);			
-					if ($rowChange>0) {
-						$mensAlert[0]='Se actualizaron los datos del oferta';
-						$colorAlert='success';
-						$iconAlert='glyphicon glyphicon-ok';
-					}else{
-						$mensAlert[0]="Error: No se ha podido actualizar los datos del oferta";
-					}			
+					$tecnocom->actualizar('oferta',$paraOferta,$llaveOferta);			
+				
+					$mensAlert[0]='Se actualizaron los datos del oferta';
+					$colorAlert='success';
+					$iconAlert='glyphicon glyphicon-ok';
+								
 				}else{
 					$mensAlert[0]="Error: No se ha podido cargar la banner al servidor";
 				}
@@ -41,14 +39,11 @@
 			$paraOferta['fechat']=$_POST['fechat'];
 			$paraOferta['precio_oferta']=$_POST['precio_oferta'];
 			$llaveOferta['id_oferta']=$_POST['id_oferta'];
-			$rowChange=$tecnocom->actualizar('oferta',$paraOferta,$llaveOferta);	
-			if ($rowChange>0) {
-				$mensAlert[0]='Se actualizaron los datos del oferta';
-				$colorAlert='success';
-				$iconAlert='glyphicon glyphicon-ok';
-			}else{
-				$mensAlert[0]="Error: No se ha podido actualizar los datos del oferta";
-			}			
+			$tecnocom->actualizar('oferta',$paraOferta,$llaveOferta);	
+			
+			$mensAlert[0]='Se actualizaron los datos del oferta';
+			$colorAlert='success';
+			$iconAlert='glyphicon glyphicon-ok';
 		}
 		if($_POST['enviar']=="Guardar y Regresar"){
 			include('index.php');

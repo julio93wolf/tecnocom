@@ -16,8 +16,8 @@
 					$contrasena=md5($contrasena);
 					$paraUsuario['correo']=$correo;
 					$paraUsuario['contrasena']=$contrasena;
-					$rowChange=$tecnocom->insertar('usuario',$paraUsuario);
-					if ($rowChange>0) {
+					$tecnocom->insertar('usuario',$paraUsuario);
+					if ($tecnocom->rowChange>0) {
 						$mensAlert[0]='Se agrego el nuevo usuario';
 						// Obtenemos el id_usuario
 						$datoUsuario=$tecnocom->consultar('select * from usuario where correo=:correo and contrasena=:contrasena',$paraUsuario);
@@ -33,8 +33,8 @@
 						$paraCliente['telefono']=$_POST['telefono'];
 						$paraCliente['domicilio']=$_POST['domicilio'];
 						$paraCliente['id_usuario']=$id_usuario;
-						$rowChange=$tecnocom->insertar('cliente',$paraCliente);
-						if ($rowChange>0) {
+						$tecnocom->insertar('cliente',$paraCliente);
+						if ($tecnocom->rowChange>0) {
 							$mensAlert[1]='Se agrego el nuevo cliente';
 							// Obtenemos el id del cliente
 							$paraCliente=array();
@@ -45,8 +45,8 @@
 							$paraCarrito['subtotal']=0;
 							$paraCarrito['iva']=0;
 							$paraCarrito['total']=0;
-							$rowChange=$tecnocom->insertar('carrito',$paraCarrito);
-							if ($rowChange>0) {
+							$tecnocom->insertar('carrito',$paraCarrito);
+							if ($tecnocom->rowChange>0) {
 								$mensAlert[2]='Se agrego el nuevo carrito para el cliente';
 								$colorAlert='success';
 								$iconAlert='glyphicon glyphicon-ok';

@@ -8,8 +8,8 @@
 			$token=md5(rand(1,1000000).sha1($correo)).md5(md5($datoCorreo[0]['contrasena'])).md5(rand(1,1000000).soundex(crypt('tecnocom','correo')).crypt(rand(1,1000000),'recuperar'));
 			$paraUsuario['llave']=$token;
 			$llaveUsuario['correo']=$correo;
-			$rowChange=$tecnocom->actualizar('usuario',$paraUsuario,$llaveUsuario);
-			if (count($rowChange)) {
+			$tecnocom->actualizar('usuario',$paraUsuario,$llaveUsuario);
+			if (count($tecnocom->rowChange)) {
 				$mensaje='Se envio el correo con las instrucciones';
 				$color='success';
 				$icon='glyphicon glyphicon-ok';

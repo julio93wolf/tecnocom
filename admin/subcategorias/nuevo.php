@@ -10,8 +10,8 @@
 	if (isset($_POST['enviar'])) {
 		$paraSubCategoria['id_categoria']=$_POST['id_categoria'];
 		$paraSubCategoria['subcategoria']=$_POST['subcategoria'];
-		$rowChange=$tecnocom->insertar('subcategoria',$paraSubCategoria);			
-		if ($rowChange>0) {
+		$tecnocom->insertar('subcategoria',$paraSubCategoria);			
+		if ($tecnocom->rowChange>0) {
 			$mensAlert[0]='Se inserto la nueva subcategoría';
 			$colorAlert='success';
 			$iconAlert='glyphicon glyphicon-ok';

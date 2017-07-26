@@ -12,8 +12,8 @@
 		$paraOferta['fechai']=$_POST['fechai'];
 		$paraOferta['fechat']=$_POST['fechat'];
 		$paraOferta['precio_oferta']=$_POST['precio_oferta'];
-		$rowChange=$tecnocom->insertar('oferta',$paraOferta);			
-		if ($rowChange>0) {
+		$tecnocom->insertar('oferta',$paraOferta);			
+		if ($tecnocom->rowChange>0) {
 			$mensAlert[0]='Se agrego la nueva oferta';
 			$colorAlert='success';
 			$iconAlert='glyphicon glyphicon-ok';
@@ -27,8 +27,8 @@
 					if(move_uploaded_file($origen,$destino)){
 						$paraBanner['id_oferta']=$id_oferta;
 						$paraBanner['banner']='oferta_'.$id_oferta.'.'.$extension[1];
-						$rowChange=$tecnocom->insertar('oferta_banner',$paraBanner);			
-						if ($rowChange>0) {
+						$tecnocom->insertar('oferta_banner',$paraBanner);			
+						if ($tecnocom->rowChange>0) {
 							$mensAlert[0]='Se agrego la imagen de la oferta';
 							$colorAlert='success';
 							$iconAlert='glyphicon glyphicon-ok';

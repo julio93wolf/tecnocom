@@ -63,7 +63,7 @@
           <div class="panel-body">No Hay Registros</div>
       <?php endif; ?>
     </div>
-  	<a class="btn btn-primary pull-right" href="recibo.php?id_compra=<?php echo $valCompra['id_compra']; ?>" role="button"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir</a>
+  	<a class="btn btn-primary pull-right" href="recibo.php?id_compra=<?php echo $valCompra['id_compra']; ?>" role="button" target="_blank"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir</a>
 </div>
 <?php
 	include('../footer.php');

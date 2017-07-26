@@ -5,16 +5,10 @@
 	if (isset($_POST['enviar'])) {
 		$llaveCategoria['id_categoria']=$_POST['id_categoria'];
 		$paraCategoria['categoria']=$_POST['categoria'];
-		$rowChange=$tecnocom->actualizar('categoria',$paraCategoria,$llaveCategoria);
-		if ($rowChange>0) {
-			$mensAlert[0]='Se actualizo la categoría';
-			$colorAlert='success';
-			$iconAlert='glyphicon glyphicon-ok';
-		}else{
-			$mensAlert[0]="Error: No se ha podido modificar la categoría";
-			$colorAlert="danger";
-			$iconAlert='glyphicon-exclamation-sign';
-		}
+		$tecnocom->actualizar('categoria',$paraCategoria,$llaveCategoria);
+		$mensAlert[0]='Se actualizo la categoría';
+		$colorAlert='success';
+		$iconAlert='glyphicon glyphicon-ok';
 		if($_POST['enviar']=="Guardar y Regresar"){
 			include('index.php');
 			die();

@@ -4,8 +4,8 @@
 	$tecnocom->security($rol,'/tecnocom/admin/login/');
 	if (isset($_POST['enviar'])) {
 		$paraCategoria['categoria']=$_POST['categoria'];
-		$rowChange=$tecnocom->insertar('categoria',$paraCategoria);			
-		if ($rowChange>0) {
+		$tecnocom->insertar('categoria',$paraCategoria);			
+		if ($tecnocom->rowChange>0) {
 			$mensAlert[0]='Se inserto la nueva categoría';
 			$colorAlert='success';
 			$iconAlert='glyphicon glyphicon-ok';

@@ -16,8 +16,8 @@
 		$datoBanner=$tecnocom->consultar('select banner from oferta_banner where id_oferta=:id_oferta',$paraOferta);
 		if (count($datoBanner)>0) {
 			$banner=$datoBanner[0]['banner'];
-			$rowChange=$tecnocom->borrar('oferta_banner',$paraOferta);
-			if($rowChange>0){
+			$tecnocom->borrar('oferta_banner',$paraOferta);
+			if($tecnocom->rowChange>0){
 				if(file_exists('../../images/ofertas/'.$banner)){
 					//Eliminar los banners de la carpeta del servidor
 	    		unlink('../../images/ofertas/'.$banner);
@@ -29,9 +29,9 @@
 				$mensAlert[0]="Error: No se ha podido eliminar la imagen de la oferta";
 			}
 		}
-		$rowChange=$tecnocom->borrar('oferta',$paraOferta);	
-		if ($rowChange>0) {
-			$mensAlert[0]="Se elimino ".$rowChange." oferta";
+		$tecnocom->borrar('oferta',$paraOferta);	
+		if ($tecnocom->rowChange>0) {
+			$mensAlert[0]="Se elimino ".$tecnocom->rowChange." oferta";
 			$colorAlert="success";
 			$iconAlert='glyphicon-ok';
 		}else{

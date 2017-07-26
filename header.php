@@ -33,7 +33,11 @@
                   <div class="row">
                     <div class="btn-group pull-right" role="group" aria-label="...">
                       <a class="btn btn-primary" href="/tecnocom/venta/registro" role="button"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Registrarse</a>
-                      <a class="btn btn-success" href="/tecnocom/venta/login" role="button"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Iniciar Sesion</a>
+                      <?php if (!isset($_SESSION['usrValido'])): ?>
+                        <a class="btn btn-success" href="/tecnocom/venta/login" role="button"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> Iniciar Sesion</a>
+                      <?php else: ?>
+                        <a class="btn btn-success" href="/tecnocom/venta/cliente" role="button"><span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Mi Cuenta</a>
+                      <?php endif; ?>
                     </div>    
                   </div>
                 </div>

@@ -17,8 +17,8 @@
               <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 footer_color">
                 <h4>Mi Cuenta</h4>
                 <ul>
-                  <li><a href="">Mi Cuenta</a></li>
-                  <li><a href="">Historial de Compras</a></li>
+                  <li><a href="/tecnocom/venta/cliente/">Mi Cuenta</a></li>
+                  <li><a href="/tecnocom/venta/historial/">Historial de Compras</a></li>
                 </ul>
               </div><!-- /.col-xs-12 /.col-sm-4 /.col-md-4 /.col-lg-4 --> 
               <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 footer_color">
@@ -26,6 +26,12 @@
                 <ul>
                   <li><a href="contacto.php">Contactános</a></li>
                   <li><a href="opciones_pago.php">Opciones de Pago</a></li>
+                </ul>
+              </div><!-- /.col-xs-12 /.col-sm-4 /.col-md-4 /.col-lg-4 --> 
+              <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 footer_color">
+                <h4>Empleados</h4>
+                <ul>
+                  <li><a href="/tecnocom/admin/login/">Empleados</a></li>
                 </ul>
               </div><!-- /.col-xs-12 /.col-sm-4 /.col-md-4 /.col-lg-4 --> 
             </div><!-- /.row -->  

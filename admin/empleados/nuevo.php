@@ -16,8 +16,8 @@
 					$contrasena=md5($contrasena);
 					$paraUsuario['correo']=$correo;
 					$paraUsuario['contrasena']=$contrasena;
-					$rowChange=$tecnocom->insertar('usuario',$paraUsuario);
-					if ($rowChange>0) {
+					$tecnocom->insertar('usuario',$paraUsuario);
+					if ($tecnocom->rowChange>0) {
 						$mensAlert[0]='Se agrego el nuevo usuario';
 						// Obtenemos el id_usuario
 						$datoUsuario=$tecnocom->consultar('select * from usuario where correo=:correo and contrasena=:contrasena',$paraUsuario);
@@ -31,8 +31,8 @@
 						$paraCliente['apaterno']=$_POST['apaterno'];
 						$paraCliente['amaterno']=$_POST['amaterno'];
 						$paraCliente['id_usuario']=$id_usuario;
-						$rowChange=$tecnocom->insertar('empleado',$paraCliente);
-						if ($rowChange>0) {
+						$tecnocom->insertar('empleado',$paraCliente);
+						if ($tecnocom->rowChange>0) {
 							$mensAlert[1]='Se agrego el nuevo empleado';
 							$colorAlert='success';
 							$iconAlert='glyphicon glyphicon-ok';

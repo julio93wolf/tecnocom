@@ -4,6 +4,7 @@
 		$paramCompra['id_compra']=$_GET['id_compra'];
 		$datoCarrito=$tecnocom->consultar('select * from vw_compras where id_compra=:id_compra',$paramCompra);
 		require_once($_SERVER['DOCUMENT_ROOT'].'/tecnocom/vendor/autoload.php');
+		$subtotal=0;
 		$content = '<page>';
 
 			$content.= '<style>';
@@ -70,8 +71,23 @@
 						$content.= '<td class="title40">'.$value['producto'].'</td>';
 						$content.= '<td class="title20">'.$value['modelo'].'</td>';
 						$content.= '<td class="title15l">'.$value['precio'].'</td>';
+						$subtotal+=$value['precio']*$value['cantidad'];
 					$content.= '</tr>';
 				}
+				$content.= '<tr>';
+					$content.= '<th class="title10"></th>';
+					$content.= '<th class="title10"></th>';
+					$content.= '<th class="title10">Subtotal</th>';
+					$content.= '<th class="title10">IVA</th>';
+					$content.= '<th class="title10">Total</th>';
+				$content.= '</tr>';
+				$content.= '<tr>';
+					$content.= '<td class="title10"></td>';
+					$content.= '<td class="title10"></td>';
+					$content.= '<td class="title10">'.$subtotal.'</td>';
+					$content.= '<td class="title10">'.$subtotal*0.16.'</td>';
+					$content.= '<td class="title10">'.$subtotal*1.16.'</td>';
+				$content.= '</tr>';
 			$content.= '</table>';
 		$content.= '</page>';
 		try

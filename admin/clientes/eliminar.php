@@ -22,13 +22,13 @@
 			// Se revisa que el carrito este vacio, de lo contrario se eliminan los registros
 			$datoDetalle=$tecnocom->consultar('select * from carrito_detalle where id_carrito=:id_carrito',$paraCarrito);
 			if(sizeof($datoDetalle)>0){
-				$rowChange=$tecnocom->borrar('carrito_detalle',$paraCarrito);
+				$tecnocom->borrar('carrito_detalle',$paraCarrito);
 			}
 
 			// Se elimina el carrito del cliente
-			$rowChange=$tecnocom->borrar('carrito',$paraCliente);
-			if($rowChange>0){
-				$mensAlert[0]='Se elimino '.$rowChange.' carrito';
+			$tecnocom->borrar('carrito',$paraCliente);
+			if($tecnocom->rowChange>0){
+				$mensAlert[0]='Se elimino '.$tecnocom->rowChange.' carrito';
 				$colorAlert='success';
 				$iconAlert='glyphicon glyphicon-ok';
 			}else{
@@ -43,9 +43,9 @@
 			$paraUsuario['id_usuario']=$id_usuario;
 
 			// Se elimina el cliente
-			$rowChange=$tecnocom->borrar('cliente',$paraCliente);
-			if($rowChange>0){
-				$mensAlert[1]='Se elimino '.$rowChange.' cliente';
+			$tecnocom->borrar('cliente',$paraCliente);
+			if($tecnocom->rowChange>0){
+				$mensAlert[1]='Se elimino '.$tecnocom->rowChange.' cliente';
 				$colorAlert='success';
 				$iconAlert='glyphicon glyphicon-ok';
 			}else{
@@ -56,9 +56,9 @@
 
 			// Se elimina el usuario y su rol
 			$tecnocom->borrar('usuario_rol',$paraUsuario);
-			$rowChange=$tecnocom->borrar('usuario',$paraUsuario);
-			if($rowChange>0){
-				$mensAlert[2]='Se elimino '.$rowChange.' usuario';
+			$tecnocom->borrar('usuario',$paraUsuario);
+			if($tecnocom->rowChange>0){
+				$mensAlert[2]='Se elimino '.$tecnocom->rowChange.' usuario';
 				$colorAlert='success';
 				$iconAlert='glyphicon glyphicon-ok';
 			}else{

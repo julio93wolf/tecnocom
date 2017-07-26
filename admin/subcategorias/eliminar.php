@@ -18,9 +18,9 @@
 		$colorAlert="danger";
 		$iconAlert='glyphicon-exclamation-sign';
 		if(sizeof($datoProducto)<=0){
-			$rowChange=$tecnocom->borrar('subcategoria',$paraSubCategoria);	
-			if ($rowChange>0) {
-				$mensAlert[0]="Se eliminaron ".$rowChange." categorias";
+			$tecnocom->borrar('subcategoria',$paraSubCategoria);	
+			if ($tecnocom->rowChange>0) {
+				$mensAlert[0]="Se eliminaron ".$tecnocom->rowChange." categorias";
 				$colorAlert="success";
 				$iconAlert='glyphicon-ok';
 			}else{

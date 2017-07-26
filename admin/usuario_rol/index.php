@@ -7,8 +7,8 @@
 		$id_rol = $_POST['id_rol'];
 		$paraUserRol['id_usuario']=$id_usuario;
 		$paraUserRol['id_rol']=$id_rol;
-		$rowChange=$tecnocom->insertar('usuario_rol',$paraUserRol);
-		if ($rowChange>0) {
+		$tecnocom->insertar('usuario_rol',$paraUserRol);
+		if ($tecnocom->rowChange>0) {
 			$mensAlert[0]='Se inserto el nuevo rol';
 			$colorAlert='success';
 			$iconAlert='glyphicon glyphicon-ok';

@@ -12,7 +12,7 @@
 		$mensAlert[0]="No se han podido eliminar por que hay ".count($datoCompraDetalle)." compras asociadas";
 		if(count($datoCompraDetalle)<=0){
 			//Eliminar el producto del carrito de los usuarios
-			$rowChange=$tecnocom->borrar('carrito_detalle',$paraProducto);
+			$tecnocom->borrar('carrito_detalle',$paraProducto);
 			//Obtener el id de las ofertas asignadas al producto
 			$datoOferta=$tecnocom->consultar('select id_oferta from oferta where id_producto=:id_producto',$paraProducto);
 			foreach ($datoOferta as $keyOferta => $varOferta) {
@@ -23,8 +23,8 @@
 				if(count($datoOfertaBanner)>0){
 					$oferta_banner=$datoOfertaBanner[0]['banner'];
 					//Eliminar los banners de la oferta
-					$rowChange=$tecnocom->borrar('oferta_banner',$paraOferta);
-					if($rowChange>0){
+					$tecnocom->borrar('oferta_banner',$paraOferta);
+					if($tecnocom->rowChange>0){
 						if(file_exists('../../images/ofertas/'.$oferta_banner)){
 								//Eliminar los banners de la carpeta del servidor
 			    			unlink('../../images/ofertas/'.$oferta_banner);
@@ -34,10 +34,10 @@
 			}
 
 			// Eliminas las ofertas
-			$rowChange=$tecnocom->borrar('oferta',$paraProducto);
+			$tecnocom->borrar('oferta',$paraProducto);
 			
 			//Eliminar los detalles del producto
-			$rowChange=$tecnocom->borrar('producto_detalle',$paraProducto);
+			$tecnocom->borrar('producto_detalle',$paraProducto);
 
 			//Obtener el nombre de la imagen del producto
 			$prodImagen="";
@@ -46,11 +46,11 @@
 				$prodImagen=$producto[0]['imagen'];	
 			}
 			//Eliminar el producto
-			$rowChange=$tecnocom->borrar('producto',$paraProducto);
-			if($rowChange>0){
+			$tecnocom->borrar('producto',$paraProducto);
+			if($tecnocom->rowChange>0){
 				$colorAlert="success";
 				$iconAlert='glyphicon-ok';
-				$mensAlert[0]="Se eliminaron ".$rowChange." productos";
+				$mensAlert[0]="Se eliminaron ".$tecnocom->rowChange." productos";
 				if($prodImagen!=""){
 					if(file_exists('../../images/productos/'.$prodImagen)){
 						//Eliminar las imagenes de la carpeta del servidor

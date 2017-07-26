@@ -65,30 +65,32 @@
       <?php if(count($datoCarrito)!=0):
         foreach ($datoCarrito as $keyCarrito => $valCarrito): ?>
         <div class="panel-body">
-          <input type="hidden" name="id_carrito" value="<?php echo $valCarrito['id_carrito']; ?>">
-          <div class="col-xs-4 col-sm-6 col-md-2 col-lg-2">
-            <label for="in_Cantidad">Cantidad:</label>
-            <input type="number" name="cantidad[<?php echo $valCarrito['id_producto']; ?>]" class="form-control" id="in_Cantidad" placeholder="0" value="<?php echo $valCarrito['cantidad']; ?>">
-          </div>
-          <div class="hidden-xs hidden-sm col-md-1 col-lg-1">
-            <td><img class="img-responsive" src="../../images/productos/<?php echo $valCarrito['imagen']; ?>" alt="<?php echo $valCarrito['sku']; ?>" /></td>
-          </div>
-          <div class="col-xs-8 col-sm-6 col-md-3 col-lg-3">
-            <h4><strong><?php echo $valCarrito['producto']; ?></strong></h4>
-            <p><?php echo $valCarrito['sku']; ?></p>
-            <p>Modelo: <?php echo $valCarrito['modelo']; ?></p>
-          </div>
-          <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
-            <h5><strong>Precio:</strong></h5>
-            <h4><strong>$<?php echo $valCarrito['precio']; ?></strong></h4>
-          </div>
-          <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
-            <h5><strong>Total:</strong></h5>
-            <h4><strong>$<?php echo $valCarrito['precio']*$valCarrito['cantidad']; ?></strong></h4>
-          </div>
-          <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
-            <div class="form-group">
-              <a class="btn btn-danger" href="index.php?id_producto=<?php echo $valCarrito['id_producto']; ?>&id_carrito=<?php echo $valCarrito['id_carrito']; ?>" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Quitar</a>
+          <div class="row vertical-align">
+            <input type="hidden" name="id_carrito" value="<?php echo $valCarrito['id_carrito']; ?>">
+            <div class="col-xs-4 col-sm-6 col-md-2 col-lg-2">
+              <label for="in_Cantidad">Cantidad:</label>
+              <input type="number" name="cantidad[<?php echo $valCarrito['id_producto']; ?>]" class="form-control" id="in_Cantidad" placeholder="0" value="<?php echo $valCarrito['cantidad']; ?>">
+            </div>
+            <div class="hidden-xs hidden-sm col-md-1 col-lg-1">
+              <td><img class="img-responsive" src="../../images/productos/<?php echo $valCarrito['imagen']; ?>" alt="<?php echo $valCarrito['sku']; ?>" /></td>
+            </div>
+            <div class="col-xs-8 col-sm-6 col-md-3 col-lg-3">
+              <h4><strong><?php echo $valCarrito['producto']; ?></strong></h4>
+              <p><?php echo $valCarrito['sku']; ?></p>
+              <p>Modelo: <?php echo $valCarrito['modelo']; ?></p>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
+              <h5><strong>Precio:</strong></h5>
+              <h4><strong>$<?php echo $valCarrito['precio']; ?></strong></h4>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
+              <h5><strong>Total:</strong></h5>
+              <h4><strong>$<?php echo $valCarrito['precio']*$valCarrito['cantidad']; ?></strong></h4>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-2 col-lg-2">
+              <div class="form-group">
+                <a class="btn btn-danger" href="index.php?id_producto=<?php echo $valCarrito['id_producto']; ?>&id_carrito=<?php echo $valCarrito['id_carrito']; ?>" role="button"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Quitar</a>
+              </div>
             </div>
           </div>
         </div>

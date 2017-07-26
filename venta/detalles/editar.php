@@ -1,6 +1,6 @@
 <?php
 	include_once('../tecnocom.class.php');
-	$rol[0]='Administrador';
+	$rol[0]='Cliente';
 	$tecnocom->security($rol,'/tecnocom/admin/login/');
 	if (isset($_POST['enviar'])) {
 		// Validar correo
@@ -25,14 +25,17 @@
 							$paraUsuario['contrasena']=$contrasena;
 							$llaveUsuario['id_usuario']=$_POST['id_usuario'];
 							$tecnocom->actualizar('usuario',$paraUsuario,$llaveUsuario);
-							$mensAlert[0]='Se actualizo la informacion del usuario';
-							// Actualizamos la informacion del empleado
+							
+							// Actualizamos la informacion del cliente
 							$paraCliente['nombre']=$_POST['nombre'];
 							$paraCliente['apaterno']=$_POST['apaterno'];
 							$paraCliente['amaterno']=$_POST['amaterno'];
-							$llaveCliente['id_empleado']=$_POST['id_empleado'];
-							$tecnocom->actualizar('empleado',$paraCliente,$llaveCliente);
-							$mensAlert[1]='Se actualizo la informacion del empleado';
+							$paraCliente['telefono']=$_POST['telefono'];
+							$paraCliente['domicilio']=$_POST['domicilio'];
+							$llaveCliente['id_cliente']=$_POST['id_cliente'];
+							$tecnocom->actualizar('cliente',$paraCliente,$llaveCliente);
+							
+							$mensAlert[1]='Se actualizo la informacion del cliente';
 							$colorAlert='success';
 							$iconAlert='glyphicon glyphicon-ok';
 						}else{
@@ -48,13 +51,18 @@
 				$paraUsuario['correo']=$correo;
 				$llaveUsuario['id_usuario']=$_POST['id_usuario'];
 				$tecnocom->actualizar('usuario',$paraUsuario,$llaveUsuario);
-				// Actualizamos la informacion del empleado
+				
+				$mensAlert[0]='Se actualizo la informacion del usuario';
+				// Actualizamos la informacion del cliente
 				$paraCliente['nombre']=$_POST['nombre'];
 				$paraCliente['apaterno']=$_POST['apaterno'];
 				$paraCliente['amaterno']=$_POST['amaterno'];
-				$llaveCliente['id_empleado']=$_POST['id_empleado'];
-				$tecnocom->actualizar('empleado',$paraCliente,$llaveCliente);
-				$mensAlert[0]='Se actualizo la informacion del empleado';
+				$paraCliente['telefono']=$_POST['telefono'];
+				$paraCliente['domicilio']=$_POST['domicilio'];
+				$llaveCliente['id_cliente']=$_POST['id_cliente'];
+				$tecnocom->actualizar('cliente',$paraCliente,$llaveCliente);
+				
+				$mensAlert[1]='Se actualizo la informacion del cliente';
 				$colorAlert='success';
 				$iconAlert='glyphicon glyphicon-ok';
 			}
@@ -66,16 +74,15 @@
 			die();
 		}
 	}
-	if ($_REQUEST['id_empleado']) {
-		$id_empleado = $_REQUEST['id_empleado'];
-		$paraEmpleado=array();
-		$paraEmpleado['id_empleado'] =$id_empleado;
-		$datoEmpleado = $tecnocom->consultar('select * from empleado join usuario using (id_usuario) where id_empleado=:id_empleado',$paraEmpleado);
+	if (isset($_SESSION['usrDatos']['id_usuario'])) {
+		$paraCliente=array();
+  	$paraCliente['id_usuario'] = $_SESSION['usrDatos']['id_usuario'];
+  	$datoCliente = $tecnocom->consultar('select * from cliente join usuario using (id_usuario) where id_usuario=:id_usuario',$paraCliente);
 	}
 	include('../header.php');
 ?>
 <div class="page-header">
-  <h1>Editar Empleado</h1>
+  <h1>Editar Cliente</h1>
 </div>
 <?php
 	if(isset($mensAlert) and isset($colorAlert) and isset($iconAlert)){
@@ -90,20 +97,29 @@
 			
 			<div class="form-group">
 		    <label for="in_Nombre">Nombre</label>
-		    <input type="text" name="nombre" class="form-control" id="in_Nombre" placeholder="Nombre(s)" value="<?php echo $datoEmpleado[0]['nombre']?>">
+		    <input type="text" name="nombre" class="form-control" id="in_Nombre" placeholder="Nombre(s)" value="<?php echo $datoCliente[0]['nombre']?>">
 	  	</div>
 	  	<div class="form-group">
 		    <label for="in_Paterno">Apellido Paterno</label>
-		    <input type="text" name="apaterno" class="form-control" id="in_Paterno" placeholder="Apellido Paterno" value="<?php echo $datoEmpleado[0]['apaterno']?>">
+		    <input type="text" name="apaterno" class="form-control" id="in_Paterno" placeholder="Apellido Paterno" value="<?php echo $datoCliente[0]['apaterno']?>">
 	  	</div>
 	  	<div class="form-group">
 		    <label for="in_Materno">Apellido Materno</label>
-		    <input type="text" name="amaterno" class="form-control" id="in_Materno" placeholder="Apellido Materno" value="<?php echo $datoEmpleado[0]['amaterno']?>">
+		    <input type="text" name="amaterno" class="form-control" id="in_Materno" placeholder="Apellido Materno" value="<?php echo $datoCliente[0]['amaterno']?>">
+	  	</div>
+	  	<div class="form-group">
+		    <label for="in_Phone">Teléfono</label>
+		    <input type="tel" name="telefono" class="form-control" id="in_Phone" placeholder="Teléfono" value="<?php echo $datoCliente[0]['telefono']?>">
+	  	</div>
+	  	<div class="form-group">
+		    <label for="in_Domicilio">Domicilio</label>
+		    <input type="text" name="domicilio" class="form-control" id="in_Domicilio" placeholder="Domicilio" value="<?php echo $datoCliente[0]['domicilio']?>">
 	  	</div>
 	  	<div class="form-group">
 		    <label for="in_Email">Correo</label>
-		    <input type="email" name="correo" class="form-control" id="in_Email" placeholder="Correo" value="<?php echo $datoEmpleado[0]['correo']?>">
+		    <input type="email" name="correo" class="form-control" id="in_Email" placeholder="Correo" value="<?php echo $datoCliente[0]['correo']?>">
 	  	</div>
+
 	  	<div class="checkbox">
 		    <label>
 		      <input type="checkbox" id="in_Password" onclick="new_password()"> Modificar Contraseña
@@ -132,9 +148,9 @@
 		    <label for="in_Confirmar">Confirmar Contraseña</label>
 		    <input type="password" name="confirmar" class="form-control" id="in_Confirmar" placeholder="Confirmar Contraseña" disabled>
 	  	</div>
-	  	<input type="hidden" name="id_empleado" value="<?php echo $datoEmpleado[0]['id_empleado']?>">
-	  	<input type="hidden" name="id_usuario" value="<?php echo $datoEmpleado[0]['id_usuario']?>">
-	  	<input type="hidden" name="actual" value="<?php echo $datoEmpleado[0]['contrasena']?>">
+	  	<input type="hidden" name="id_cliente" value="<?php echo $datoCliente[0]['id_cliente']?>">
+	  	<input type="hidden" name="id_usuario" value="<?php echo $datoCliente[0]['id_usuario']?>">
+	  	<input type="hidden" name="actual" value="<?php echo $datoCliente[0]['contrasena']?>">
 	  	<div class="form-group">
 	  		<button type="submit" name="enviar" value="Guardar" class="btn btn-primary">Guardar</button>
 				<button type="submit" name="enviar" value="Guardar y Regresar" class="btn btn-success">Guardar y Regresar</button>	

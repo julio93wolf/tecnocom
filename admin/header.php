@@ -48,7 +48,6 @@
 	        <li class="dropdown">
 	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Cuenta<span class="caret"></span></a>
 	          <ul class="dropdown-menu">
-	            <li><a href="#">Detalles</a></li>
 	            <li><a href="../login/logout.php"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a></li>
 	          </ul>
 	        </li>

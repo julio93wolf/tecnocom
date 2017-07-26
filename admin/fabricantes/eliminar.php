@@ -18,11 +18,11 @@
 				$logo=$datoFabricante[0]['logo'];	
 			}
 			//Eliminar el producto
-			$rowChange=$tecnocom->borrar('fabricante',$paraFabricante);
-			if($rowChange>0){
+			$tecnocom->borrar('fabricante',$paraFabricante);
+			if($tecnocom->rowChange>0){
 				$colorAlert="success";
 				$iconAlert='glyphicon-ok';
-				$mensAlert[0]="Se elimino ".$rowChange." fabricante";
+				$mensAlert[0]="Se elimino ".$tecnocom->rowChange." fabricante";
 				if($logo!=""){
 					if(file_exists('../../images/fabricantes/'.$logo)){
 						//Eliminar las imagenes de la carpeta del servidor

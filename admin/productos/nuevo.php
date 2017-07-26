@@ -18,8 +18,8 @@
 					$paraProducto['id_fabricante']=$_POST['id_fabricante'];
 					$paraProducto['id_subcategoria']=$_POST['id_subcategoria'];
 					$paraProducto['imagen']=$_POST['sku'].'.'.$extension[1];
-					$rowChange=$tecnocom->insertar('producto',$paraProducto);			
-					if ($rowChange>0) {
+					$tecnocom->insertar('producto',$paraProducto);			
+					if ($tecnocom->rowChange>0) {
 						$mensAlert[0]='Se inserto el nuevo producto';
 						$colorAlert='success';
 						$iconAlert='glyphicon glyphicon-ok';

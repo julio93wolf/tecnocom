@@ -11,9 +11,9 @@
 		$paraEmpleado['id_empleado']= $id_empleado;
 		$datoEmpleado=$tecnocom->consultar('select * from empleado where id_empleado=:id_empleado',$paraEmpleado);
 		if (count($datoEmpleado)>0) {
-			$rowChange=$tecnocom->borrar('empleado',$paraEmpleado);
-			if ($rowChange>0) {
-				$mensAlert[0]=" Se ha eliminado ".$rowChange." empleado";
+			$tecnocom->borrar('empleado',$paraEmpleado);
+			if ($tecnocom->rowChange>0) {
+				$mensAlert[0]=" Se ha eliminado ".$tecnocom->rowChange." empleado";
 				$colorAlert='success';
 				$iconAlert='glyphicon glyphicon-ok';
 			}else{
@@ -23,10 +23,10 @@
 			}
 			$id_usuario=$datoEmpleado[0]['id_usuario'];
 			$paraUsuario['id_usuario']=$id_usuario;
-			$rowChange=$tecnocom->borrar('usuario_rol',$paraUsuario);
-			$rowChange=$tecnocom->borrar('usuario',$paraUsuario);
-			if ($rowChange>0) {
-				$mensAlert[1]=" Se ha eliminado ".$rowChange." usuario";
+			$tecnocom->borrar('usuario_rol',$paraUsuario);
+			$tecnocom->borrar('usuario',$paraUsuario);
+			if ($tecnocom->rowChange>0) {
+				$mensAlert[1]=" Se ha eliminado ".$tecnocom->rowChange." usuario";
 				$colorAlert='success';
 				$iconAlert='glyphicon glyphicon-ok';
 			}else{
