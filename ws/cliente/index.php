@@ -1,16 +1,15 @@
 <?php
 	include('../../admin/tecnocom.class.php');
 	$metodo=$_SERVER['REQUEST_METHOD'];
-	//header('Content-Type: application/json');	
-	$json=array('mensaje'=>'no se implemento ninguna acción');
+	header('Content-Type: application/json');	
+	$json=array('mensaje'=>'No se implemento ninguna acción');
 	switch ($metodo) {
 		case 'POST':
-			echo "POST";
 			$json=file_get_contents('php://input');
 			$json=json_decode($json);
 			foreach ($json as $key => $value) {
 				$param['correo']=$value->correo;
-				$param['contrasena']=$value->contrasena;
+				$param['contrasena']=md5($value->contrasena);
 				$tecnocom->insertar('usuario',$param);
 				$dato=$tecnocom->consultar('select id_usuario from usuario where correo=:correo and contrasena=:contrasena',$param);
 				if ($tecnocom->rowChange>0) {
@@ -57,32 +56,29 @@
 			if (isset($_GET['id_cliente'])) {
 				$json=file_get_contents('php://input');
 				$json=json_decode($json);
-				$llave['id_cliente']=$_GET['id_cliente'];
-				foreach ($json as $key => $value) {
-					$param['nombre']=$value->nombre;
-					$param['apaterno']=$value->apaterno;
-					$param['amaterno']=$value->amaterno;
-					$param['telefono']=$value->telefono;
-					$param['domicilio']=$value->domicilio;
-					$tecnocom->actualizar('cliente',$param,$llave);
-					if ($tecnocom->rowChange>0) {
+				$param['id_cliente']=$_GET['id_cliente'];
+				$dato=$tecnocom->consultar('select id_usuario from cliente where id_cliente=:id_cliente',$param);
+				if ($tecnocom->rowChange>0) {
+					foreach ($json as $key => $value) {
+						$llave['id_cliente']=$_GET['id_cliente'];
 						$param=array();
-						$param['id_cliente']=$_GET['id_cliente'];
-						$dato=$tecnocom->consultar('select id_usuario from cliente where id_cliente=:id_cliente',$param);
+						$param['nombre']=$value->nombre;
+						$param['apaterno']=$value->apaterno;
+						$param['amaterno']=$value->amaterno;
+						$param['telefono']=$value->telefono;
+						$param['domicilio']=$value->domicilio;
+						$tecnocom->actualizar('cliente',$param,$llave);
+						
 						$llave=array();
 						$llave['id_usuario']=$dato[0]['id_usuario'];
 						$param=array();
 						$param['correo']=$value->correo;
-						$param['contrasena']=$value->contrasena;
+						$param['contrasena']=md5($value->contrasena);
 						$tecnocom->actualizar('usuario',$param,$llave);
-						if ($tecnocom->rowChange>0) {
-							$json=array('mensaje'=>'Se actualizaron los datos del cliente');
-						}else{
-							$json=array('mensaje'=>'No se actualizaron los datos del usuario');
-						}
-					}else{
-						$json=array('mensaje'=>'No se actualizaron los datos del cliente o el cliente no existe');
+						$json=array('mensaje'=>'Se actualizaron los datos del cliente');
 					}
+				}else{
+					$json=array('mensaje'=>'El cliente no existe');
 				}
 			}else{
 				$json=array('mensaje'=>'El ID del cliente es Obligatorío');
